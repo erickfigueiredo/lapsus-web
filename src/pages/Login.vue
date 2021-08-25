@@ -46,6 +46,7 @@
     </section>
   </div>
   <div class="absolute bg-white shadow-lg rounded-lg p-4 bottom-8 right-8">
+    <font-awesome icon="user-secret" />
     <p>Absolute child aaa</p>
   </div>
 </template>
