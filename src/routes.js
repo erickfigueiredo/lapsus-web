@@ -1,9 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
+// Importação das pages
+import Login from './pages/Login.vue';
+
 const routes = [
   {
-    path: '',
+    path: '/',
     component: '',
+  },
+  {
+    path: '/login',
+    component: Login,
+  },
+  {
+    path: '/cadastro',
+    component: Login,
   },
   {
     path: '/:pathMatch(.*)',
