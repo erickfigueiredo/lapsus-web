@@ -1,12 +1,16 @@
-import axios from './AxiosSettings';
+import lapsus from './AxiosSettings';
 
 class Access {
   static async login(data) {
     try {
-      const res = await axios.post('/login', data);
+      const res = await lapsus.post('/login', data);
       return res.data;
     } catch (err) {
-      return err;
+      if (err.response.data) {
+        return err.response.data;
+      }
+
+      return { success: false, message: 'Houve um erro desconhecido' };
     }
   }
 }

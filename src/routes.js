@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 // Importação das pages
 import Login from './pages/Login.vue';
+import Register from './pages/Register.vue';
+import Teste from './pages/Teste.vue';
 
 const routes = [
   {
@@ -14,11 +16,20 @@ const routes = [
   },
   {
     path: '/cadastro',
-    component: Login,
+    component: Register,
+  },
+  {
+    path: '/teste',
+    component: Teste,
+  },
+  {
+    path: '/404',
+    component: Teste,
+    // Passar a página errada para esta rota
   },
   {
     path: '/:pathMatch(.*)',
-    component: '',
+    redirect: '/404',
   },
 ];
 
