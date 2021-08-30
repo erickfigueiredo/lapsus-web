@@ -11,7 +11,21 @@
         }
       ]"
     >
-      <font-awesome :class="flag === 2 ? 'text-gray-800' : 'text-white'" :icon="['fas', 'check']" />
+      <font-awesome
+        v-if="flag === 1"
+        class="text-white"
+        :icon="['fas', 'check']"
+      />
+      <font-awesome
+        v-else-if="flag === 2"
+        class="text-gray-800"
+        :icon="['fas', 'exclamation']"
+      />
+      <font-awesome
+        v-else
+        class="text-white"
+        :icon="['fas', 'times']"
+      />
     </section>
     <p class="py-4 px-2">{{ message }}</p>
   </div>

@@ -47,7 +47,7 @@ export default createRouter({
   history: createWebHistory(),
   routes,
   // Chamado pelo router, sempre que a página muda
-  scrollBehavior(to, from, savedPosition) {
+  scrollBehavior(_, _2, savedPosition) {
     if (savedPosition) {
       return savedPosition;
     }
@@ -57,3 +57,11 @@ export default createRouter({
     };
   },
 });
+
+/* // Global Navigation Guard
+router.beforeEach((to, from, next) => {
+  console.log(next);
+
+});
+export default router;
+*/
