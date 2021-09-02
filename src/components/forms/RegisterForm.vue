@@ -54,7 +54,7 @@
         </label>
         <input
           id="password"
-          type="password"
+          :type="passwordVisible? 'text':'password'"
           name="password"
           v-model="form.password"
           placeholder="Sua senha"
@@ -69,7 +69,7 @@
         </label>
         <input
           id="passwordConf"
-          type="password"
+          :type="passwordVisible? 'text':'password'"
           name="passwordConf"
           v-model="passwordConf"
           placeholder="Digite novamente"
@@ -84,6 +84,7 @@
         As senhas não coincidem!
       </p>
     </div>
+    <p @click="togglePassword">{{passwordVisible ? 'Ocultar':'Mostrar'}} senha</p>
     <button
       className="w-full mt-4 p-2 bg-gray-700 text-yellow-600 hover:bg-yellow-600
           hover:text-white rounded-md cursor-pointer font-semibold transition delay-75
@@ -100,7 +101,15 @@
 
 <script>
 export default {
-  emits: {},
+  emits: {
+    'form-response': (flag, message) => {
+      if (flag && message) {
+        return true;
+      }
+
+      return false;
+    },
+  },
   data() {
     return {
       form: {
@@ -109,6 +118,8 @@ export default {
         email: '',
         password: '',
       },
+
+      passwordVisible: false,
 
       passwordConf: '',
       passwordConflict: false,
@@ -120,7 +131,7 @@ export default {
     passwordConf() {
       if (
         this.form.password
-        && this.passwordConf.length > 0
+        && this.passwordConf
         && this.form.password !== this.passwordConf
       ) {
         this.passwordConflict = true;
@@ -132,7 +143,7 @@ export default {
     'form.password': function () {
       if (
         this.passwordConf
-        && this.form.password.length > 0
+        && this.form.password
         && this.form.password !== this.passwordConf
       ) {
         this.passwordConflict = true;
@@ -140,6 +151,14 @@ export default {
         this.passwordConflict = false;
       }
     },
+  },
+  methods: {
+    togglePassword() {
+      this.passwordVisible = !this.passwordVisible;
+    },
+    /* submitForm() {
+      this.$emit('form-response', 3, 'Mensagem de erro');
+    }, */
   },
 };
 </script>

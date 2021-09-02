@@ -9,8 +9,7 @@ class Shapefile {
 
       return response.data;
     } catch (err) {
-      console.log(err);
-      return err;
+      return err.response.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido' };
     }
   }
 }

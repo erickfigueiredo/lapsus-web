@@ -1,11 +1,11 @@
 <template>
-  <h1>A</h1>
+  <header class="bg-gray-700 p-4">
+    Erick
+  </header>
 </template>
 
 <script>
 export default {
-  data() {
-    return {};
-  },
+
 };
 </script>

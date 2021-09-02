@@ -1,19 +1,20 @@
 <template>
-  <facade>
+  <facade-template>
     <template #form>
       <login-form @form-response="showInformation" />
     </template>
-  </facade>
+  </facade-template>
+  <p @click="test" class="text-center">{{$store.state.counter}}</p>
   <float-info :flag="floatData.flag" :message="floatData.message" />
 </template>
 
 <script>
-import Facade from '../templates/FacadeTemplate.vue';
+import FacadeTemplate from '../templates/FacadeTemplate.vue';
 import LoginForm from '../components/forms/LoginForm.vue';
 
 export default {
   components: {
-    Facade,
+    FacadeTemplate,
     LoginForm,
   },
   data() {
@@ -25,6 +26,9 @@ export default {
     };
   },
   methods: {
+    test() {
+      this.$store.state.counter += 2;
+    },
     showInformation(flag, message) {
       this.floatData.flag = flag;
       this.floatData.message = message;

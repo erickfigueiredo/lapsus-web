@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import FloatInfo from './components/FloatInfo.vue';
 
+import Store from './stores';
 import Router from './routes';
 import App from './App.vue';
 
@@ -14,6 +15,7 @@ library.add(faCheck, faExclamation, faTimes);
 
 const app = createApp(App);
 
+app.use(Store);
 app.use(Router);
 
 app.component('font-awesome', FontAwesomeIcon);

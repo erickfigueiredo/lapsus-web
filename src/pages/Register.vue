@@ -1,19 +1,19 @@
 <template>
-  <facade>
+  <facade-template>
     <template #form>
       <register-form @form-response="showInformation" />
     </template>
-  </facade>
+  </facade-template>
   <float-info :flag="floatData.flag" :message="floatData.message" />
 </template>
 
 <script>
-import Facade from '../templates/FacadeTemplate.vue';
+import FacadeTemplate from '../templates/FacadeTemplate.vue';
 import RegisterForm from '../components/forms/RegisterForm.vue';
 
 export default {
   components: {
-    Facade,
+    FacadeTemplate,
     RegisterForm,
   },
   data() {
