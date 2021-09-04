@@ -2,7 +2,9 @@ import { createApp } from 'vue';
 import './assets/tailwind.css';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCheck, faExclamation, faTimes } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCheck, faExclamation, faTimes, faUserCircle, faChevronRight, faCaravan, faSpinner, faBars,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import FloatInfo from './components/FloatInfo.vue';
@@ -11,7 +13,8 @@ import Store from './stores';
 import Router from './routes';
 import App from './App.vue';
 
-library.add(faCheck, faExclamation, faTimes);
+library.add(faCheck, faExclamation, faTimes, faUserCircle, faBars,
+  faChevronRight, faCaravan, faSpinner);
 
 const app = createApp(App);
 

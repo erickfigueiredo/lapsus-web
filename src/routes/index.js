@@ -4,6 +4,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Login from '../pages/Login.vue';
 import Register from '../pages/Register.vue';
 import Home from '../pages/Home.vue';
+import Category from '../pages/Category.vue';
 
 import Teste from '../pages/Teste.vue';
 // import Map from '../pages/Map.vue';
@@ -20,6 +21,10 @@ const routes = [
   {
     path: '/cadastro',
     component: Register,
+  },
+  {
+    path: '/categorias',
+    component: Category,
   },
   {
     path: '/teste',
@@ -49,6 +54,8 @@ export default createRouter({
       top: 0,
     };
   },
+  // Definimos o nome da classe
+  linkActiveClass: 'active',
 });
 
 /* // Global Navigation Guard

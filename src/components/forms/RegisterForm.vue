@@ -9,7 +9,7 @@
           id="name"
           type="text"
           name="name"
-          v-model="form.name"
+          v-model="name"
           placeholder="Seu nome"
           class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
               outline-none border-2 border-gray-200 focus:border-gray-400"
@@ -24,7 +24,7 @@
           id="surname"
           type="text"
           name="surname"
-          v-model="form.surname"
+          v-model="surname"
           placeholder="Sobrenome"
           class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
               outline-none border-2 border-gray-200 focus:border-gray-400"
@@ -40,7 +40,7 @@
         id="email"
         type="email"
         name="email"
-        v-model="form.email"
+        v-model="email"
         placeholder="email@exemplo.com"
         class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
               outline-none border-2 border-gray-200 focus:border-gray-400"
@@ -54,9 +54,9 @@
         </label>
         <input
           id="password"
-          :type="passwordVisible? 'text':'password'"
+          :type="passwordVisible ? 'text' : 'password'"
           name="password"
-          v-model="form.password"
+          v-model="password"
           placeholder="Sua senha"
           class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
               outline-none border-2 border-gray-200 focus:border-gray-400"
@@ -69,7 +69,7 @@
         </label>
         <input
           id="passwordConf"
-          :type="passwordVisible? 'text':'password'"
+          :type="passwordVisible ? 'text' : 'password'"
           name="passwordConf"
           v-model="passwordConf"
           placeholder="Digite novamente"
@@ -79,45 +79,35 @@
         />
       </div>
     </div>
+    <p class="text-sm text-right text-gray-400 cursor-pointer" @click="togglePassword">
+      {{ passwordVisible ? "Ocultar" : "Mostrar" }} senha
+    </p>
     <div v-if="passwordConflict" class="border-2 border-red-500 bg-red-300 p-2 rounded-lg">
       <p class="text-sm text-red-500">
         As senhas não coincidem!
       </p>
     </div>
-    <p @click="togglePassword">{{passwordVisible ? 'Ocultar':'Mostrar'}} senha</p>
-    <button
-      className="w-full mt-4 p-2 bg-gray-700 text-yellow-600 hover:bg-yellow-600
-          hover:text-white rounded-md cursor-pointer font-semibold transition delay-75
-          duration-300 ease-in-out"
-      :disabled="blockAction || passwordConflict"
-    >
-      Cadastrar
-    </button>
+    <base-button name="Cadastrar" :isBlocked="blockAction || passwordConflict" />
   </form>
-  <router-link to="/login" class="block text-sm text-center text-gray-400 hover:text-yellow-600"
-    >Já possui uma conta? Faça login</router-link
-  >
+  <router-link to="/login" class="block text-sm text-center text-gray-400 hover:text-lemon-500">
+    Já possui uma conta? Faça login
+  </router-link>
 </template>
 
 <script>
-export default {
-  emits: {
-    'form-response': (flag, message) => {
-      if (flag && message) {
-        return true;
-      }
+import BaseButton from '../BaseButton.vue';
 
-      return false;
-    },
+export default {
+  components: {
+    BaseButton,
   },
+  emits: ['form-response'],
   data() {
     return {
-      form: {
-        name: '',
-        surname: '',
-        email: '',
-        password: '',
-      },
+      name: '',
+      surname: '',
+      email: '',
+      password: '',
 
       passwordVisible: false,
 
@@ -129,23 +119,14 @@ export default {
   },
   watch: {
     passwordConf() {
-      if (
-        this.form.password
-        && this.passwordConf
-        && this.form.password !== this.passwordConf
-      ) {
+      if (this.password && this.passwordConf && this.password !== this.passwordConf) {
         this.passwordConflict = true;
       } else {
         this.passwordConflict = false;
       }
     },
-    // eslint-disable-next-line
-    'form.password': function () {
-      if (
-        this.passwordConf
-        && this.form.password
-        && this.form.password !== this.passwordConf
-      ) {
+    password() {
+      if (this.passwordConf && this.password && this.password !== this.passwordConf) {
         this.passwordConflict = true;
       } else {
         this.passwordConflict = false;
@@ -156,9 +137,13 @@ export default {
     togglePassword() {
       this.passwordVisible = !this.passwordVisible;
     },
-    /* submitForm() {
+    submitForm() {
+      this.blockAction = true;
+      // Concluir cadastro
       this.$emit('form-response', 3, 'Mensagem de erro');
-    }, */
+
+      this.blockAction = false;
+    },
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="flag !== 0" class="flex absolute bg-white shadow-lg rounded-lg bottom-8 right-8">
+  <div v-if="flag !== 0" class="flex absolute z-40 bg-white shadow-lg rounded-lg bottom-8 right-8">
     <section
       :class="[
         'p-4',

@@ -8,7 +8,7 @@
         id="email"
         type="email"
         name="email"
-        v-model="form.email"
+        v-model="email"
         placeholder="email@exemplo.com"
         class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
               outline-none border-2 border-gray-200 focus:border-gray-400"
@@ -23,46 +23,33 @@
         id="password"
         type="password"
         name="password"
-        v-model="form.password"
+        v-model="password"
         placeholder="********"
         class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
               outline-none border-2 border-gray-200 focus:border-gray-400"
         required
       />
     </div>
-    <button
-      className="w-full mt-4 p-2 bg-gray-700 text-yellow-600 hover:bg-yellow-600
-          hover:text-white rounded-md cursor-pointer font-semibold transition delay-75
-          duration-300 ease-in-out"
-      :disabled="blockAction"
-    >
-      Login
-    </button>
+    <base-button name="Login" :isBlocked="blockAction" />
   </form>
-  <router-link to="/cadastro" class="block text-sm text-center text-gray-400 hover:text-yellow-600"
-    >Não tem uma conta? Cadastre-se</router-link
-  >
+  <router-link to="/cadastro" class="block text-sm text-center text-gray-400 hover:text-lemon-500">
+    Não tem uma conta? Cadastre-se
+  </router-link>
 </template>
 
 <script>
+import BaseButton from '../BaseButton.vue';
 import Access from '../../services/Access';
 
 export default {
-  emits: {
-    'form-response': (flag, message) => {
-      if (flag && message) {
-        return true;
-      }
-
-      return false;
-    },
+  components: {
+    BaseButton,
   },
+  emits: ['form-response'],
   data() {
     return {
-      form: {
-        email: '',
-        password: '',
-      },
+      email: '',
+      password: '',
 
       blockAction: false,
     };
@@ -71,7 +58,10 @@ export default {
     async submitForm() {
       this.blockAction = true;
 
-      const result = await Access.login(this.form);
+      const result = await Access.login({
+        email: this.email,
+        password: this.password,
+      });
 
       if (!result.success) {
         this.$emit('form-response', 3, result.message);
