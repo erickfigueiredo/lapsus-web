@@ -10,6 +10,7 @@
         name="name"
         v-model="name"
         placeholder="Informe um nome"
+        spellcheck="true"
         class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
         outline-none border-2 border-gray-200 focus:border-gray-400"
         required
@@ -25,12 +26,13 @@
         v-model="desc"
         rows="10"
         placeholder="Informe uma breve descrição"
+        spellcheck="true"
         class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
         outline-none border-2 border-gray-200 focus:border-gray-400"
         required
       />
     </div>
-    <base-button name="Cadastrar" :isBlocked="blockAction" />
+    <base-button :name="toUpdate ? 'Atualizar' : 'Cadastrar'" :isBlocked="blockAction" />
   </form>
 </template>
 
@@ -44,7 +46,7 @@ export default {
   },
   emits: ['form-response', 'form-data'],
   props: {
-    data: {
+    fillData: {
       type: Object,
       default() {
         return {
@@ -63,9 +65,9 @@ export default {
   },
   data() {
     return {
-      id: this.data.id,
-      name: this.data.name,
-      desc: this.data.desc,
+      id: this.fillData.id,
+      name: this.fillData.name,
+      desc: this.fillData.desc,
 
       blockAction: false,
     };
@@ -78,13 +80,26 @@ export default {
     async submitForm() {
       this.blockAction = true;
 
+      const data = {
+        name: this.name,
+        desc: this.desc,
+      };
+
       if (this.toUpdate) {
-        console.log(this.toUpdate);
+        data.id = this.id;
+
+        const result = await Category.update(data);
+        if (result.success) {
+          this.name = result.category.name;
+          this.desc = result.category.desc;
+
+          this.$emit('form-response', 1, 'Categoria atualizada com Successo!');
+          this.$emit('form-data', result.category);
+        } else {
+          this.$emit('form-response', 3, result.message);
+        }
       } else {
-        const result = await Category.create({
-          name: this.name,
-          desc: this.desc,
-        });
+        const result = await Category.create(data);
 
         if (result.success) {
           this.$emit('form-response', 1, 'Categoria cadastrada com Successo!');

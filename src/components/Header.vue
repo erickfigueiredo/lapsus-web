@@ -1,14 +1,16 @@
 <template>
-  <header class="px-4 bg-cerulean-100">
-    <div class="py-2 px-4 flex my-auto">
-      <button class="lg:hidden" @click="isActive = true;">
-        <font-awesome class="text-2xl text-cerulean-500" :icon="['fas', 'bars']"/>
+  <header class="px-4 bg-white border-b-2 border-lemon-500">
+    <div class=" flex my-auto py-2">
+    <!-- Mudar a tag button -->
+      <button class="ml-4 lg:hidden" @click="isActive = true;">
+        <font-awesome :icon="['fas', 'bars']" class="text-2xl text-cerulean-700 align-middle"/>
       </button>
-      <button class="ml-auto">
-        <font-awesome :icon="['fas', 'user-circle']" class="text-3xl text-cerulean-500" />
+      <!-- Mudar a tag button -->
+      <button class="ml-auto bg-cerulean-700 rounded-full w-10 h-10 shadow-md mr-4 lg:mr-12">
+        <font-awesome :icon="['fas', 'user-circle']"
+        class="text-3xl text-white align-middle" />
       </button>
     </div>
-    <hr class="border-1 border-cerulean-700"/>
   </header>
 </template>
 
