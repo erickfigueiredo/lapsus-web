@@ -25,6 +25,26 @@ class Shapefile {
       return err.response?.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido!' };
     }
   }
+
+  static async update(data) {
+    try {
+      const res = await lapsus.put('/shapefile', data);
+
+      return res.data;
+    } catch (err) {
+      return err.response?.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido!' };
+    }
+  }
+
+  static async delete(id) {
+    try {
+      const res = await lapsus.delete(`/shapefile/${id}`);
+
+      return res.data;
+    } catch (err) {
+      return err.response?.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido!' };
+    }
+  }
 }
 
 export default Shapefile;

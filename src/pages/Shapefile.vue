@@ -10,17 +10,36 @@
         <div class="bg-gray-100 rounded-md p-6 h-full overflow-y-auto">
           <ul>
             <li
-              v-for="shp in shapefiles"
+              v-for="(shp, index) in shapefiles"
               :key="shp.id"
               class="py-4 px-8 text-white bg-cerulean-400 rounded-lg mb-4"
             >
-              <font-awesome :icon="['fas', 'archive']" class="mr-2" /> {{ shp.title }}
+              <font-awesome :icon="['fas', 'archive']" class="mr-2" /> {{ shp.title }} -
+              <span @click="openModal(index)">Atualizar</span> -
+              <span @click="openModal(index, true)">Deletar</span>
             </li>
           </ul>
         </div>
       </card>
     </section>
   </base-layout>
+  <modal v-if="isModalUpdateActive" title="Atualizar Shapefile" size="w-1/4" @close="closeModal">
+    <shapefile-form
+      @form-response="showInformation"
+      @form-data="updateShapefile"
+      :fill-data="shapefile"
+      :to-update="true"
+    />
+  </modal>
+  <modal
+    v-if="isModalDeleteActive"
+    title="Deletar Categoria"
+    size="w-1/4"
+    @close="closeModal(true)"
+  >
+    <p>Tem certeza que deseja deletar "{{ shapefile.title }}"?</p>
+    <button :disabled="blockAction" @click="deleteShapefile">Sim</button>
+  </modal>
   <float-info :flag="floatData.flag" :message="floatData.message" />
 </template>
 
@@ -28,7 +47,7 @@
 import Base from '../templates/BaseTemplate.vue';
 import BaseCard from '../components/BaseCard.vue';
 import ShapefileForm from '../components/forms/ShapefileForm.vue';
-// import Modal from '../components/Modal.vue';
+import Modal from '../components/Modal.vue';
 
 import Shapefile from '../services/Shapefile';
 
@@ -37,7 +56,7 @@ export default {
     BaseLayout: Base,
     Card: BaseCard,
     ShapefileForm,
-    // Modal,
+    Modal,
   },
   data() {
     return {
@@ -46,15 +65,51 @@ export default {
         message: '',
       },
 
+      blockAction: false,
+
+      isModalUpdateActive: false,
+      isModalDeleteActive: false,
+
       shapefiles: [],
+
+      shapefile: null,
+      index: null,
     };
   },
   methods: {
     addShapefile(shapefile) {
-      this.shapefiles.push(shapefile);
+      this.shapefiles.unshift(shapefile);
     },
-    updateShapefile() {},
-    deleteShapefile() {},
+    updateShapefile(shapefile) {
+      this.shapefiles[this.index] = shapefile;
+    },
+    async deleteShapefile() {
+      this.blockAction = true;
+      const result = await Shapefile.delete(this.shapefile.id);
+
+      if (result.success) {
+        this.shapefiles.splice(this.index, 1);
+        this.showInformation(1, result.message);
+      } else {
+        this.showInformation(3, result.message);
+      }
+
+      this.isModalDeleteActive = false;
+      this.blockAction = false;
+    },
+    openModal(index, isDelete = false) {
+      this.shapefile = this.shapefiles[index];
+      this.index = index;
+
+      if (isDelete) {
+        this.isModalDeleteActive = true;
+      } else this.isModalUpdateActive = true;
+    },
+    closeModal(isDelete = false) {
+      if (isDelete) {
+        this.isModalDeleteActive = false;
+      } else this.isModalUpdateActive = false;
+    },
     showInformation(flag, message) {
       this.floatData.flag = flag;
       this.floatData.message = message;

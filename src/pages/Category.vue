@@ -26,7 +26,7 @@
       </card>
     </section>
   </base-layout>
-  <modal v-if="isModalUpdateActive" title="Atualizar Categoria" @close="closeModal">
+  <modal v-if="isModalUpdateActive" title="Atualizar Categoria" size="w-1/4" @close="closeModal">
     <category-form
       @form-response="showInformation"
       @form-data="updateCategory"
@@ -34,7 +34,12 @@
       :to-update="true"
     />
   </modal>
-  <modal v-if="isModalDeleteActive" title="Deletar Categoria" @close="closeModal(true)">
+  <modal
+    v-if="isModalDeleteActive"
+    title="Deletar Categoria"
+    size="w-1/4"
+    @close="closeModal(true)"
+  >
     <p>Tem certeza que deseja deletar "{{ category.name }}"?</p>
     <button :disabled="blockAction" @click="deleteCategory">Sim</button>
   </modal>

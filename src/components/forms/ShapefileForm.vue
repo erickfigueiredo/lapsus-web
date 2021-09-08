@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submitForm" enctype="multipart/form-data" class="my-4">
+  <form @submit.prevent="submitForm" class="my-4">
     <div className="my-4">
       <label for="name" className="block my-2 text-gray-500 font-semibold">
         Título
@@ -32,7 +32,7 @@
         required
       />
     </div>
-    <div className="my-4">
+    <div v-if="!toUpdate" className="my-4">
       <label for="desc" className="block my-2 text-gray-500 font-semibold">
         Arquivo
       </label>
