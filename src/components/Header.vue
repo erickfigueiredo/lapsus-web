@@ -2,7 +2,7 @@
   <header class="px-4 bg-white border-b-2 border-lemon-500">
     <div class=" flex my-auto py-2">
     <!-- Mudar a tag button -->
-      <button class="ml-4 lg:hidden" @click="isActive = true;">
+      <button class="ml-2 lg:hidden" @click="isActive = true;">
         <font-awesome :icon="['fas', 'bars']" class="text-2xl text-cerulean-700 align-middle"/>
       </button>
       <!-- Mudar a tag button -->

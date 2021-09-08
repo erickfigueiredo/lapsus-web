@@ -15,7 +15,7 @@ class Category {
       const res = await lapsus.post('/category', data);
       return res.data;
     } catch (err) {
-      return err.response.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido!' };
+      return err.response?.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido!' };
     }
   }
 
@@ -24,7 +24,7 @@ class Category {
       const res = await lapsus.put('/category', data);
       return res.data;
     } catch (err) {
-      return err.response.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido!' };
+      return err.response?.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido!' };
     }
   }
 
@@ -33,7 +33,7 @@ class Category {
       const res = await lapsus.delete(`/category/${id}`);
       return res.data;
     } catch (err) {
-      return err.response.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido!' };
+      return err.response?.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido!' };
     }
   }
 }

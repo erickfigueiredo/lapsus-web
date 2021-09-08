@@ -1,15 +1,15 @@
 <template>
-  <form @submit.prevent="submitForm" class="my-4">
+  <form @submit.prevent="submitForm" enctype="multipart/form-data" class="my-4">
     <div className="my-4">
       <label for="name" className="block my-2 text-gray-500 font-semibold">
-        Nome
+        Título
       </label>
       <input
         id="name"
         type="text"
         name="name"
-        v-model="name"
-        placeholder="Informe um nome"
+        v-model="title"
+        placeholder="Informe um Título"
         spellcheck="true"
         class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
         outline-none border-2 border-gray-200 focus:border-gray-400"
@@ -24,7 +24,7 @@
         id="desc"
         name="desc"
         v-model="desc"
-        rows="10"
+        rows="6"
         placeholder="Informe uma breve descrição"
         spellcheck="true"
         class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
@@ -32,13 +32,28 @@
         required
       />
     </div>
-    <base-button :name="toUpdate ? 'Atualizar' : 'Cadastrar'" :isBlocked="blockAction" />
+    <div className="my-4">
+      <label for="desc" className="block my-2 text-gray-500 font-semibold">
+        Arquivo
+      </label>
+      <input
+        id="shape"
+        type="file"
+        name="shape"
+        ref="file"
+        accept=".zip"
+        class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
+        outline-none border-2 border-gray-200 focus:border-gray-400"
+        required
+      />
+    </div>
+    <base-button name="Cadastrar" :isBlocked="blockAction" />
   </form>
 </template>
 
 <script>
 import BaseButton from '../BaseButton.vue';
-import Category from '../../services/Category';
+import Shapefile from '../../services/Shapefile';
 
 export default {
   components: {
@@ -51,7 +66,7 @@ export default {
       default() {
         return {
           id: null,
-          name: '',
+          title: '',
           desc: '',
         };
       },
@@ -66,7 +81,7 @@ export default {
   data() {
     return {
       id: this.fillData.id,
-      name: this.fillData.name,
+      title: this.fillData.title,
       desc: this.fillData.desc,
 
       blockAction: false,
@@ -74,38 +89,45 @@ export default {
   },
   methods: {
     clearForm() {
-      this.name = '';
+      this.title = '';
       this.desc = '';
+      this.$refs.file.value = null;
     },
     async submitForm() {
       this.blockAction = true;
 
       const data = {
-        name: this.name,
+        title: this.title,
         desc: this.desc,
       };
 
       if (this.toUpdate) {
         data.id = this.id;
 
-        const result = await Category.update(data);
+        const result = await Shapefile.update(data);
         if (result.success) {
-          this.name = result.category.name;
-          this.desc = result.category.desc;
+          this.name = result.shapefile.title;
+          this.desc = result.shapefile.desc;
 
           this.$emit('form-response', 1, 'Categoria atualizada com sucesso!');
-          this.$emit('form-data', result.category);
+          this.$emit('form-data', result.shapefile);
         } else {
           this.$emit('form-response', 3, result.message);
         }
       } else {
-        const result = await Category.create(data);
+        // data.added_by = '';
+
+        const formData = new FormData();
+
+        formData.append('file', this.$refs.file.files[0]);
+        formData.append('data', JSON.stringify(data));
+
+        const result = await Shapefile.create(formData);
 
         if (result.success) {
-          this.$emit('form-response', 1, 'Categoria cadastrada com sucesso!');
-          this.$emit('form-data', result.category);
+          this.$emit('form-response', 1, 'Shapefile implantado com sucesso!');
         } else {
-          this.$emit('form-response', 3, result.message);
+          this.$emit('fomr-response', 3, result.message);
         }
 
         this.clearForm();

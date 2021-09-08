@@ -1,18 +1,18 @@
 <template>
-  <base-layout name="Categoria">
-    <section class="md:flex space-x-4 h-4/5">
-      <div class="bg-white w-full md:w-2/6 p-4 rounded-lg">
+  <base-layout>
+    <section class="md:flex md:space-x-4 md:h-4/5">
+      <card responsivity="mb-4 md:mb-0 md:w-2/6">
         <h2 class="font-bold text-gray-500">Cadastro de Categorias</h2>
         <hr class="my-4" />
         <category-form @form-response="showInformation" @form-data="addCategory" />
-      </div>
-      <div class="w-full md:w-4/6 bg-white p-4 rounded-lg shadow-md">
+      </card>
+      <card responsivity="md:w-4/6">
         <div class="bg-gray-100 rounded-md p-6 h-full overflow-y-auto">
           <ul>
             <template v-for="(cat, index) in categories" :key="cat.id">
               <li
                 v-if="index === 0 || cat.name[0] !== categories[index - 1].name[0]"
-                class="capitalize p-2 rounded-md bg-cerulean-300 my-2"
+                class="capitalize p-2 rounded-md bg-cerulean-400 text-white my-2"
               >
                 {{ cat.name[0] }}
               </li>
@@ -23,7 +23,7 @@
             </template>
           </ul>
         </div>
-      </div>
+      </card>
     </section>
   </base-layout>
   <modal v-if="isModalUpdateActive" title="Atualizar Categoria" @close="closeModal">
@@ -36,13 +36,14 @@
   </modal>
   <modal v-if="isModalDeleteActive" title="Deletar Categoria" @close="closeModal(true)">
     <p>Tem certeza que deseja deletar "{{ category.name }}"?</p>
-    <button @click="deleteCategory">Sim</button>
+    <button :disabled="blockAction" @click="deleteCategory">Sim</button>
   </modal>
   <float-info :flag="floatData.flag" :message="floatData.message" />
 </template>
 
 <script>
 import Base from '../templates/BaseTemplate.vue';
+import BaseCard from '../components/BaseCard.vue';
 import CategoryForm from '../components/forms/CategoryForm.vue';
 import Modal from '../components/Modal.vue';
 
@@ -51,6 +52,7 @@ import Category from '../services/Category';
 export default {
   components: {
     BaseLayout: Base,
+    Card: BaseCard,
     CategoryForm,
     Modal,
     // TableData,
