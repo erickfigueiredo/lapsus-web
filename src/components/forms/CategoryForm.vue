@@ -29,7 +29,6 @@
         spellcheck="true"
         class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
         outline-none border-2 border-gray-200 focus:border-gray-400"
-        required
       />
     </div>
     <base-button :name="toUpdate ? 'Atualizar' : 'Cadastrar'" :isBlocked="blockAction" />
@@ -110,7 +109,6 @@ export default {
 
         this.clearForm();
       }
-
       this.blockAction = false;
     },
   },

@@ -9,16 +9,16 @@
       <card responsivity="md:w-4/6">
         <div class="bg-gray-100 rounded-md p-6 h-full overflow-y-auto">
           <ul>
-            <template v-for="(cat, index) in categories" :key="cat.id">
+            <template v-for="(cat, i) in categories" :key="cat.id">
               <li
-                v-if="index === 0 || cat.name[0] !== categories[index - 1].name[0]"
+                v-if="i === 0 || cat.name[0] !== categories[i - 1].name[0]"
                 class="capitalize p-2 rounded-md bg-cerulean-400 text-white my-2"
               >
                 {{ cat.name[0] }}
               </li>
               <li class="capitalize my-1 mx-6">
-                {{ cat.name }} - <span @click="openModal(index)">Atualizar</span> -
-                <span @click="openModal(index, true)">Deletar</span>
+                {{ cat.name + " " + cat.id }} - <span @click="openModal(i)">Atualizar</span> -
+                <span @click="openModal(i, true)">Deletar</span>
               </li>
             </template>
           </ul>
@@ -60,7 +60,6 @@ export default {
     Card: BaseCard,
     CategoryForm,
     Modal,
-    // TableData,
   },
   data() {
     return {
@@ -82,28 +81,26 @@ export default {
   },
   methods: {
     // eslint-disable-next-line consistent-return
-    binarySearcher(arr, begin, end, value) {
-      if (end >= begin) {
-        const mid = begin + Math.floor((end - begin) / 2);
+    addOrdered(array, begin, end, cat) {
+      const index = Math.floor((begin + end) / 2);
 
-        if (end - begin <= 1) {
-          if (value.name >= arr[mid].name) {
-            arr.splice(mid + 1, 0, value);
-            return null;
-          }
-          arr.splice(mid, 0, value);
-          return null;
+      if (array[index].name === cat.name || begin === end) {
+        if (array[index].name <= cat.name) {
+          array.splice(index + 1, 0, cat);
+        } else {
+          array.splice(index, 0, cat);
         }
+        return null;
+      }
 
-        if (arr[mid].name > value.name) {
-          this.binarySearcher(arr, begin, mid - 1, value);
-        }
-
-        return this.binarySearcher(arr, mid + 1, end, value);
+      if (array[index].name < cat.name) {
+        this.addOrdered(array, index + 1, end, cat);
+      } else {
+        this.addOrdered(array, begin, index, cat);
       }
     },
     addCategory(category) {
-      this.binarySearcher(this.categories, 0, this.categories.length - 1, category);
+      this.addOrdered(this.categories, 0, this.categories.length - 1, category);
     },
     updateCategory(category) {
       this.categories[this.index] = category;
