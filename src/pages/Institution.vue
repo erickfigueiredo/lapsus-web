@@ -10,6 +10,7 @@
     </section>
   </base-layout>
 </template>
+
 <script>
 import Base from '../templates/BaseTemplate.vue';
 import BaseCard from '../components/BaseCard.vue';
