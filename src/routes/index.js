@@ -6,7 +6,7 @@ import Register from '../pages/Register.vue';
 
 import Home from '../pages/Home.vue';
 import Category from '../pages/Category.vue';
-// import Institution from '../pages/Institution.vue';
+import Institution from '../pages/Institution.vue';
 import Shapefile from '../pages/Shapefile.vue';
 
 import NotFound from '../pages/NotFound.vue';
@@ -34,6 +34,11 @@ const routes = [
     name: 'Categorias',
     path: '/categorias',
     component: Category,
+  },
+  {
+    name: 'Instituições',
+    path: '/instituicoes',
+    component: Institution,
   },
   {
     name: 'Shapefiles',

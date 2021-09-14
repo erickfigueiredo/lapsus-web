@@ -41,6 +41,19 @@
         </li>
         <li>
           <router-link
+            to="/instituicoes"
+            class="block ml-4 my-4 border-l-8 rounded-l-lg "
+            exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800 border-r-4"
+          >
+            <div class="hover:bg-cerulean-800 pr-4 p-2 transition duration-200">
+              <p class="text-center text-lg">
+                <font-awesome :icon="['fas', 'landmark']" class="text-xl mr-2" />Instituições
+              </p>
+            </div>
+          </router-link>
+        </li>
+        <li>
+          <router-link
             to="/shapefiles"
             class="block ml-4 my-4 border-l-8 rounded-l-lg "
             exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800 border-r-4"
