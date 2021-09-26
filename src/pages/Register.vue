@@ -1,6 +1,11 @@
 <template>
   <facade-template>
     <template #form>
+      <div class="flex justify-center mb-8">
+        <div>
+          <img src="../assets/lapsus_logo.png" alt="Sistema Lapsus" class="w-32" />
+        </div>
+      </div>
       <register-form @form-response="showInformation" />
     </template>
   </facade-template>
