@@ -10,6 +10,11 @@
       class=" fixed z-20 inset-y-0 left-0 w-64 transition duration-300 transform bg-cerulean-900
       overflow-y-auto rounded-r-xl lg:rounded-none lg:translate-x-0 lg:static lg:inset-0"
     >
+      <div class="flex justify-center mt-4 mb-12">
+        <div>
+          <img src="../assets/lapsus_logo.png" alt="Sistema Lapsus" class="w-32" />
+        </div>
+      </div>
       <!-- Início definição das rotas -->
       <ul class="text-gray-200">
         <li>
