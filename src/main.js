@@ -5,6 +5,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faCheck, faExclamation, faTimes, faUserCircle, faChevronRight,
   faCaravan, faSpinner, faBars, faArchive, faTasks, faLandmark,
+  faEnvelope, faEnvelopeOpenText,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -17,7 +18,7 @@ import App from './App.vue';
 library.add(
   faCheck, faExclamation, faTimes, faUserCircle, faBars,
   faChevronRight, faCaravan, faSpinner, faArchive, faTasks,
-  faLandmark,
+  faLandmark, faEnvelope, faEnvelopeOpenText,
 );
 
 const app = createApp(App);

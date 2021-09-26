@@ -7,7 +7,10 @@ import Register from '../pages/Register.vue';
 import Home from '../pages/Home.vue';
 import Category from '../pages/Category.vue';
 import Institution from '../pages/Institution.vue';
+import Message from '../pages/Message.vue';
 import Shapefile from '../pages/Shapefile.vue';
+
+import Contribution from '../pages/Contribution.vue';
 
 import NotFound from '../pages/NotFound.vue';
 
@@ -36,6 +39,11 @@ const routes = [
     component: Category,
   },
   {
+    name: 'Mensagens',
+    path: '/mensagens',
+    component: Message,
+  },
+  {
     name: 'Instituições',
     path: '/instituicoes',
     component: Institution,
@@ -44,6 +52,11 @@ const routes = [
     name: 'Shapefiles',
     path: '/shapefiles',
     component: Shapefile,
+  },
+  {
+    name: 'Contribuição',
+    path: '/contribuicao',
+    component: Contribution,
   },
   {
     name: 'Test',

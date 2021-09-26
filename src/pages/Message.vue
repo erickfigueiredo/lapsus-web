@@ -4,12 +4,11 @@
 </template>
 
 <script>
-import Base from '../templates/BaseTemplate.vue';
+import BaseTemplate from '../templates/BaseTemplate.vue';
 
 export default {
   components: {
-    BaseLayout: Base,
+    BaseLayout: BaseTemplate,
   },
-
 };
 </script>
