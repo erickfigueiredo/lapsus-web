@@ -1,6 +1,6 @@
 <template>
   <base-layout :is-map="true">
-    <base-map></base-map>
+    <base-map />
   </base-layout>
 </template>
 
@@ -13,6 +13,5 @@ export default {
     BaseLayout: Base,
     BaseMap,
   },
-
 };
 </script>

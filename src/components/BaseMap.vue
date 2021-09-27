@@ -12,17 +12,35 @@ import 'leaflet-draw';
 // import translate from '../translate/MapDraw';
 
 export default {
-  name: 'LeafletMap',
   data() {
     return {
       map: null,
+      coords: null,
     };
   },
-  mounted() {
-    this.map = L.map('mapContainer').setView([-20.7542, -42.8819], 15);
+  methods: {
+    async getUserLocation() {
+      try {
+        const geolocation = await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject);
+        });
+
+        this.coords = geolocation.coords;
+      } catch (error) {
+        console.warn(error);
+        this.coords = { latitude: -20.7542, longitude: -42.8819 };
+      }
+    },
+  },
+  async mounted() {
+    await this.getUserLocation();
+
+    this.map = L.map('mapContainer').setView(
+      [this.coords.latitude, this.coords.longitude],
+      15,
+    );
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      attribution:
-        '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.map);
 
     // L.drawLocal = { translate };
