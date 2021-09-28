@@ -54,8 +54,8 @@ const routes = [
     component: Shapefile,
   },
   {
-    name: 'Contribuição',
-    path: '/contribuicao',
+    name: 'Contribuições',
+    path: '/contribuicoes',
     component: Contribution,
   },
   {

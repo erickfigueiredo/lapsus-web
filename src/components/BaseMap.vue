@@ -12,6 +12,12 @@ import 'leaflet-draw';
 // import translate from '../translate/MapDraw';
 
 export default {
+  props: {
+    useUserLocation: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       map: null,
@@ -33,12 +39,17 @@ export default {
     },
   },
   async mounted() {
-    await this.getUserLocation();
+    if (this.useUserLocation) {
+      await this.getUserLocation();
+    } else {
+      this.coords = { latitude: -20.7542, longitude: -42.8819 };
+    }
 
     this.map = L.map('mapContainer').setView(
       [this.coords.latitude, this.coords.longitude],
       15,
-    );
+    ).setMinZoom(6);
+
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.map);

@@ -1,6 +1,6 @@
 <template>
   <base-layout :is-map="true">
-    <base-map />
+    <base-map :useUserLocation="true"  />
   </base-layout>
 </template>
 

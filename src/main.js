@@ -4,8 +4,8 @@ import './assets/tailwind.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faCheck, faExclamation, faTimes, faUserCircle, faChevronRight,
-  faCaravan, faSpinner, faBars, faArchive, faTasks, faLandmark,
-  faEnvelope, faEnvelopeOpenText,
+  faSortUp, faSortDown, faCaravan, faSpinner, faBars,
+  faArchive, faTasks, faLandmark, faEnvelopeOpenText, faMapMarkedAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -17,8 +17,8 @@ import App from './App.vue';
 
 library.add(
   faCheck, faExclamation, faTimes, faUserCircle, faBars,
-  faChevronRight, faCaravan, faSpinner, faArchive, faTasks,
-  faLandmark, faEnvelope, faEnvelopeOpenText,
+  faChevronRight, faSortUp, faSortDown, faCaravan, faSpinner,
+  faArchive, faTasks, faLandmark, faEnvelopeOpenText, faMapMarkedAlt,
 );
 
 const app = createApp(App);
