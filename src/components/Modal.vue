@@ -5,7 +5,8 @@
       <font-awesome :icon="['fas', 'times']"/>
     </p>
     <header>
-      <h2>{{title}}</h2>
+      <h2 class="text-xl">{{title}}</h2>
+      <hr class="my-2">
     </header>
     <section>
       <slot />

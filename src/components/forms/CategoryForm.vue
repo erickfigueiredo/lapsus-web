@@ -24,7 +24,7 @@
         id="desc"
         name="desc"
         v-model="desc"
-        rows="10"
+        rows="9"
         placeholder="Informe uma breve descrição"
         spellcheck="true"
         class="w-full p-2 bg-gray-100 text-gray-600 rounded-md

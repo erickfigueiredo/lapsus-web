@@ -1,12 +1,12 @@
 <template>
   <base-layout>
     <section class="md:flex md:space-x-4 md:h-4/5">
-      <card responsivity="mb-4 md:mb-0 md:w-2/6">
+      <card responsivity="mb-4 md:mb-0 md:w-1/2 lg:w-2/6">
         <h2 class="font-bold text-gray-500">Cadastro de Categorias</h2>
         <hr class="my-4" />
         <category-form @form-response="showInformation" @form-data="addCategory" />
       </card>
-      <card responsivity="md:w-4/6">
+      <card responsivity="md:w-1/2 lg:w-4/6">
         <div class="bg-gray-100 rounded-md p-6 h-full overflow-y-auto">
           <ul>
             <template v-for="(cat, i) in categories" :key="cat.id">
@@ -16,17 +16,38 @@
               >
                 {{ cat.name[0] }}
               </li>
-              <li class="capitalize my-1 mx-6">
-                {{ cat.name + " " + cat.id }} - <span @click="openModal(i)">Atualizar</span> -
-                <span @click="openModal(i, true)">Deletar</span>
+              <li class="capitalize my-1 mx-6 lg:flex">
+                <p class="my-2 truncate">
+                  {{ cat.name }}
+                </p>
+                <button
+                  class="ml-auto p-2 bg-cerulean-500 hover:bg-cerulean-700 text-white rounded-md
+                  transition delay-50 duration-300 ease-in-out"
+                  @click="openModal(i)"
+                >
+                  Atualizar
+                </button>
+                <button
+                  class="ml-2 p-2 bg-red-500 hover:bg-red-700 text-white rounded-md transition
+                  delay-50 duration-300 ease-in-out"
+                  @click="openModal(i, true)"
+                >
+                  Deletar
+                </button>
               </li>
+              <hr v-if="i < categories.length - 1 && cat.name[0] === categories[i + 1].name[0]" />
             </template>
           </ul>
         </div>
       </card>
     </section>
   </base-layout>
-  <modal v-if="isModalUpdateActive" title="Atualizar Categoria" size="w-1/4" @close="closeModal">
+  <modal
+    v-if="isModalUpdateActive"
+    title="Atualizar Categoria"
+    size="w-4/5 md:w-2/4 lg:w-1/4"
+    @close="closeModal"
+  >
     <category-form
       @form-response="showInformation"
       @form-data="updateCategory"
@@ -37,7 +58,7 @@
   <modal
     v-if="isModalDeleteActive"
     title="Deletar Categoria"
-    size="w-1/4"
+    size="w-4/5 md:w-2/4 lg:w-1/4"
     @close="closeModal(true)"
   >
     <p>Tem certeza que deseja deletar "{{ category.name }}"?</p>

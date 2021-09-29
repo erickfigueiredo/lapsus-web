@@ -14,7 +14,7 @@
               :key="shp.id"
               class="py-4 px-8 text-white bg-cerulean-400 rounded-lg mb-4"
             >
-              <font-awesome :icon="['fas', 'archive']" class="mr-2" /> {{ shp.title }} -
+              <font-awesome :icon="['fas', 'layer-group']" class="mr-2" /> {{ shp.title }} -
               <span @click="openModal(index)">Atualizar</span> -
               <span @click="openModal(index, true)">Deletar</span>
             </li>

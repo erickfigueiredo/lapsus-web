@@ -27,7 +27,7 @@
             duration-200"
             exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800 border-r-4"
           >
-            <p class="text-center text-base">
+            <p class="ml-12 text-base">
               <font-awesome :icon="['fas', 'caravan']" class="text-xl mr-2" />Home
             </p>
           </router-link>
@@ -38,7 +38,7 @@
             pr-4 p-2 transition duration-200"
             @click="isDockOpen = !isDockOpen"
           >
-            <p class="text-center text-base">
+            <p class="ml-12 text-base">
               <font-awesome :icon="['fas', 'map-marked-alt']" class="text-xl mr-2" />Mapas
               <font-awesome
                 :icon="
@@ -55,10 +55,10 @@
               <li>
                 <router-link
                   to="/contribuicoes"
-                  class="block my-4 border-l-4"
-                  exact-active-class="p-2 border-lemon-400 text-lemon-400 bg-cerulean-800"
+                  class="block p-2 my-4 border-l-4 hover:bg-cerulean-800"
+                  exact-active-class=" border-lemon-400 text-lemon-400 bg-cerulean-800"
                 >
-                  <p class="text-center text-base">
+                  <p class="ml-12 text-base">
                     <font-awesome :icon="['fas', 'tasks']" class="text-xl mr-2" />Contribuições
                   </p>
                 </router-link>
@@ -66,10 +66,10 @@
               <li>
                 <router-link
                   to="/colaboracoes"
-                  class="block my-4 border-l-4"
-                  exact-active-class="p-2 border-lemon-400 text-lemon-400 bg-cerulean-800"
+                  class="block p-2 my-4 border-l-4 hover:bg-cerulean-800"
+                  exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800"
                 >
-                  <p class="text-center text-base">
+                  <p class="ml-12 text-base">
                     <font-awesome :icon="['fas', 'tasks']" class="text-xl mr-2" />Contribuir
                   </p>
                 </router-link>
@@ -84,7 +84,7 @@
             duration-200"
             exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800 border-r-4"
           >
-            <p class="text-center text-base">
+            <p class="ml-12 text-base">
               <font-awesome :icon="['fas', 'tasks']" class="text-xl mr-2" />Categoria
             </p>
           </router-link>
@@ -96,7 +96,7 @@
             duration-200"
             exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800 border-r-4"
           >
-            <p class="text-center text-base">
+            <p class="ml-12 text-base">
               <font-awesome :icon="['fas', 'landmark']" class="text-xl mr-2" />Instituições
             </p>
           </router-link>
@@ -108,7 +108,7 @@
             duration-200"
             exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800 border-r-4"
           >
-            <p class="text-center text-base">
+            <p class="ml-12 text-base">
               <font-awesome :icon="['fas', 'envelope-open-text']" class="text-xl mr-2" />Mensagens
             </p>
           </router-link>
@@ -120,8 +120,8 @@
             duration-200"
             exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800 border-r-4"
           >
-            <p class="text-center text-base">
-              <font-awesome :icon="['fas', 'archive']" class="text-xl mr-2" />Shapefile
+            <p class="ml-12 text-base">
+              <font-awesome :icon="['fas', 'layer-group']" class="text-xl mr-2" />Shapefile
             </p>
           </router-link>
         </li>
