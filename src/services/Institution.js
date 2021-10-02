@@ -4,7 +4,15 @@ class Institution {
   static async index() {
     try {
       const res = await lapsus.get('/institution/all');
+      return res.data;
+    } catch (err) {
+      return err.response?.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido!' };
+    }
+  }
 
+  static async create(data) {
+    try {
+      const res = await lapsus.post('/institution', data);
       return res.data;
     } catch (err) {
       return err.response?.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido!' };

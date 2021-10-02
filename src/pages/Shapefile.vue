@@ -12,9 +12,12 @@
             <li
               v-for="(shp, index) in shapefiles"
               :key="shp.id"
-              class="py-4 px-8 text-white bg-cerulean-400 rounded-lg mb-4"
+              class="py-4 px-8 mb-4 text-white bg-cerulean-400 rounded-lg"
             >
-              <font-awesome :icon="['fas', 'layer-group']" class="mr-2" /> {{ shp.title }} -
+              <p class="capitalize truncate">
+                <font-awesome :icon="['fas', 'layer-group']" class="mr-2" />
+                {{ shp.title }}
+              </p>
               <span @click="openModal(index)">Atualizar</span> -
               <span @click="openModal(index, true)">Deletar</span>
             </li>

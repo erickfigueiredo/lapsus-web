@@ -16,10 +16,11 @@
               >
                 {{ cat.name[0] }}
               </li>
-              <li class="capitalize my-1 mx-6 lg:flex">
-                <p class="my-2 truncate">
+              <li class="my-1 mx-6 lg:flex">
+                <p class="my-2 capitalize truncate">
                   {{ cat.name }}
                 </p>
+
                 <button
                   class="ml-auto p-2 bg-cerulean-500 hover:bg-cerulean-700 text-white rounded-md
                   transition delay-50 duration-300 ease-in-out"

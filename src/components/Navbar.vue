@@ -10,13 +10,14 @@
       class=" fixed z-20 inset-y-0 left-0 w-64 transition duration-300 transform bg-cerulean-900
       overflow-y-auto rounded-r-xl lg:rounded-none lg:translate-x-0 lg:static lg:inset-0"
     >
-      <div class="flex justify-center mt-8 mb-12">
+      <section class="flex justify-center mt-8 mb-12">
         <div>
           <router-link to="/" exact>
             <img src="../assets/lapsus_logo.png" alt="Sistema Lapsus" class="w-32" />
           </router-link>
         </div>
-      </div>
+      </section>
+
       <!-- Início definição das rotas -->
       <ul class="text-gray-200">
         <li>
@@ -39,7 +40,7 @@
             @click="isDockOpen = !isDockOpen"
           >
             <p class="ml-12 text-base">
-              <font-awesome :icon="['fas', 'map-marked-alt']" class="text-xl mr-2" />Mapas
+              <font-awesome :icon="['fas', 'map']" class="text-xl mr-2" />Mapas
               <font-awesome
                 :icon="
                   isDockOpen || $route.name === 'Contribuições'
@@ -54,23 +55,25 @@
             <ul>
               <li>
                 <router-link
-                  to="/contribuicoes"
-                  class="block p-2 my-4 border-l-4 hover:bg-cerulean-800"
-                  exact-active-class=" border-lemon-400 text-lemon-400 bg-cerulean-800"
-                >
-                  <p class="ml-12 text-base">
-                    <font-awesome :icon="['fas', 'tasks']" class="text-xl mr-2" />Contribuições
-                  </p>
-                </router-link>
-              </li>
-              <li>
-                <router-link
                   to="/colaboracoes"
                   class="block p-2 my-4 border-l-4 hover:bg-cerulean-800"
                   exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800"
                 >
                   <p class="ml-12 text-base">
-                    <font-awesome :icon="['fas', 'tasks']" class="text-xl mr-2" />Contribuir
+                    <font-awesome :icon="['fas', 'map-marker-alt']" class="text-xl mr-2" />
+                    Contribuir
+                  </p>
+                </router-link>
+              </li>
+              <li>
+                <router-link
+                  to="/contribuicoes"
+                  class="block p-2 my-4 border-l-4 hover:bg-cerulean-800"
+                  exact-active-class=" border-lemon-400 text-lemon-400 bg-cerulean-800"
+                >
+                  <p class="ml-12 text-base">
+                    <font-awesome :icon="['fas', 'map-marked-alt']" class="text-xl mr-2" />
+                    Contribuições
                   </p>
                 </router-link>
               </li>
@@ -85,7 +88,7 @@
             exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800 border-r-4"
           >
             <p class="ml-12 text-base">
-              <font-awesome :icon="['fas', 'tasks']" class="text-xl mr-2" />Categoria
+              <font-awesome :icon="['fas', 'tasks']" class="text-xl mr-2" />Categorias
             </p>
           </router-link>
         </li>
@@ -121,7 +124,7 @@
             exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800 border-r-4"
           >
             <p class="ml-12 text-base">
-              <font-awesome :icon="['fas', 'layer-group']" class="text-xl mr-2" />Shapefile
+              <font-awesome :icon="['fas', 'layer-group']" class="text-xl mr-2" />Shapefiles
             </p>
           </router-link>
         </li>
