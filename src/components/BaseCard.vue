@@ -9,7 +9,7 @@ export default {
   props: {
     responsivity: {
       type: String,
-      required: true,
+      required: false,
     },
   },
 };
