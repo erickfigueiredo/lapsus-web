@@ -1,6 +1,6 @@
 <template>
-  <base-layout>
-  </base-layout>
+  <base-template>
+  </base-template>
 </template>
 
 <script>
@@ -8,7 +8,7 @@ import BaseTemplate from '../templates/BaseTemplate.vue';
 
 export default {
   components: {
-    BaseLayout: BaseTemplate,
+    BaseTemplate,
   },
 };
 </script>

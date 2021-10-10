@@ -3,15 +3,13 @@ import { createRouter, createWebHistory } from 'vue-router';
 // Importação das pages
 import Login from '../pages/Login.vue';
 import Register from '../pages/Register.vue';
-
 import Home from '../pages/Home.vue';
 import Category from '../pages/Category.vue';
 import Institution from '../pages/Institution.vue';
+import InstitutionDetails from '../pages/InstitutionDetails.vue';
 import Message from '../pages/Message.vue';
 import Shapefile from '../pages/Shapefile.vue';
-
 import Contribution from '../pages/Contribution.vue';
-
 import NotFound from '../pages/NotFound.vue';
 
 import Teste from '../pages/Teste.vue';
@@ -21,6 +19,7 @@ const routes = [
   {
     name: 'Home',
     path: '/',
+    alias: '/home',
     component: Home,
   },
   {
@@ -47,6 +46,11 @@ const routes = [
     name: 'Instituições',
     path: '/instituicoes',
     component: Institution,
+  },
+  {
+    name: 'Instituição',
+    path: '/instituicoes/:institutionId',
+    component: InstitutionDetails,
   },
   {
     name: 'Shapefiles',

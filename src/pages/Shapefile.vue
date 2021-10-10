@@ -1,5 +1,5 @@
 <template>
-  <base-layout>
+  <base-template>
     <section class="md:flex md:space-x-4 md:h-4/5">
       <card responsivity="mb-4 md:mb-0 md:w-1/2">
         <h2 class="font-bold text-gray-500">Cadastro de Shapefile</h2>
@@ -7,8 +7,9 @@
         <shapefile-form @form-response="showInformation" @form-data="addShapefile" />
       </card>
       <card responsivity="md:w-1/2">
-        <div class="bg-gray-100 rounded-md p-6 h-full overflow-y-auto">
-          <ul>
+        <list-load v-if="isLoading" />
+        <div v-else class="bg-gray-100 rounded-md p-6 h-full overflow-y-auto">
+          <ul v-if="shapefiles.length">
             <li
               v-for="(shp, index) in shapefiles"
               :key="shp.id"
@@ -22,10 +23,15 @@
               <span @click="openModal(index, true)">Deletar</span>
             </li>
           </ul>
+          <div v-else class="flex font-semibold text-center text-gray-400 h-full">
+            <p class="mx-auto my-auto">
+              Não há categorias para serem exibidas
+            </p>
+          </div>
         </div>
       </card>
     </section>
-  </base-layout>
+  </base-template>
   <modal v-if="isModalUpdateActive" title="Atualizar Shapefile" size="w-1/4" @close="closeModal">
     <shapefile-form
       @form-response="showInformation"
@@ -47,19 +53,21 @@
 </template>
 
 <script>
-import Base from '../templates/BaseTemplate.vue';
+import BaseTemplate from '../templates/BaseTemplate.vue';
 import BaseCard from '../components/BaseCard.vue';
 import ShapefileForm from '../components/forms/ShapefileForm.vue';
 import Modal from '../components/Modal.vue';
+import ListLoad from '../components/loads/ListLoad.vue';
 
 import Shapefile from '../services/Shapefile';
 
 export default {
   components: {
-    BaseLayout: Base,
+    BaseTemplate,
     Card: BaseCard,
     ShapefileForm,
     Modal,
+    ListLoad,
   },
   data() {
     return {
@@ -69,6 +77,7 @@ export default {
       },
 
       blockAction: false,
+      isLoading: true,
 
       isModalUpdateActive: false,
       isModalDeleteActive: false,
@@ -131,6 +140,8 @@ export default {
     } else {
       this.showInformation(3, result.message);
     }
+
+    this.isLoading = false;
   },
 };
 </script>

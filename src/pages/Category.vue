@@ -1,5 +1,5 @@
 <template>
-  <base-layout>
+  <base-template>
     <section class="md:flex md:space-x-4 md:h-4/5">
       <card responsivity="mb-4 md:mb-0 md:w-1/2 lg:w-2/6">
         <h2 class="font-bold text-gray-500">Cadastro de Categorias</h2>
@@ -7,8 +7,9 @@
         <category-form @form-response="showInformation" @form-data="addCategory" />
       </card>
       <card responsivity="md:w-1/2 lg:w-4/6">
-        <div class="bg-gray-100 rounded-md p-6 h-full overflow-y-auto">
-          <ul>
+        <list-load v-if="isLoading" />
+        <div v-else class="bg-gray-100 rounded-md p-6 h-full overflow-y-auto">
+          <ul v-if="categories.length">
             <template v-for="(cat, i) in categories" :key="cat.id">
               <li
                 v-if="i === 0 || cat.name[0] !== categories[i - 1].name[0]"
@@ -39,10 +40,15 @@
               <hr v-if="i < categories.length - 1 && cat.name[0] === categories[i + 1].name[0]" />
             </template>
           </ul>
+          <div v-else class="flex font-semibold text-center text-gray-400 h-full">
+            <p class="mx-auto my-auto">
+              Não há categorias para serem exibidas
+            </p>
+          </div>
         </div>
       </card>
     </section>
-  </base-layout>
+  </base-template>
   <modal
     v-if="isModalUpdateActive"
     title="Atualizar Categoria"
@@ -69,19 +75,21 @@
 </template>
 
 <script>
-import Base from '../templates/BaseTemplate.vue';
+import BaseTemplate from '../templates/BaseTemplate.vue';
 import BaseCard from '../components/BaseCard.vue';
 import CategoryForm from '../components/forms/CategoryForm.vue';
 import Modal from '../components/Modal.vue';
+import ListLoad from '../components/loads/ListLoad.vue';
 
 import Category from '../services/Category';
 
 export default {
   components: {
-    BaseLayout: Base,
+    BaseTemplate,
     Card: BaseCard,
     CategoryForm,
     Modal,
+    ListLoad,
   },
   data() {
     return {
@@ -91,6 +99,7 @@ export default {
       },
 
       blockAction: false,
+      isLoading: true,
 
       isModalUpdateActive: false,
       isModalDeleteActive: false,
@@ -142,8 +151,8 @@ export default {
       this.blockAction = false;
     },
     openModal(index, isDelete = false) {
-      this.category = this.categories[index];
       this.index = index;
+      this.category = this.categories[index];
 
       if (isDelete) {
         this.isModalDeleteActive = true;
@@ -172,6 +181,8 @@ export default {
     } else {
       this.showInformation(3, result.message);
     }
+
+    this.isLoading = false;
   },
 };
 </script>

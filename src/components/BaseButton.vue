@@ -1,6 +1,6 @@
 <template>
   <button
-    class="w-full mt-4 p-2 rounded-md cursor-pointer font-semibold
+    class="w-full mt-4 p-2 rounded-md font-semibold
           transition delay-75 duration-300 ease-in-out"
     :class="
       isBlocked

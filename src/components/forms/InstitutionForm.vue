@@ -64,8 +64,7 @@
         required
       />
     </div>
-    <!-- Mudar Base button pra receber um slot -->
-    <base-button name="Cadastrar" :isBlocked="blockAction" />
+    <base-button :name="toUpdate ? 'Atualizar' : 'Cadastrar'" :isBlocked="blockAction" />
   </form>
 </template>
 
@@ -76,57 +75,87 @@
 import BaseButton from '../BaseButton.vue';
 import Institution from '../../services/Institution';
 
-import genericMask from '../../utils/genericMask';
-
 export default {
   components: {
     BaseButton,
   },
-  emits: ['form-response'],
+  emits: ['form-response', 'form-data'],
+  props: {
+    fillData: {
+      type: Object,
+      default() {
+        return {
+          id: null,
+          name: '',
+          email: '',
+          phone: '',
+          address: '',
+        };
+      },
+    },
+    toUpdate: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
-      id: null,
-      name: '',
-      email: '',
-      phone: '',
-      address: '',
-
-      added_by: '',
+      id: this.fillData.id,
+      name: this.fillData.name,
+      email: this.fillData.email,
+      phone: this.fillData.phone,
+      address: this.fillData.address,
 
       blockAction: false,
     };
   },
   methods: {
-    clearForm() {},
-    formatPhone() {
-      const formated = genericMask(this.phone, '(##)####-####');
-      if (formated) {
-        this.phone = formated;
-      } else {
-        const formatedCell = genericMask(this.phone, '(##)#####-####');
-        if (formated) {
-          this.phone = formatedCell;
-        }
-      }
+    clearForm() {
+      this.name = '';
+      this.email = '';
+      this.phone = '';
+      this.address = '';
     },
     async submitForm() {
       this.blockAction = true;
 
-      const result = await Institution.create({
+      const data = {
         name: this.name,
         email: this.email,
         phone: this.phone,
         address: this.address,
-        added_by: 1,
-      });
+      };
 
-      if (result.success) {
-        this.$emit('form-response', 1, 'Instituição cadastrada com sucesso!');
-        // this.$emit('form-data', result.category);
+      if (this.toUpdate) {
+        data.id = this.id;
+
+        const result = await Institution.update(data);
+        if (result.success) {
+          this.name = result.institution.name;
+          this.email = result.institution.email;
+          this.phone = result.institution.phone;
+          this.address = result.institution.address;
+
+          this.$emit('form-response', 1, 'Instituição atualizada com sucesso!');
+          this.$emit('form-data', result.institution);
+        } else {
+          this.$emit('form-response', 3, result.message);
+        }
       } else {
-        this.$emit('form-response', 3, result.message);
-      }
+        // Estático, por enquanto
+        data.added_by = 1;
 
+        const result = await Institution.create(data);
+
+        if (result.success) {
+          this.clearForm();
+
+          this.$emit('form-response', 1, 'Instituição cadastrada com sucesso!');
+          this.$emit('form-data', result.institution);
+        } else {
+          this.$emit('form-response', 3, result.message);
+        }
+      }
       this.blockAction = false;
     },
   },

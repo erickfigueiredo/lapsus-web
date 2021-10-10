@@ -57,17 +57,14 @@ export default {
     },
     toUpdate: {
       type: Boolean,
-      default() {
-        return false;
-      },
+      default: false,
     },
   },
   data() {
     return {
       id: this.fillData.id,
       name: this.fillData.name,
-      desc: this.fillData.desc,
-
+      desc: this.fillData.desc ?? undefined,
       blockAction: false,
     };
   },
@@ -101,13 +98,13 @@ export default {
         const result = await Category.create(data);
 
         if (result.success) {
+          this.clearForm();
+
           this.$emit('form-response', 1, 'Categoria cadastrada com sucesso!');
           this.$emit('form-data', result.category);
         } else {
           this.$emit('form-response', 3, result.message);
         }
-
-        this.clearForm();
       }
       this.blockAction = false;
     },

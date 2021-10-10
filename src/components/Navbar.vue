@@ -10,12 +10,16 @@
       class=" fixed z-20 inset-y-0 left-0 w-64 transition duration-300 transform bg-cerulean-900
       overflow-y-auto rounded-r-xl lg:rounded-none lg:translate-x-0 lg:static lg:inset-0"
     >
-      <section class="flex justify-center mt-8 mb-12">
+      <section class="flex justify-center mt-8 mb-4 lg:my-4">
         <div>
           <router-link to="/" exact>
             <img src="../assets/lapsus_logo.png" alt="Sistema Lapsus" class="w-32" />
           </router-link>
         </div>
+      </section>
+
+      <section class="my-8 text-gray-200 text-center font-semibold">
+        <span>Administrador</span>
       </section>
 
       <!-- Início definição das rotas -->
@@ -30,6 +34,19 @@
           >
             <p class="ml-12 text-base">
               <font-awesome :icon="['fas', 'caravan']" class="text-xl mr-2" />Home
+            </p>
+          </router-link>
+        </li>
+        <li>
+          <router-link
+            to="/"
+            exact
+            class="block ml-4 my-4 border-l-8 rounded-l-lg hover:bg-cerulean-800 pr-4 p-2 transition
+            duration-200"
+            exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800 border-r-4"
+          >
+            <p class="ml-12 text-base">
+              <font-awesome :icon="['fas', 'id-card']" class="text-xl mr-2" />Usuários
             </p>
           </router-link>
         </li>
