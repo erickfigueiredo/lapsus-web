@@ -1,9 +1,9 @@
 <template>
-  <div class="flex h-screen">
-    <navbar />
+  <div  class="flex h-screen">
+    <navbar @click="isActiveMenu = false" />
     <div class="flex-1 flex flex-col overflow-hidden bg-cerulean-100">
       <head-bar />
-      <main class="flex-1 overflow-x-hidden overflow-y-auto">
+      <main @click="isActiveMenu = false" class="flex-1 overflow-x-hidden overflow-y-auto">
         <div
           :class="['container', 'mx-auto', 'h-full', { 'p-4 md:px-8 lg:py-4 lg:px-16': !isMap }]"
         >
@@ -27,11 +27,17 @@
 <script>
 import Navbar from '../components/Navbar.vue';
 import Header from '../components/Header.vue';
+import useMenus from '../hooks/useMenus';
 
 export default {
   components: {
     HeadBar: Header,
     Navbar,
+  },
+  setup() {
+    const { isActiveMenu } = useMenus();
+
+    return { isActiveMenu };
   },
   props: {
     subtitle: {
