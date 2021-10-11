@@ -54,7 +54,7 @@ import Pagination from '../components/Pagination.vue';
 import InstitutionForm from '../components/forms/InstitutionForm.vue';
 
 import Institution from '../services/Institution';
-import Technician from '../services/Technician';
+import Technician from '../services/users/Technician';
 
 export default {
   components: {

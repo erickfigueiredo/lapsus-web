@@ -39,7 +39,7 @@
 
 <script>
 import BaseButton from '../BaseButton.vue';
-import Access from '../../services/Access';
+import Access from '../../services/users/Access';
 
 export default {
   components: {

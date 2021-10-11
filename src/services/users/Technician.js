@@ -1,4 +1,4 @@
-import lapsus from './AxiosSettings';
+import { lapsus, defaultErrorMessage } from '../AxiosSettings';
 
 class Technician {
   static async indexByInstitution(idInstitution, page) {
@@ -6,7 +6,7 @@ class Technician {
       const res = await lapsus.get(`technician/institution/${idInstitution}/?page=${page}`);
       return res.data;
     } catch (err) {
-      return err.response?.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido' };
+      return err.response?.data ? err.response.data : defaultErrorMessage;
     }
   }
 }

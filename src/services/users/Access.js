@@ -1,4 +1,4 @@
-import lapsus from './AxiosSettings';
+import { lapsus, defaultErrorMessage } from '../AxiosSettings';
 
 class Access {
   static async login(data) {
@@ -6,7 +6,7 @@ class Access {
       const res = await lapsus.post('/login', data);
       return res.data;
     } catch (err) {
-      return err.response.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido' };
+      return err.response.data ? err.response.data : defaultErrorMessage;
     }
   }
 }

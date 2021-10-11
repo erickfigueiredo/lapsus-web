@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const mainConfig = axios.create({
+export const lapsus = axios.create({
   baseURL: 'http://localhost:3001',
   timeout: '3000',
   headers: {
@@ -9,4 +9,4 @@ const mainConfig = axios.create({
   },
 });
 
-export default mainConfig;
+export const defaultErrorMessage = { success: false, message: 'Houve um erro de conexão com o servidor!' };

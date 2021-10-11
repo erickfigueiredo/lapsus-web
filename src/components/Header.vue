@@ -21,12 +21,18 @@
     </div>
   </header>
   <div v-if="isActiveMenu" class="absolute top-12 right-4 shadow-md rounded-lg lg:right-12">
-    <div class="absolute -top-2 right-7 bg-white h-4 w-4 transform rotate-45"></div>
-    <section class="bg-white p-6 rounded-lg">
+    <div class="absolute -top-2 right-7 bg-white h-4 w-4 transform rotate-45" />
+    <section class="bg-white rounded-lg">
       <ul>
-        <li>Perfil</li>
-        <li>Configurações</li>
-        <li>Sair</li>
+        <li class="px-6 py-2">
+          <router-link to="/perfil" @click="closeMenu">Perfil</router-link>
+        </li>
+        <li class="px-6 py-2">
+          <router-link to="/configuracoes" @click="closeMenu">Configurações</router-link>
+        </li>
+        <li class="px-6 py-2 text-red-500 hover:bg-red-500 rounded-b-lg hover:text-white">
+          <router-link to="/categorias" @click="closeMenu">Sair</router-link>
+        </li>
       </ul>
     </section>
   </div>
@@ -40,6 +46,11 @@ export default {
     const { isActiveNav, isActiveMenu } = useMenus();
 
     return { isActiveNav, isActiveMenu };
+  },
+  methods: {
+    closeMenu() {
+      this.isActiveMenu = false;
+    },
   },
 };
 </script>

@@ -82,14 +82,11 @@ const routes = [
 export default createRouter({
   history: createWebHistory(),
   routes,
-  // Chamado pelo router, sempre que a página muda
   scrollBehavior(_, _2, savedPosition) {
     if (savedPosition) {
       return savedPosition;
     }
-    return {
-      left: 0,
-      top: 0,
-    };
+
+    return { top: 0, left: 0 };
   },
 });

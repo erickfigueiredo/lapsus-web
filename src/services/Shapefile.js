@@ -1,4 +1,4 @@
-import lapsus from './AxiosSettings';
+import { lapsus, defaultErrorMessage } from './AxiosSettings';
 
 class Shapefile {
   static async index() {
@@ -7,7 +7,7 @@ class Shapefile {
 
       return res.data;
     } catch (err) {
-      return err.response?.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido!' };
+      return err.response?.data ? err.response.data : defaultErrorMessage;
     }
   }
 
@@ -22,7 +22,7 @@ class Shapefile {
 
       return res.data;
     } catch (err) {
-      return err.response?.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido!' };
+      return err.response?.data ? err.response.data : defaultErrorMessage;
     }
   }
 
@@ -32,7 +32,7 @@ class Shapefile {
 
       return res.data;
     } catch (err) {
-      return err.response?.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido!' };
+      return err.response?.data ? err.response.data : defaultErrorMessage;
     }
   }
 
@@ -42,7 +42,7 @@ class Shapefile {
 
       return res.data;
     } catch (err) {
-      return err.response?.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido!' };
+      return err.response?.data ? err.response.data : defaultErrorMessage;
     }
   }
 }

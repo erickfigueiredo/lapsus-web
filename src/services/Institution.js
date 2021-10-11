@@ -1,4 +1,4 @@
-import lapsus from './AxiosSettings';
+import { lapsus, defaultErrorMessage } from './AxiosSettings';
 
 class Institution {
   static async findOneById(id) {
@@ -6,7 +6,7 @@ class Institution {
       const res = await lapsus.get(`institution/${id}`);
       return res.data;
     } catch (err) {
-      return err.response?.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido!' };
+      return err.response?.data ? err.response.data : defaultErrorMessage;
     }
   }
 
@@ -15,7 +15,7 @@ class Institution {
       const res = await lapsus.get(`institution/all/detailed/?page=${page}`);
       return res.data;
     } catch (err) {
-      return err.response?.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido!' };
+      return err.response?.data ? err.response.data : defaultErrorMessage;
     }
   }
 
@@ -24,7 +24,7 @@ class Institution {
       const res = await lapsus.post('institution', data);
       return res.data;
     } catch (err) {
-      return err.response?.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido!' };
+      return err.response?.data ? err.response.data : defaultErrorMessage;
     }
   }
 
@@ -33,7 +33,7 @@ class Institution {
       const res = await lapsus.put('institution', data);
       return res.data;
     } catch (err) {
-      return err.response?.data ? err.response.data : { success: false, message: 'Houve um erro desconhecido!' };
+      return err.response?.data ? err.response.data : defaultErrorMessage;
     }
   }
 }
