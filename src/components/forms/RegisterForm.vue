@@ -79,7 +79,7 @@
         />
       </div>
     </div>
-    <p class="text-sm text-right text-gray-400 cursor-pointer" @click="togglePassword">
+    <p class="text-sm text-right text-gray-400 cursor-pointer" @click="toggleVisiblePassword">
       {{ passwordVisible ? "Ocultar" : "Mostrar" }} senha
     </p>
     <div v-if="passwordConflict" class="border-2 border-red-500 bg-red-300 p-2 rounded-lg">
@@ -96,6 +96,8 @@
 
 <script>
 import BaseButton from '../BaseButton.vue';
+
+import Registered from '../../services/users/Registered';
 
 export default {
   components: {
@@ -134,13 +136,35 @@ export default {
     },
   },
   methods: {
-    togglePassword() {
+    toggleVisiblePassword() {
       this.passwordVisible = !this.passwordVisible;
     },
-    submitForm() {
+    clearForm() {
+      this.name = '';
+      this.surname = '';
+      this.email = '';
+      this.password = '';
+      this.passwordConf = '';
+    },
+    async submitForm() {
       this.blockAction = true;
-      // Concluir cadastro
-      this.$emit('form-response', 3, 'Mensagem de erro');
+      if (this.password === this.passwordConf) {
+        const result = await Registered.create({
+          name: this.name,
+          surname: this.surname,
+          email: this.email,
+          password: this.password,
+        });
+        if (result.success) {
+          this.clearForm();
+
+          this.$emit('form-response', 1, 'Cadastro Realizado com sucesso!');
+        } else {
+          this.$emit('form-response', 3, result.message);
+        }
+      } else {
+        this.$emit('form-response', 2, 'As senhas não coincidem');
+      }
 
       this.blockAction = false;
     },

@@ -1,36 +1,34 @@
 <template>
-  <h1 class="text-center">Teste de envio de formulário</h1>
-  <input type="file" id="file" @change="handleFileUpload()"/>
-  <ul>
-    <li v-for="q in a" :key="q.index">
-      {{ q.value}}
-    </li>
-  </ul>
-  <button @click="teste()">Clique aqui</button>
+  <form>
+    <div v-for="c in count" :key="c">
+      <label>Campo {{ c }}</label>
+      <input type="text" :ref="'teste'+c"/>
+    </div>
+  </form>
+  <button @click="addButton">+</button>
+  <button @click="removeButton">-</button>
+  <button @click="submitForm">Enviar</button>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      a: [
-        { index: 1, value: 'a' },
-        { index: 2, value: 'b' },
-        { index: 3, value: 'c' },
-      ],
-      file: null,
+      count: 0,
     };
   },
   methods: {
-    handleFileUpload() {
-      // console.log(e.target.files[0]);
-
+    addButton() {
+      this.count += 1;
     },
-    teste() {
-      this.a.push({ index: 4, value: 'd' });
+    removeButton() {
+      if (this.count >= 1) this.count -= 1;
     },
     submitForm() {
-
+      // eslint-disable-next-line no-plusplus
+      for (let i = 0; i < this.count; i++) {
+        console.log(this.$refs[`teste${i + 1}`].value);
+      }
     },
   },
 };

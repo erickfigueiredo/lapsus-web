@@ -33,7 +33,6 @@ export default {
 
         this.coords = geolocation.coords;
       } catch (error) {
-        console.warn(error);
         this.coords = { latitude: -20.7542, longitude: -42.8819 };
       }
     },

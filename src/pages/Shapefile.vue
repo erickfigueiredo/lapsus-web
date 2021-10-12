@@ -129,7 +129,7 @@ export default {
       setTimeout(() => {
         this.floatData.flag = 0;
         this.floatData.message = '';
-      }, 3000);
+      }, 5000);
     },
   },
   async mounted() {

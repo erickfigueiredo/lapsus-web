@@ -31,9 +31,6 @@ export default {
     };
   },
   methods: {
-    test() {
-      this.$store.state.counter += 2;
-    },
     showInformation(flag, message) {
       this.floatData.flag = flag;
       this.floatData.message = message;
@@ -41,7 +38,7 @@ export default {
       setTimeout(() => {
         this.floatData.flag = 0;
         this.floatData.message = '';
-      }, 3000);
+      }, 5000);
     },
   },
 };

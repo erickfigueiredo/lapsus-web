@@ -39,7 +39,6 @@
 
 <script>
 import BaseButton from '../BaseButton.vue';
-import Access from '../../services/users/Access';
 
 export default {
   components: {
@@ -58,15 +57,12 @@ export default {
     async submitForm() {
       this.blockAction = true;
 
-      const result = await Access.login({
-        email: this.email,
-        password: this.password,
-      });
+      const result = await this.$store.dispatch('login', { email: this.email, password: this.password });
 
-      if (!result.success) {
-        this.$emit('form-response', 3, result.message);
+      if (result.success) {
+        this.$router.replace('/home');
       } else {
-        this.$router.push('/cadastro');
+        this.$emit('form-response', 3, result.message);
       }
 
       this.blockAction = false;

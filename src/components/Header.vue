@@ -9,8 +9,9 @@
         <font-awesome :icon="['fas', 'bars']" class="text-2xl text-lemon-400 align-middle" />
       </button>
       <!-- Mudar a tag button -->
+      <span class="ml-auto">Olá, {{userName}}</span>
       <button
-        class="ml-auto bg-white rounded-full w-10 h-10 shadow-md mr-4 lg:mr-12"
+        class="ml-4 bg-white rounded-full w-10 h-10 shadow-md mr-4 lg:mr-12"
         @click="isActiveMenu = !isActiveMenu"
       >
         <font-awesome
@@ -20,7 +21,7 @@
       </button>
     </div>
   </header>
-  <div v-if="isActiveMenu" class="absolute top-12 right-4 shadow-md rounded-lg lg:right-12">
+  <div v-if="isActiveMenu" class="absolute top-12 right-4 shadow-md rounded-lg z-20 lg:right-12">
     <div class="absolute -top-2 right-7 bg-white h-4 w-4 transform rotate-45" />
     <section class="bg-white rounded-lg">
       <ul>
@@ -31,7 +32,7 @@
           <router-link to="/configuracoes" @click="closeMenu">Configurações</router-link>
         </li>
         <li class="px-6 py-2 text-red-500 hover:bg-red-500 rounded-b-lg hover:text-white">
-          <router-link to="/categorias" @click="closeMenu">Sair</router-link>
+          <router-link to="/login" @click="logout">Sair</router-link>
         </li>
       </ul>
     </section>
@@ -47,9 +48,19 @@ export default {
 
     return { isActiveNav, isActiveMenu };
   },
+  computed: {
+    userName() {
+      return this.$store.getters.userName;
+    },
+  },
   methods: {
     closeMenu() {
       this.isActiveMenu = false;
+    },
+    logout() {
+      this.closeMenu();
+      this.$store.dispatch('logout');
+      this.$router.push('/login');
     },
   },
 };

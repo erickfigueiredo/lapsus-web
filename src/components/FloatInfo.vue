@@ -1,5 +1,8 @@
 <template>
-  <div v-if="flag !== 0" class="flex absolute z-40 bg-white shadow-lg rounded-lg bottom-8 right-8">
+  <div
+    v-if="flag !== 0"
+    class="flex absolute ml-4 z-40 bg-white shadow-lg rounded-lg bottom-8 right-8"
+  >
     <section
       :class="[
         'p-4',
@@ -11,21 +14,9 @@
         }
       ]"
     >
-      <font-awesome
-        v-if="flag === 1"
-        class="text-white"
-        :icon="['fas', 'check']"
-      />
-      <font-awesome
-        v-else-if="flag === 2"
-        class="text-gray-800"
-        :icon="['fas', 'exclamation']"
-      />
-      <font-awesome
-        v-else
-        class="text-white"
-        :icon="['fas', 'times']"
-      />
+      <font-awesome v-if="flag === 1" class="text-white" :icon="['fas', 'check']" />
+      <font-awesome v-else-if="flag === 2" class="text-gray-800" :icon="['fas', 'exclamation']" />
+      <font-awesome v-else class="text-white" :icon="['fas', 'times']" />
     </section>
     <p class="py-4 px-2">{{ message }}</p>
   </div>
