@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="submitForm" class="my-4">
-    <div className="my-4">
-      <label for="name" className="block my-2 text-gray-500 font-semibold">
+    <div class="my-4">
+      <label for="name" class="block my-2 text-gray-500 font-semibold">
         Nome
       </label>
       <input
@@ -17,8 +17,8 @@
       />
     </div>
     <div class="my-0 md:my-4 md:flex md:space-x-4">
-      <div className="my-4 md:my-0 md:w-full">
-        <label for="email" className="block my-2 text-gray-500 font-semibold">
+      <div class="my-4 md:my-0 md:w-full">
+        <label for="email" class="block my-2 text-gray-500 font-semibold">
           E-mail
         </label>
         <input
@@ -32,8 +32,8 @@
           required
         />
       </div>
-      <div className="my-4 md:my-0 md:w-full">
-        <label for="phone" className="block my-2 text-gray-500 font-semibold">
+      <div class="my-4 md:my-0 md:w-full">
+        <label for="phone" class="block my-2 text-gray-500 font-semibold">
           Telefone
         </label>
         <input
@@ -48,8 +48,8 @@
         />
       </div>
     </div>
-    <div className="my-4">
-      <label for="address" className="block my-2 text-gray-500 font-semibold">
+    <div class="my-4">
+      <label for="address" class="block my-2 text-gray-500 font-semibold">
         Endereço
       </label>
       <textarea

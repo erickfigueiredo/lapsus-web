@@ -9,16 +9,21 @@
         <font-awesome :icon="['fas', 'bars']" class="text-2xl text-lemon-400 align-middle" />
       </button>
       <!-- Mudar a tag button -->
-      <span class="ml-auto">Olá, {{userName}}</span>
-      <button
-        class="ml-4 bg-white rounded-full w-10 h-10 shadow-md mr-4 lg:mr-12"
-        @click="isActiveMenu = !isActiveMenu"
-      >
-        <font-awesome
-          :icon="['fas', 'user-circle']"
-          class="text-3xl text-cerulean-700 align-middle"
-        />
-      </button>
+      <div class="ml-auto my-auto">
+        <!-- Mudar isso de escrever o nome e a questão da rota -->
+        <span v-if="$store.getters['userName']" class="text-white align-middle">
+          Olá, {{ $store.getters["userName"] }}
+        </span>
+        <button
+          class="ml-4 bg-white rounded-full w-10 h-10 shadow-md mr-4 lg:mr-12"
+          @click="isActiveMenu = !isActiveMenu"
+        >
+          <font-awesome
+            :icon="['fas', 'user-circle']"
+            class="text-3xl text-cerulean-700 align-middle"
+          />
+        </button>
+      </div>
     </div>
   </header>
   <div v-if="isActiveMenu" class="absolute top-12 right-4 shadow-md rounded-lg z-20 lg:right-12">
@@ -31,9 +36,14 @@
         <li class="px-6 py-2">
           <router-link to="/configuracoes" @click="closeMenu">Configurações</router-link>
         </li>
-        <li class="px-6 py-2 text-red-500 hover:bg-red-500 rounded-b-lg hover:text-white">
-          <router-link to="/login" @click="logout">Sair</router-link>
-        </li>
+        <router-link to="/login" @click="logout">
+          <li
+            class="px-6 py-2 text-red-500 hover:bg-red-500 rounded-b-lg hover:text-white
+          font-semibold"
+          >
+            Sair
+          </li>
+        </router-link>
       </ul>
     </section>
   </div>
@@ -47,11 +57,6 @@ export default {
     const { isActiveNav, isActiveMenu } = useMenus();
 
     return { isActiveNav, isActiveMenu };
-  },
-  computed: {
-    userName() {
-      return this.$store.getters.userName;
-    },
   },
   methods: {
     closeMenu() {

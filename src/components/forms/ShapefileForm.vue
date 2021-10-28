@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="submitForm" class="my-4">
-    <div className="my-4">
-      <label for="name" className="block my-2 text-gray-500 font-semibold">
+    <div class="my-4">
+      <label for="name" class="block my-2 text-gray-500 font-semibold">
         Título
       </label>
       <input
@@ -16,8 +16,8 @@
         required
       />
     </div>
-    <div className="my-4">
-      <label for="desc" className="block my-2 text-gray-500 font-semibold">
+    <div class="my-4">
+      <label for="desc" class="block my-2 text-gray-500 font-semibold">
         Descrição
       </label>
       <textarea
@@ -32,8 +32,8 @@
         required
       />
     </div>
-    <div v-if="!toUpdate" className="my-4">
-      <label for="desc" className="block my-2 text-gray-500 font-semibold">
+    <div v-if="!toUpdate" class="my-4">
+      <label for="desc" class="block my-2 text-gray-500 font-semibold">
         Arquivo
       </label>
       <input
@@ -115,7 +115,7 @@ export default {
           this.$emit('form-response', 3, result.message);
         }
       } else {
-        // data.added_by = '';
+        data.added_by = '1';
 
         const formData = new FormData();
 
@@ -126,6 +126,7 @@ export default {
 
         if (result.success) {
           this.$emit('form-response', 1, 'Shapefile implantado com sucesso!');
+          this.$emit('form-data', result.shapefile);
         } else {
           this.$emit('fomr-response', 3, result.message);
         }

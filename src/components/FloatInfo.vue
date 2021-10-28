@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="flag !== 0"
+    v-show="flag !== 0"
     class="flex absolute ml-4 z-40 bg-white shadow-lg rounded-lg bottom-8 right-8"
   >
     <section

@@ -2,7 +2,7 @@
   <form @submit.prevent="submitForm" class="my-4">
     <div class="flex-none md:flex md:my-4 md:space-x-4">
       <div class="my-4 md:w-1/2 md:my-0">
-        <label for="name" className="block my-2 text-gray-500 font-semibold">
+        <label for="name" class="block my-2 text-gray-500 font-semibold">
           Nome
         </label>
         <input
@@ -17,7 +17,7 @@
         />
       </div>
       <div class="my-4 md:w-1/2 md:my-0">
-        <label for="surname" className="block my-2 text-gray-500 font-semibold">
+        <label for="surname" class="block my-2 text-gray-500 font-semibold">
           Sobrenome
         </label>
         <input
@@ -32,8 +32,8 @@
         />
       </div>
     </div>
-    <div className="my-4">
-      <label for="email" className="block my-2 text-gray-500 font-semibold">
+    <div class="my-4">
+      <label for="email" class="block my-2 text-gray-500 font-semibold">
         E-mail
       </label>
       <input
@@ -49,7 +49,7 @@
     </div>
     <div class="flex-none md:flex md:my-4 md:space-x-4">
       <div class="my-4 md:w-1/2 md:my-0">
-        <label for="name" className="block my-2 text-gray-500 font-semibold">
+        <label for="name" class="block my-2 text-gray-500 font-semibold">
           Senha
         </label>
         <input
@@ -64,7 +64,7 @@
         />
       </div>
       <div class="my-4 md:w-1/2 md:my-0">
-        <label for="passwordConf" className="block my-2 text-gray-500 font-semibold">
+        <label for="passwordConf" class="block my-2 text-gray-500 font-semibold">
           Confirme a senha
         </label>
         <input

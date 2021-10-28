@@ -17,25 +17,26 @@
               >
                 {{ cat.name[0] }}
               </li>
-              <li class="my-1 mx-6 lg:flex">
+              <li class="my-2 mx-6 lg:flex">
                 <p class="my-2 capitalize truncate">
                   {{ cat.name }}
                 </p>
-
-                <button
-                  class="ml-auto p-2 bg-cerulean-500 hover:bg-cerulean-700 text-white rounded-md
-                  transition delay-50 duration-300 ease-in-out"
-                  @click="openModal(i)"
-                >
-                  Atualizar
-                </button>
-                <button
-                  class="ml-2 p-2 bg-red-500 hover:bg-red-700 text-white rounded-md transition
-                  delay-50 duration-300 ease-in-out"
-                  @click="openModal(i, true)"
-                >
-                  Deletar
-                </button>
+                <div class="ml-auto flex">
+                  <button
+                    class="p-2 bg-cerulean-500 hover:bg-cerulean-700 text-white rounded-md
+                    transition delay-50 duration-300 ease-in-out"
+                    @click="openModal(i)"
+                  >
+                    Atualizar
+                  </button>
+                  <button
+                    class="ml-auto lg:ml-2 p-2 bg-red-500 hover:bg-red-700 text-white rounded-md
+                    transition delay-50 duration-300 ease-in-out"
+                    @click="openModal(i, true)"
+                  >
+                    Deletar
+                  </button>
+                </div>
               </li>
               <hr v-if="i < categories.length - 1 && cat.name[0] === categories[i + 1].name[0]" />
             </template>

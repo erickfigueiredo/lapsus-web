@@ -23,16 +23,18 @@
         <template #body>
           <tr v-for="inst in institutions" :key="inst.id" class="hover:bg-gray-100">
             <td class="px-5 py-5 border-b border-gray-200 ">
-              <p class="text-gray-900">{{ inst.name }}</p>
+              <span class="text-gray-900">{{ inst.name }}</span>
             </td>
             <td class="px-5 py-5 border-b border-gray-200">
               <a :href="`mailto:${inst.email}`" class="text-gray-900">{{ inst.email }}</a>
             </td>
             <td class="px-5 py-5 border-b border-gray-200 hidden md:table-cell">
-              <p class="text-gray-900">{{ formatNumber(inst.phone) }}</p>
+              <span class="text-gray-900">{{ formatNumber(inst.phone) }}</span>
             </td>
             <td class="px-5 py-5 border-b border-gray-200 hidden md:table-cell">
-              <p class="text-gray-900">{{ new Date(inst.created_at).toLocaleDateString() }}</p>
+              <span class="text-gray-900"
+                >{{ new Date(inst.created_at).toLocaleDateString() }}
+              </span>
             </td>
             <td class="px-5 py-5 border-b border-gray-200">
               <router-link

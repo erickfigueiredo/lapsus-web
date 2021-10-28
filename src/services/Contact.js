@@ -1,18 +1,9 @@
 import { lapsus, defaultErrorMessage } from './AxiosSettings';
 
-class Institution {
-  static async findOneById(id) {
+class Contact {
+  static async index(page) {
     try {
-      const res = await lapsus.get(`institution/${id}`);
-      return res.data;
-    } catch (err) {
-      return err.response?.data ? err.response.data : defaultErrorMessage;
-    }
-  }
-
-  static async indexDetailed(page) {
-    try {
-      const res = await lapsus.get(`institution/all/detailed?page=${page}`);
+      const res = await lapsus.get(`/contact/all?page=${page}`);
       return res.data;
     } catch (err) {
       return err.response?.data ? err.response.data : defaultErrorMessage;
@@ -21,16 +12,25 @@ class Institution {
 
   static async create(data) {
     try {
-      const res = await lapsus.post('institution', data);
+      const res = await lapsus.post('/contact', data);
       return res.data;
     } catch (err) {
       return err.response?.data ? err.response.data : defaultErrorMessage;
     }
   }
 
-  static async update(data) {
+  static async toggleVisualization(id) {
     try {
-      const res = await lapsus.put('institution', data);
+      const res = await lapsus.patch('/contact/toggle_check', { id });
+      return res.data;
+    } catch (err) {
+      return err.response?.data ? err.response.data : defaultErrorMessage;
+    }
+  }
+
+  static async delete(id) {
+    try {
+      const res = await lapsus.delete(`/contact/${id}`);
       return res.data;
     } catch (err) {
       return err.response?.data ? err.response.data : defaultErrorMessage;
@@ -38,4 +38,4 @@ class Institution {
   }
 }
 
-export default Institution;
+export default Contact;

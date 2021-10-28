@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="submitForm" class="my-4">
-    <div className="my-4">
-      <label for="email" className="block my-2 text-gray-500 font-semibold">
+    <div class="my-4">
+      <label for="email" class="block my-2 text-gray-500 font-semibold">
         E-mail
       </label>
       <input
@@ -15,8 +15,8 @@
         required
       />
     </div>
-    <div className="my-4">
-      <label for="password" className="block my-2 text-gray-500 font-semibold">
+    <div class="my-4">
+      <label for="password" class="block my-2 text-gray-500 font-semibold">
         Senha
       </label>
       <input

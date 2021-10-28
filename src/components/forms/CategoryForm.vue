@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="submitForm" class="my-4">
-    <div className="my-4">
-      <label for="name" className="block my-2 text-gray-500 font-semibold">
+    <div class="my-4">
+      <label for="name" class="block my-2 text-gray-500 font-semibold">
         Nome
       </label>
       <input
@@ -16,8 +16,8 @@
         required
       />
     </div>
-    <div className="my-4">
-      <label for="desc" className="block my-2 text-gray-500 font-semibold">
+    <div class="my-4">
+      <label for="desc" class="block my-2 text-gray-500 font-semibold">
         Descrição
       </label>
       <textarea

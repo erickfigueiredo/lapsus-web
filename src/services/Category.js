@@ -12,7 +12,11 @@ class Category {
 
   static async create(data) {
     try {
-      const res = await lapsus.post('/category', data);
+      const res = await lapsus.post('/category', data, {
+        headers: {
+          // Authorization: token,
+        },
+      });
       return res.data;
     } catch (err) {
       return err.response?.data ? err.response.data : defaultErrorMessage;

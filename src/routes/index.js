@@ -8,11 +8,12 @@ import Category from '../pages/Category.vue';
 import Institution from '../pages/Institution.vue';
 import InstitutionDetails from '../pages/InstitutionDetails.vue';
 import Message from '../pages/Message.vue';
+import NewMessage from '../pages/NewMessage.vue';
 import Shapefile from '../pages/Shapefile.vue';
 import Contribution from '../pages/Contribution.vue';
 import NotFound from '../pages/NotFound.vue';
 
-import Teste from '../pages/Teste.vue';
+import Teste from '../pages/Teste2.vue';
 // import Map from '../pages/Map.vue';
 
 const routes = [
@@ -41,6 +42,11 @@ const routes = [
     name: 'Mensagens',
     path: '/mensagens',
     component: Message,
+  },
+  {
+    name: 'Enviar mensagem',
+    path: '/mensagens/nova',
+    component: NewMessage,
   },
   {
     name: 'Instituições',

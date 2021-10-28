@@ -23,12 +23,6 @@ library.add(
   faIdCard, faUserSecret, faUser, faUserShield, faUserCog, faUserTie,
 );
 
-/* Router.beforeEach((to, from, next) => {
-  console.log(to, from);
-  next(true);
-  // next(false);
-}); */
-
 const app = createApp(App);
 
 app.use(Store);
