@@ -2,7 +2,7 @@
   <form>
     <div v-for="c in count" :key="c">
       <label>Campo {{ c }}</label>
-      <input type="text" :ref="'teste'+c"/>
+      <input type="text" :id="'teste'+c" :ref="'teste'+c"/>
     </div>
   </form>
   <button @click="addButton">+</button>

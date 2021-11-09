@@ -1,5 +1,5 @@
 <template>
-  <input type="text" v-model="name" />
+  <div class="w-full">{{name}}</div>
 </template>
 
 <script>
@@ -11,7 +11,10 @@ export default {
     },
   },
   data() {
-    return { name: this.a };
+    return { name: this.a }; // Isso n funciona com alteração de prop
+  },
+  created() {
+    console.log('Recriou');
   },
 };
 </script>

@@ -1,15 +1,26 @@
 <template>
-  <div id="mapContainer" class="w-full h-full z-10"></div>
+  <div id="map-container" class="w-full h-full z-10"></div>
 </template>
 
 <script>
+/* eslint-disable global-require */
+/* eslint-disable no-underscore-dangle */
+// import { toRaw } from 'vue';
+
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
 
 import L from 'leaflet';
 import 'leaflet-draw';
 
-// import translate from '../translate/MapDraw';
+// eslint-disable-next-line no-underscore-dangle
+delete L.Icon.Default.prototype._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+  iconUrl: require('leaflet/dist/images/marker-icon.png'),
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+});
 
 export default {
   props: {
@@ -21,7 +32,7 @@ export default {
   data() {
     return {
       map: null,
-      coords: null,
+      geometry: '',
     };
   },
   methods: {
@@ -36,6 +47,44 @@ export default {
         this.coords = { latitude: -20.7542, longitude: -42.8819 };
       }
     },
+    drawFigure(e) {
+      const { layerType, layer } = e;
+      const that = this;
+
+      this.geometry = '';
+
+      const geometryOptions = {
+        marker() {
+          const coord = layer.getLatLng();
+          that.geometry = `POINT (${coord.lat} ${coord.lng})`;
+        },
+        polygon() {
+          that.geometry = 'POLYGON ((';
+
+          // eslint-disable-next-line no-plusplus
+          for (let i = 0; i < layer._latlngs[0].length; i++) {
+            that.geometry += `${layer._latlngs[0][i].lat} ${layer._latlngs[0][i].lng}`;
+            if (i < layer._latlngs[0].length - 1) that.geometry += ',';
+            else that.geometry += `, ${layer._latlngs[0][0].lat} ${layer._latlngs[0][0].lng}))`;
+          }
+        },
+        polyline() {
+          that.geometry = 'LINESTRING (';
+
+          // eslint-disable-next-line no-plusplus
+          for (let i = 0; i < layer._latlngs.length; i++) {
+            that.geometry += `${layer._latlngs[i].lat} ${layer._latlngs[i].lng}`;
+            if (i < layer._latlngs.length - 1) that.geometry += ',';
+            else that.geometry += ')';
+          }
+        },
+      };
+
+      if (geometryOptions[layerType]) geometryOptions[layerType]();
+    },
+    openColaborationModal() {
+      console.log('Chamou!');
+    },
   },
   async mounted() {
     if (this.useUserLocation) {
@@ -44,29 +93,85 @@ export default {
       this.coords = { latitude: -20.7542, longitude: -42.8819 };
     }
 
-    this.map = L.map('mapContainer').setView(
-      [this.coords.latitude, this.coords.longitude],
-      15,
-    ).setMinZoom(6);
-
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    const osm = L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      minZoom: 5,
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(this.map);
+    });
 
-    // L.drawLocal = { translate };
+    const satellite = L.tileLayer.wms(
+      'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      {
+        minZoom: 5,
+        maxZoom: 17,
+        attribution:
+          'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+      },
+    );
+
+    const baseMap = {
+      'Open Street Map': osm,
+      'Visão Satélite': satellite,
+    };
+
+    // Definição e plotagem do mapa
+    const map = L.map('map-container', {
+      center: [this.coords.latitude, this.coords.longitude],
+      layers: [osm],
+      zoom: 15,
+      attributionControl: true,
+    });
+
+    L.control.layers(baseMap, null, { collapse: true }).addTo(map);
 
     const drawnItems = new L.FeatureGroup();
-    this.map.addLayer(drawnItems);
+    map.addLayer(drawnItems);
 
     const drawControl = new L.Control.Draw({
+      draw: {
+        circle: false,
+        circlemarker: false,
+        marker: true,
+        polyline: {
+          metric: true,
+          showLength: true,
+        },
+        polygon: {
+          metric: true,
+          precision: {
+            km: 2,
+          },
+          feet: false,
+          nautic: false,
+          showArea: true,
+          showLength: true,
+          allowIntersection: false,
+          drawError: {
+            color: '#f2628c', // Color the shape will turn when intersects
+            message: '<strong>Erro:</strong> Polígonos não permitem interseção!', // Message that will show when intersect
+          },
+        },
+        rectangle: false,
+      },
       edit: {
         featureGroup: drawnItems,
+        remove: true,
       },
     });
-    this.map.addControl(drawControl);
+
+    L.drawLocal.draw.toolbar.buttons.marker = 'Insira um ponto';
+    L.drawLocal.draw.toolbar.buttons.polygon = 'Desenhe um polígono';
+    L.drawLocal.draw.toolbar.buttons.polyline = 'Desenhe linhas interligadas';
+
+    map.addControl(drawControl);
+
+    map.on('draw:created', this.drawFigure);
+    map.on('draw:drawstop', this.openColaborationModal);
+
+    this.map = map;
   },
   beforeUnmount() {
     if (this.map) {
+      this.map.off();
       this.map.remove();
     }
   },
