@@ -5,7 +5,7 @@
 <script>
 /* eslint-disable global-require */
 /* eslint-disable no-underscore-dangle */
-// import { toRaw } from 'vue';
+import { toRaw } from 'vue';
 
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
@@ -13,7 +13,6 @@ import 'leaflet-draw/dist/leaflet.draw.css';
 import L from 'leaflet';
 import 'leaflet-draw';
 
-// eslint-disable-next-line no-underscore-dangle
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
@@ -23,6 +22,7 @@ L.Icon.Default.mergeOptions({
 });
 
 export default {
+  emits: ['finish-draw'],
   props: {
     useUserLocation: {
       type: Boolean,
@@ -33,6 +33,7 @@ export default {
     return {
       map: null,
       geometry: '',
+      finishDraw: false,
     };
   },
   methods: {
@@ -80,10 +81,17 @@ export default {
         },
       };
 
-      if (geometryOptions[layerType]) geometryOptions[layerType]();
+      if (geometryOptions[layerType]) {
+        geometryOptions[layerType]();
+        this.finishDraw = true;
+      }
     },
-    openColaborationModal() {
-      console.log('Chamou!');
+    sendCoords() {
+      if (this.finishDraw) {
+        this.finishDraw = false;
+
+        this.$emit('finish-draw', this.geometry);
+      }
     },
   },
   async mounted() {
@@ -132,10 +140,16 @@ export default {
         circlemarker: false,
         marker: true,
         polyline: {
+          shapeOptions: {
+            color: '#4361ea',
+          },
           metric: true,
           showLength: true,
         },
         polygon: {
+          shapeOptions: {
+            color: '#CDFF41',
+          },
           metric: true,
           precision: {
             km: 2,
@@ -154,7 +168,8 @@ export default {
       },
       edit: {
         featureGroup: drawnItems,
-        remove: true,
+        edit: false,
+        remove: false,
       },
     });
 
@@ -165,15 +180,15 @@ export default {
     map.addControl(drawControl);
 
     map.on('draw:created', this.drawFigure);
-    map.on('draw:drawstop', this.openColaborationModal);
+    map.on('draw:drawstop', this.sendCoords);
+
+    L.control.scale({ metric: true, imperial: false }).addTo(map);
 
     this.map = map;
   },
   beforeUnmount() {
-    if (this.map) {
-      this.map.off();
-      this.map.remove();
-    }
+    toRaw(this.map).remove();
+    console.log('Remontou o mapa');
   },
 };
 </script>

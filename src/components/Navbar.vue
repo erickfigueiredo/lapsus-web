@@ -72,7 +72,7 @@
             <ul>
               <li>
                 <router-link
-                  to="/colaboracoes"
+                  to="/contribuir"
                   class="block p-2 my-4 border-l-4 hover:bg-cerulean-800"
                   exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800"
                 >

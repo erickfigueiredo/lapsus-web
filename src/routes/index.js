@@ -10,7 +10,7 @@ import InstitutionDetails from '../pages/InstitutionDetails.vue';
 import Message from '../pages/Message.vue';
 import NewMessage from '../pages/NewMessage.vue';
 import Shapefile from '../pages/Shapefile.vue';
-import Contribution from '../pages/Contribution.vue';
+import Contribute from '../pages/Contribute.vue';
 import NotFound from '../pages/NotFound.vue';
 
 import Teste from '../pages/Teste2.vue';
@@ -64,9 +64,9 @@ const routes = [
     component: Shapefile,
   },
   {
-    name: 'Contribuições',
-    path: '/contribuicoes',
-    component: Contribution,
+    name: 'Contribuir',
+    path: '/contribuir',
+    component: Contribute,
   },
   {
     name: 'Test',

@@ -25,7 +25,7 @@
           </ul>
           <div v-else class="flex font-semibold text-center text-gray-400 h-full">
             <p class="mx-auto my-auto">
-              Não há categorias para serem exibidas
+              Não há shapefiles para serem exibidos
             </p>
           </div>
         </div>
