@@ -13,8 +13,7 @@ import Shapefile from '../pages/Shapefile.vue';
 import Contribute from '../pages/Contribute.vue';
 import NotFound from '../pages/NotFound.vue';
 
-import Teste from '../pages/Teste2.vue';
-// import Map from '../pages/Map.vue';
+import Teste2 from '../pages/Teste2.vue';
 
 const routes = [
   {
@@ -71,7 +70,7 @@ const routes = [
   {
     name: 'Test',
     path: '/teste',
-    component: Teste,
+    component: Teste2,
   },
   {
     name: 'NotFound',

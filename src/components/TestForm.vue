@@ -1,20 +1,42 @@
 <template>
-  <div class="w-full">{{name}}</div>
+  <form>
+    <button type="button" @click="addField"> Adicionar + </button>
+    <div v-for="n in numFields" :key="n">
+      <select
+        :ref="'field'+n"
+        class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
+        outline-none border-2 border-gray-200 focus:border-gray-400"
+      >
+        <option value="Opção1">Opção Selecinada</option>
+        <option value="Opção2">Opção Selecinada1</option>
+        <option value="Opção3">Opção Selecinada2</option>
+      </select>
+    </div>
+    <button type="button" @click="removeField()"> Diminuir - </button>
+    <button type="button" @click="showInfo">Clique aqui</button>
+  </form>
 </template>
 
 <script>
 export default {
-  props: {
-    a: {
-      type: String,
-      required: true,
-    },
-  },
   data() {
-    return { name: this.a }; // Isso n funciona com alteração de prop
+    return {
+      numFields: 0,
+    };
   },
-  created() {
-    console.log('Recriou');
+  methods: {
+    addField() {
+      this.info.push({ a: '' });
+      this.numFields += 1;
+    },
+    removeField() {
+      if (this.numFields > 0) { this.numFields -= 1; }
+    },
+    showInfo() {
+      for (let i = 0; i < this.numFields; i += 1) {
+        console.log(this.$refs[`field${i + 1}`].value);
+      }
+    },
   },
 };
 </script>

@@ -1,53 +1,59 @@
 <template>
-  <div>
-    <contribution-form :category-list="categories" />
-    <input type="text" v-model="valor" @keyup="brlMoneyFormat" />
+  <div class="p-4">
+    <emsi-form
+    :categoryList="category"
+    :causeList="cause"
+    :riskList="risk"
+    :scaleList="scale"
+    :statusList="status"
+    :casualtiesList="casualties"
+    :typeList="type"
+    :loctypeList="loctype"
+    :weatherList="weather"
+    :actorList="actor"
+    :contributionList="contribution"
+    />
   </div>
-  <test-form :a="aa" :key="ab"/>
-  <button @click="teste">Clique</button>
 </template>
 
 <script>
-import ContributionForm from '../components/forms/ContributionForm.vue';
-import TestForm from '../components/TestForm.vue';
+import EMSIForm from '../components/forms/EMSIForm.vue';
 
-import Category from '../services/Category';
+import EMSI from '../services/EMSI';
 
 export default {
   components: {
-    ContributionForm,
-    TestForm,
+    'emsi-form': EMSIForm,
   },
   data() {
     return {
-      categories: [],
-      valor: '',
-      aa: '',
-      ab: 0,
+      category: [],
+      cause: [],
+      risk: [],
+      scale: [],
+      status: [],
+      casualties: [],
+      contribution: [],
+      type: {},
+      loctype: {},
+      weather: {},
+      actor: {},
     };
   },
-  methods: {
-    teste() {
-      this.aa += 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa';
-      this.ab += 1;
-
-      console.log(this.ab);
-    },
-    brlMoneyFormat() {
-      let v = this.valor.replace(/\D/g, '');
-      v = `${(v / 100).toFixed(2)}`;
-      v = v.replace('.', ',');
-      v = v.replace(/(\d)(\d{3})(\d{3}),/g, '$1.$2.$3,');
-      v = v.replace(/(\d)(\d{3}),/g, '$1.$2,');
-      this.valor = v;
-    },
-  },
   async mounted() {
-    const result = await Category.index();
+    const a = await EMSI.list();
 
-    if (result.success) {
-      this.categories = result.category;
-    }
+    this.category = a.category;
+    this.cause = a.cause;
+    this.risk = a.risk;
+    this.scale = a.scale;
+    this.status = a.status;
+    this.loctype = a.loctype;
+    this.actor = a.actor;
+    this.contribution = a.contribution;
+    this.type = a.type;
+    this.casualties = a.casualties;
+    this.weather = a.weather;
   },
 };
 </script>

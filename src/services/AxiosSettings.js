@@ -5,7 +5,6 @@ export const lapsus = axios.create({
   timeout: '3000',
   headers: {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
   },
 });
 

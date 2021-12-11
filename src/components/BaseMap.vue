@@ -66,7 +66,7 @@ export default {
           for (let i = 0; i < layer._latlngs[0].length; i++) {
             that.geometry += `${layer._latlngs[0][i].lat} ${layer._latlngs[0][i].lng}`;
             if (i < layer._latlngs[0].length - 1) that.geometry += ',';
-            else that.geometry += `, ${layer._latlngs[0][0].lat} ${layer._latlngs[0][0].lng}))`;
+            else that.geometry += `,${layer._latlngs[0][0].lat} ${layer._latlngs[0][0].lng}))`;
           }
         },
         polyline() {
@@ -90,6 +90,7 @@ export default {
       if (this.finishDraw) {
         this.finishDraw = false;
 
+        console.log(this.geometry);
         this.$emit('finish-draw', this.geometry);
       }
     },
@@ -126,7 +127,6 @@ export default {
       center: [this.coords.latitude, this.coords.longitude],
       layers: [osm],
       zoom: 15,
-      attributionControl: true,
     });
 
     L.control.layers(baseMap, null, { collapse: true }).addTo(map);
@@ -188,7 +188,6 @@ export default {
   },
   beforeUnmount() {
     toRaw(this.map).remove();
-    console.log('Remontou o mapa');
   },
 };
 </script>

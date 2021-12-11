@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submitForm" class="my-4 overflow-y-scroll">
+  <form @submit.prevent="submitForm" class="my-4">
     <div class="my-4">
       <label for="category" class="block my-2 text-gray-500 font-semibold">
         Tipo de Evento
@@ -76,7 +76,6 @@
         outline-none border-2 border-gray-200 focus:border-gray-400"
       />
     </div>
-    <p>{{ coords }}</p>
     <base-button name="Cadastrar Contribuição" :isBlocked="blockAction" />
   </form>
 </template>
@@ -143,12 +142,12 @@ export default {
 
       const result = await Contribution.create(formData);
       if (result.success) {
+        this.clearForm();
         this.$emit('form-response', 1, 'Categoria cadastrada com sucesso!');
       } else {
         this.$emit('form-response', 3, result.message);
       }
 
-      this.clearForm();
       this.blockAction = false;
     },
   },
