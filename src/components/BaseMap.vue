@@ -13,6 +13,10 @@ import 'leaflet-draw/dist/leaflet.draw.css';
 import L from 'leaflet';
 import 'leaflet-draw';
 
+import shp from 'shpjs';
+
+import Shapefile from '../services/Shapefile';
+
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
@@ -91,6 +95,7 @@ export default {
         this.finishDraw = false;
 
         console.log(this.geometry);
+
         this.$emit('finish-draw', this.geometry);
       }
     },
@@ -131,6 +136,20 @@ export default {
 
     L.control.layers(baseMap, null, { collapse: true }).addTo(map);
 
+    const shapes = await Shapefile.index('y');
+
+    if (shapes.success) {
+      shapes.shapefile.forEach((s) => {
+        shp(s.uri).then((data) => {
+          L.geoJSON(data, {
+            style() {
+              return { color: '#4361ee' };
+            },
+          }).addTo(map);
+        });
+      });
+    }
+
     const drawnItems = new L.FeatureGroup();
     map.addLayer(drawnItems);
 
@@ -160,8 +179,8 @@ export default {
           showLength: true,
           allowIntersection: false,
           drawError: {
-            color: '#f2628c', // Color the shape will turn when intersects
-            message: '<strong>Erro:</strong> Polígonos não permitem interseção!', // Message that will show when intersect
+            color: '#f2628c', // Cor do contorno se encontrar uma interseção
+            message: '<strong>Erro:</strong> Polígonos não permitem interseção!', // Mensagem que será informada
           },
         },
         rectangle: false,

@@ -1,9 +1,23 @@
-import { lapsus, defaultErrorMessage } from './AxiosSettings';
+import { lapsus, apiURL, defaultErrorMessage } from './AxiosSettings';
 
 class Shapefile {
-  static async index() {
+  static async index(isURI = 'n') {
     try {
-      const res = await lapsus.get('/shapefile/all');
+      const res = await lapsus.get(`/shapefile/all?is_uri=${isURI}`);
+
+      if (isURI === 'y') {
+        if (res.data.success) {
+          const shapefile = res.data.shapefile.map((link) => {
+            const parts = link.uri.split(/\\|\//);
+            const uri = `${apiURL}/${parts[parts.length - 2]}/${parts[parts.length - 1]}`;
+            return { uri };
+          });
+
+          return { success: true, shapefile };
+        }
+
+        return res.data;
+      }
 
       return res.data;
     } catch (err) {
