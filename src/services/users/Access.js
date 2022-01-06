@@ -6,7 +6,7 @@ class Access {
       const res = await lapsus.post('/login', data);
       return res.data;
     } catch (err) {
-      return err.response.data ? err.response.data : defaultErrorMessage;
+      return err.response?.data ? err.response.data : defaultErrorMessage;
     }
   }
 
@@ -18,7 +18,7 @@ class Access {
 
       return res.data;
     } catch (err) {
-      return err.response.data ? err.response.data : defaultErrorMessage;
+      return err.response?.data ? err.response.data : defaultErrorMessage;
     }
   }
 }
