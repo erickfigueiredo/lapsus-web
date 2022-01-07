@@ -157,7 +157,7 @@ export default {
           this.$emit('form-response', 1, 'Mensagem enviada com sucesso!');
         } else {
           this.is_visualized = !this.is_visualized;
-          this.$emit('form-response', 1, 'Status alterado com successo!');
+          this.$emit('form-response', 1, 'Status alterado com sucesso!');
           this.$emit('form-data', result.contact);
         }
       } else {
