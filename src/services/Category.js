@@ -10,11 +10,11 @@ class Category {
     }
   }
 
-  static async create(data) {
+  static async indexDetailed(token) {
     try {
-      const res = await lapsus.post('/category', data, {
+      const res = await lapsus.get('/category/all/detailed', {
         headers: {
-          // Authorization: token,
+          Authorization: `Bearer ${token}`,
         },
       });
       return res.data;
@@ -23,18 +23,39 @@ class Category {
     }
   }
 
-  static async update(data) {
+  static async create(token, data) {
     try {
-      const res = await lapsus.put('/category', data);
+      const res = await lapsus.post('/category', data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return res.data;
     } catch (err) {
       return err.response?.data ? err.response.data : defaultErrorMessage;
     }
   }
 
-  static async delete(id) {
+  static async update(token, data) {
     try {
-      const res = await lapsus.delete(`/category/${id}`);
+      const res = await lapsus.put('/category', data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return res.data;
+    } catch (err) {
+      return err.response?.data ? err.response.data : defaultErrorMessage;
+    }
+  }
+
+  static async delete(token, id) {
+    try {
+      const res = await lapsus.delete(`/category/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return res.data;
     } catch (err) {
       return err.response?.data ? err.response.data : defaultErrorMessage;

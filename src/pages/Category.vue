@@ -51,9 +51,10 @@
     </section>
   </base-template>
   <modal
-    v-if="isModalUpdateActive"
+    v-show="isModalUpdateActive"
     title="Atualizar Categoria"
     size="w-4/5 md:w-2/4 lg:w-1/4"
+    :key="category.id"
     @close="closeModal"
   >
     <category-form
@@ -64,9 +65,10 @@
     />
   </modal>
   <modal
-    v-if="isModalDeleteActive"
+    v-show="isModalDeleteActive"
     title="Deletar Categoria"
     size="w-4/5 md:w-2/4 lg:w-1/4"
+    :key="category.id"
     @close="closeModal(true)"
   >
     <p>Tem certeza que deseja deletar "{{ category.name }}"?</p>
@@ -76,6 +78,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import BaseTemplate from '../templates/BaseTemplate.vue';
 import BaseCard from '../components/BaseCard.vue';
 import CategoryForm from '../components/forms/CategoryForm.vue';
@@ -107,9 +111,12 @@ export default {
 
       categories: [],
 
-      category: null,
+      category: {},
       index: null,
     };
+  },
+  computed: {
+    ...mapGetters(['token']),
   },
   methods: {
     // eslint-disable-next-line consistent-return
@@ -139,7 +146,7 @@ export default {
     },
     async deleteCategory() {
       this.blockAction = true;
-      const result = await Category.delete(this.category.id);
+      const result = await Category.delete(this.token, this.category.id);
 
       if (result.success) {
         this.categories.splice(this.index, 1);
@@ -175,7 +182,7 @@ export default {
     },
   },
   async mounted() {
-    const result = await Category.index();
+    const result = await Category.indexDetailed(this.token);
 
     if (result.success) {
       this.categories = result.category;

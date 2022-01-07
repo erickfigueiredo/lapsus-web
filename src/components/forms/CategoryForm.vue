@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import BaseButton from '../BaseButton.vue';
 import Category from '../../services/Category';
 
@@ -64,9 +66,12 @@ export default {
     return {
       id: this.fillData.id,
       name: this.fillData.name,
-      desc: this.fillData.desc ?? undefined,
+      desc: this.fillData.desc,
       blockAction: false,
     };
+  },
+  computed: {
+    ...mapGetters(['token']),
   },
   methods: {
     clearForm() {
@@ -84,7 +89,7 @@ export default {
       if (this.toUpdate) {
         data.id = this.id;
 
-        const result = await Category.update(data);
+        const result = await Category.update(this.token, data);
         if (result.success) {
           this.name = result.category.name;
           this.desc = result.category.desc;
@@ -95,7 +100,7 @@ export default {
           this.$emit('form-response', 3, result.message);
         }
       } else {
-        const result = await Category.create(data);
+        const result = await Category.create(this.token, data);
 
         if (result.success) {
           this.clearForm();
