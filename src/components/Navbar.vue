@@ -17,14 +17,36 @@
           </router-link>
         </div>
       </section>
-
       <section class="my-8 text-gray-200 text-center font-semibold">
-        <span>Administrador</span>
+        <span>
+          <font-awesome
+            v-if="userType === 'A'"
+            :icon="['fas', 'user-tie']"
+            class="text-xl mr-2"
+          />
+          <font-awesome
+            v-else-if="userType === 'T'"
+            :icon="['fas', 'user-cog']"
+            class="text-xl mr-2"
+          />
+          <font-awesome
+            v-else-if="userType === 'M'"
+            :icon="['fas', 'user-shield']"
+            class="text-xl mr-2"
+          />
+          <font-awesome
+            v-else-if="userType === 'R'"
+            :icon="['fas', 'user']"
+            class="text-xl mr-2"
+          />
+          <font-awesome v-else :icon="['fas', 'user-secret']" class="text-xl mr-2" />
+          {{ userTypeDetailed }}
+        </span>
       </section>
 
       <!-- Início definição das rotas -->
       <ul class="text-gray-200">
-        <li>
+        <li v-if="isLoggedIn">
           <router-link
             to="/"
             exact
@@ -37,7 +59,7 @@
             </p>
           </router-link>
         </li>
-        <li>
+        <li v-if="isLoggedIn && userType === 'A'">
           <router-link
             to="/"
             exact
@@ -72,7 +94,7 @@
             <ul>
               <li>
                 <router-link
-                  to="/contribuir"
+                  to="/contribuicao"
                   class="block p-2 my-4 border-l-4 hover:bg-cerulean-800"
                   exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800"
                 >
@@ -94,10 +116,23 @@
                   </p>
                 </router-link>
               </li>
+              <li>
+                <router-link
+                  v-if="isLoggedIn && ['A', 'T', 'M'].includes(userType)"
+                  to="/contribuicao/avaliar"
+                  class="block p-2 my-4 border-l-4 hover:bg-cerulean-800"
+                  exact-active-class=" border-lemon-400 text-lemon-400 bg-cerulean-800"
+                >
+                  <p class="ml-12 text-base">
+                    <font-awesome :icon="['fas', 'thumbs-up']" class="text-xl mr-2" />
+                    Avaliar
+                  </p>
+                </router-link>
+              </li>
             </ul>
           </section>
         </li>
-        <li>
+        <li v-if="isLoggedIn && ['A', 'T'].includes(userType)">
           <router-link
             to="/categorias"
             class="block ml-4 my-4 border-l-8 rounded-l-lg hover:bg-cerulean-800 pr-4 p-2 transition
@@ -123,6 +158,7 @@
         </li>
         <li>
           <router-link
+            v-if="isLoggedIn && ['A', 'T'].includes(userType)"
             to="/mensagens"
             class="block ml-4 my-4 border-l-8 rounded-l-lg hover:bg-cerulean-800 pr-4 p-2 transition
             duration-200"
@@ -132,8 +168,19 @@
               <font-awesome :icon="['fas', 'envelope-open-text']" class="text-xl mr-2" />Mensagens
             </p>
           </router-link>
+          <router-link
+            v-else
+            to="/mensagens/nova"
+            class="block ml-4 my-4 border-l-8 rounded-l-lg hover:bg-cerulean-800 pr-4 p-2 transition
+            duration-200"
+            exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800 border-r-4"
+          >
+            <p class="ml-12 text-base">
+              <font-awesome :icon="['fas', 'paper-plane']" class="text-xl mr-2" />Enviar Mensagem
+            </p>
+          </router-link>
         </li>
-        <li>
+        <li v-if="isLoggedIn && userType === 'A'">
           <router-link
             to="/shapefiles"
             class="block ml-4 my-4 border-l-8 rounded-l-lg hover:bg-cerulean-800 pr-4 p-2 transition
@@ -152,6 +199,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import useMenus from '../hooks/useMenus';
 
 export default {
@@ -164,6 +213,24 @@ export default {
     return {
       isDockOpen: false,
     };
+  },
+  computed: {
+    ...mapGetters(['isLoggedIn', 'userType']),
+
+    userTypeDetailed() {
+      switch (this.userType) {
+        case 'A':
+          return 'Administrador';
+        case 'M':
+          return 'Moderador';
+        case 'R':
+          return 'Registrado';
+        case 'T':
+          return 'Técnico';
+        default:
+          return 'Anônimo';
+      }
+    },
   },
 };
 </script>
