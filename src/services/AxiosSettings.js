@@ -1,11 +1,16 @@
 import axios from 'axios';
 
+export const apiURL = 'http://localhost:3001';
+
 export const lapsus = axios.create({
-  baseURL: 'http://localhost:3001',
+  baseURL: apiURL,
   timeout: '3000',
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-export const defaultErrorMessage = { success: false, message: 'Houve um erro de conexão com o servidor!' };
+export const defaultErrorMessage = {
+  success: false,
+  message: 'Houve um erro de conexão com o servidor!',
+};
