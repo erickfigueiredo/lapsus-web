@@ -7,18 +7,41 @@ const store = createStore({
     return {
       user: null,
       token: null,
+
+      triedToLogin: false,
     };
   },
+
   mutations: {
     setUser(state, payload) {
       state.user = payload;
     },
-    setToken(state, payload) {
+    setToken(state, payload = null) {
       state.token = payload;
+
+      if (payload) {
+        localStorage.setItem('token', payload);
+      } else {
+        localStorage.removeItem('token');
+      }
+    },
+    setTriedLogin(state) {
+      state.triedToLogin = true;
     },
   },
 
   actions: {
+    async login(context, payload) {
+      const result = await Access.login(payload);
+
+      if (result.success) {
+        context.commit('setUser', result.user);
+        context.commit('setToken', result.token);
+      }
+
+      return result;
+    },
+
     async tryAutoLogin(context) {
       const token = localStorage.getItem('token');
 
@@ -26,35 +49,21 @@ const store = createStore({
         const result = await Access.getUserInfo(token);
 
         if (result.success) {
-          context.commit('setUser', result.user);
           context.commit('setToken', token);
+          context.commit('setUser', result.user);
         } else {
           context.dispatch('logout');
         }
       } else {
         context.dispatch('logout');
       }
-    },
 
-    async login(context, payload) {
-      const result = await Access.login(payload);
-
-      if (result.success) {
-        context.commit('setUser', result.user);
-
-        localStorage.setItem('token', result.token);
-        context.commit('setToken', result.token);
-      }
-
-      return result;
+      context.commit('setTriedLogin');
     },
 
     logout(context) {
-      localStorage.removeItem('user');
+      context.commit('setToken');
       context.commit('setUser', null);
-
-      localStorage.removeItem('token');
-      context.commit('setToken', null);
     },
   },
 
@@ -62,10 +71,20 @@ const store = createStore({
     isLoggedIn(state) {
       return !!state.token;
     },
-
-    // Alterar isso
+    triedLogin(state) {
+      return state.triedToLogin;
+    },
+    token(state) {
+      return state.token;
+    },
+    user(state) {
+      return state.user;
+    },
     userName(state) {
-      return state.user?.name;
+      return state.user?.name || 'Anônimo';
+    },
+    userType(state) {
+      return state.user?.type;
     },
   },
 });
