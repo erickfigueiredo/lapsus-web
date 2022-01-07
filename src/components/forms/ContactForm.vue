@@ -1,37 +1,39 @@
 <template>
   <form @submit.prevent="submitForm" class="my-4">
-    <div class="my-4">
-      <label for="sender" class="block my-2 text-gray-500 font-semibold">
-        Remetente
-      </label>
-      <input
-        id="sender"
-        type="text"
-        name="sender"
-        v-model="sender"
-        placeholder="Informe seu nome"
-        spellcheck="true"
-        class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
+    <div class="md:flex md:space-x-4">
+      <div class="my-4 md:my-0 md:w-full">
+        <label for="sender" class="block my-2 text-gray-500 font-semibold">
+          Remetente
+        </label>
+        <input
+          id="sender"
+          type="text"
+          name="sender"
+          v-model="sender"
+          placeholder="Informe seu nome"
+          spellcheck="true"
+          class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
         outline-none border-2 border-gray-200 focus:border-gray-400"
-        :disabled="isVisualization"
-        required
-      />
-    </div>
-    <div class="my-4">
-      <label for="email" class="block my-2 text-gray-500 font-semibold">
-        E-mail
-      </label>
-      <input
-        id="email"
-        type="email"
-        name="email"
-        v-model="email"
-        placeholder="Informe seu e-mail"
-        class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
+          :disabled="isVisualization || isLoggedIn"
+          required
+        />
+      </div>
+      <div class="my-4 md:my-0 md:w-full">
+        <label for="email" class="block my-2 text-gray-500 font-semibold">
+          E-mail
+        </label>
+        <input
+          id="email"
+          type="email"
+          name="email"
+          v-model="email"
+          placeholder="Informe seu e-mail"
+          class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
         outline-none border-2 border-gray-200 focus:border-gray-400"
-        :disabled="isVisualization"
-        required
-      />
+          :disabled="isVisualization || isLoggedIn"
+          required
+        />
+      </div>
     </div>
     <div class="my-4">
       <label for="subject" class="block my-2 text-gray-500 font-semibold">
@@ -81,6 +83,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import BaseButton from '../BaseButton.vue';
 import Contact from '../../services/Contact';
 
@@ -119,10 +123,16 @@ export default {
       blockAction: false,
     };
   },
+  computed: {
+    ...mapGetters(['isLoggedIn', 'user']),
+  },
   methods: {
     clearForm() {
-      this.sender = '';
-      this.email = '';
+      if (!this.isLoggedIn) {
+        this.sender = '';
+        this.email = '';
+      }
+
       this.subject = '';
       this.body = '';
     },
@@ -131,7 +141,7 @@ export default {
 
       let result;
       if (this.isVisualization) {
-        result = await Contact.toggleVisualization(this.id);
+        result = await Contact.toggleVisualization(this.id, this.$store.getters.token);
       } else {
         result = await Contact.create({
           sender: this.sender,
@@ -156,6 +166,12 @@ export default {
 
       this.blockAction = false;
     },
+  },
+  mounted() {
+    if (this.isLoggedIn) {
+      this.sender = `${this.user.name} ${this.user.surname}`;
+      this.email = this.user.email;
+    }
   },
 };
 </script>
