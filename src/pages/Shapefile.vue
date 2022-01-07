@@ -32,7 +32,13 @@
       </card>
     </section>
   </base-template>
-  <modal v-if="isModalUpdateActive" title="Atualizar Shapefile" size="w-1/4" @close="closeModal">
+  <modal
+    v-if="isModalUpdateActive"
+    title="Atualizar Shapefile"
+    size="w-1/4"
+    :key="this.shapefile.id"
+    @close="closeModal"
+  >
     <shapefile-form
       @form-response="showInformation"
       @form-data="updateShapefile"
@@ -41,9 +47,10 @@
     />
   </modal>
   <modal
-    v-if="isModalDeleteActive"
-    title="Deletar Categoria"
+    v-show="isModalDeleteActive"
+    title="Deletar Shapefile"
     size="w-1/4"
+    :key="this.shapefile.id"
     @close="closeModal(true)"
   >
     <p>Tem certeza que deseja deletar "{{ shapefile.title }}"?</p>
@@ -53,6 +60,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import BaseTemplate from '../templates/BaseTemplate.vue';
 import BaseCard from '../components/BaseCard.vue';
 import ShapefileForm from '../components/forms/ShapefileForm.vue';
@@ -84,9 +93,12 @@ export default {
 
       shapefiles: [],
 
-      shapefile: null,
+      shapefile: {},
       index: null,
     };
+  },
+  computed: {
+    ...mapGetters(['token']),
   },
   methods: {
     addShapefile(shapefile) {
@@ -97,7 +109,7 @@ export default {
     },
     async deleteShapefile() {
       this.blockAction = true;
-      const result = await Shapefile.delete(this.shapefile.id);
+      const result = await Shapefile.delete(this.token, this.shapefile.id);
 
       if (result.success) {
         this.shapefiles.splice(this.index, 1);

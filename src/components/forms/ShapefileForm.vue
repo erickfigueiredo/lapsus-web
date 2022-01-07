@@ -29,7 +29,6 @@
         spellcheck="true"
         class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
         outline-none border-2 border-gray-200 focus:border-gray-400"
-        required
       />
     </div>
     <div v-if="!toUpdate" class="my-4">
@@ -47,11 +46,13 @@
         required
       />
     </div>
-    <base-button name="Cadastrar" :isBlocked="blockAction" />
+    <base-button :name="toUpdate ? 'Atualizar': 'Cadastrar'" :isBlocked="blockAction" />
   </form>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import BaseButton from '../BaseButton.vue';
 import Shapefile from '../../services/Shapefile';
 
@@ -87,6 +88,9 @@ export default {
       blockAction: false,
     };
   },
+  computed: {
+    ...mapGetters(['token']),
+  },
   methods: {
     clearForm() {
       this.title = '';
@@ -104,7 +108,7 @@ export default {
       if (this.toUpdate) {
         data.id = this.id;
 
-        const result = await Shapefile.update(data);
+        const result = await Shapefile.update(this.token, data);
         if (result.success) {
           this.name = result.shapefile.title;
           this.desc = result.shapefile.desc;
@@ -115,24 +119,20 @@ export default {
           this.$emit('form-response', 3, result.message);
         }
       } else {
-        // Substituir pelo id do usuário
-        data.added_by = '1';
-
         const formData = new FormData();
 
         formData.append('file', this.$refs.file.files[0]);
         formData.append('data', JSON.stringify(data));
 
-        const result = await Shapefile.create(formData);
+        const result = await Shapefile.create(this.token, formData);
 
         if (result.success) {
+          this.clearForm();
           this.$emit('form-response', 1, 'Shapefile implantado com sucesso!');
           this.$emit('form-data', result.shapefile);
         } else {
-          this.$emit('fomr-response', 3, result.message);
+          this.$emit('form-response', 3, result.message);
         }
-
-        this.clearForm();
       }
 
       this.blockAction = false;

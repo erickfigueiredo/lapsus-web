@@ -5,18 +5,13 @@ class Shapefile {
     try {
       const res = await lapsus.get(`/shapefile/all?is_uri=${isURI}`);
 
-      if (isURI === 'y') {
-        if (res.data.success) {
-          const shapefile = res.data.shapefile.map((link) => {
-            const parts = link.uri.split(/\\|\//);
-            const uri = `${apiURL}/${parts[parts.length - 2]}/${parts[parts.length - 1]}`;
-            return { uri };
-          });
+      if (isURI === 'y' && res.data.success) {
+        const shapefile = res.data.shapefile.map((link) => {
+          const uri = apiURL + link.uri;
+          return { uri };
+        });
 
-          return { success: true, shapefile };
-        }
-
-        return res.data;
+        return { success: true, shapefile };
       }
 
       return res.data;
@@ -25,10 +20,11 @@ class Shapefile {
     }
   }
 
-  static async create(data) {
+  static async create(token, data) {
     try {
       const res = await lapsus.post('/shapefile', data, {
         headers: {
+          Authorization: `Bearer ${token}`,
           Accepts: 'application/json',
           'Content-Type': 'multipart/form-data',
         },
@@ -40,9 +36,13 @@ class Shapefile {
     }
   }
 
-  static async update(data) {
+  static async update(token, data) {
     try {
-      const res = await lapsus.put('/shapefile', data);
+      const res = await lapsus.put('/shapefile', data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       return res.data;
     } catch (err) {
@@ -50,9 +50,13 @@ class Shapefile {
     }
   }
 
-  static async delete(id) {
+  static async delete(token, id) {
     try {
-      const res = await lapsus.delete(`/shapefile/${id}`);
+      const res = await lapsus.delete(`/shapefile/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       return res.data;
     } catch (err) {
