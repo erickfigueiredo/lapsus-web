@@ -33,10 +33,10 @@
     </section>
   </base-template>
   <modal
-    v-if="isModalUpdateActive"
+    v-show="isModalUpdateActive"
     title="Atualizar Shapefile"
     size="w-1/4"
-    :key="this.shapefile.id"
+    :key="shapefile.id"
     @close="closeModal"
   >
     <shapefile-form
@@ -50,7 +50,7 @@
     v-show="isModalDeleteActive"
     title="Deletar Shapefile"
     size="w-1/4"
-    :key="this.shapefile.id"
+    :key="shapefile.id"
     @close="closeModal(true)"
   >
     <p>Tem certeza que deseja deletar "{{ shapefile.title }}"?</p>
