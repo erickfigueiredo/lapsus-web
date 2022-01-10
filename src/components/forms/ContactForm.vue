@@ -86,6 +86,7 @@
 import { mapGetters } from 'vuex';
 
 import BaseButton from '../BaseButton.vue';
+
 import Contact from '../../services/Contact';
 
 export default {
@@ -103,7 +104,7 @@ export default {
           email: '',
           subject: '',
           body: '',
-          is_vizualized: '',
+          is_visualized: '',
         };
       },
     },
@@ -124,7 +125,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['isLoggedIn', 'user']),
+    ...mapGetters(['isLoggedIn', 'user', 'token']),
   },
   methods: {
     clearForm() {
@@ -141,7 +142,7 @@ export default {
 
       let result;
       if (this.isVisualization) {
-        result = await Contact.toggleVisualization(this.id, this.$store.getters.token);
+        result = await Contact.toggleVisualization(this.token, this.id);
       } else {
         result = await Contact.create({
           sender: this.sender,
@@ -168,7 +169,7 @@ export default {
     },
   },
   mounted() {
-    if (this.isLoggedIn) {
+    if (!this.isVisualization && this.isLoggedIn) {
       this.sender = `${this.user.name} ${this.user.surname}`;
       this.email = this.user.email;
     }

@@ -53,7 +53,8 @@
     </card>
   </base-template>
   <modal
-    v-if="isModalVisualizationActive"
+    v-show="isModalVisualizationActive"
+    :key="contact.id"
     title="Visualização de Mensagem"
     size="w-4/5 md:w-2/4 lg:w-2/4"
     @close="closeModal()"
@@ -66,7 +67,8 @@
     />
   </modal>
   <modal
-    v-if="isModalDeleteActive"
+    v-show="isModalDeleteActive"
+    :key="contact.id"
     title="Deletar Mensagem"
     size="w-4/5 md:w-2/4 lg:w-1/4"
     @close="closeModal(true)"
@@ -78,6 +80,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import BaseTemplate from '../templates/BaseTemplate.vue';
 import BaseCard from '../components/BaseCard.vue';
 import BaseTable from '../components/BaseTable.vue';
@@ -111,13 +115,16 @@ export default {
       contacts: [],
       pagination: {},
 
-      contact: null,
+      contact: {},
       index: null,
     };
   },
+  computed: {
+    ...mapGetters(['token']),
+  },
   methods: {
     async paginate(page = 0) {
-      const result = await Contact.index(page);
+      const result = await Contact.index(this.token, page);
 
       if (result.success) {
         this.contacts = result.contact.data;
@@ -131,7 +138,7 @@ export default {
     },
     async deleteContact() {
       this.blockAction = true;
-      const result = await Contact.delete(this.contact.id);
+      const result = await Contact.delete(this.token, this.contact.id);
 
       if (result.success) {
         this.contacts.splice(this.index, 1);

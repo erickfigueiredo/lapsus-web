@@ -1,9 +1,13 @@
 import { lapsus, defaultErrorMessage } from './AxiosSettings';
 
 class Contact {
-  static async index(page) {
+  static async index(token, page) {
     try {
-      const res = await lapsus.get(`/contact/all?page=${page}`);
+      const res = await lapsus.get(`/contact/all?page=${page}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return res.data;
     } catch (err) {
       return err.response?.data ? err.response.data : defaultErrorMessage;
@@ -19,18 +23,26 @@ class Contact {
     }
   }
 
-  static async toggleVisualization(id) {
+  static async toggleVisualization(token, id) {
     try {
-      const res = await lapsus.patch('/contact/toggle_check', { id });
+      const res = await lapsus.patch('/contact/toggle_check', { id }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return res.data;
     } catch (err) {
       return err.response?.data ? err.response.data : defaultErrorMessage;
     }
   }
 
-  static async delete(id) {
+  static async delete(token, id) {
     try {
-      const res = await lapsus.delete(`/contact/${id}`);
+      const res = await lapsus.delete(`/contact/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return res.data;
     } catch (err) {
       return err.response?.data ? err.response.data : defaultErrorMessage;
