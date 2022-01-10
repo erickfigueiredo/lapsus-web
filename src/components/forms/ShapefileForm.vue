@@ -121,6 +121,8 @@ export default {
       } else {
         const formData = new FormData();
 
+        if (!data.desc) delete data.desc;
+
         formData.append('file', this.$refs.file.files[0]);
         formData.append('data', JSON.stringify(data));
 

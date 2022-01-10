@@ -100,6 +100,8 @@ export default {
           this.$emit('form-response', 3, result.message);
         }
       } else {
+        if (!data.desc) data.desc = undefined;
+
         const result = await Category.create(this.token, data);
 
         if (result.success) {
