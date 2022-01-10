@@ -54,10 +54,10 @@
     v-show="isModalUpdateActive"
     title="Atualizar Categoria"
     size="w-4/5 md:w-2/4 lg:w-1/4"
-    :key="category.id"
     @close="closeModal"
   >
     <category-form
+      :key="category.id"
       @form-response="showInformation"
       @form-data="updateCategory"
       :fill-data="category"
@@ -68,7 +68,6 @@
     v-show="isModalDeleteActive"
     title="Deletar Categoria"
     size="w-4/5 md:w-2/4 lg:w-1/4"
-    :key="category.id"
     @close="closeModal(true)"
   >
     <p>Tem certeza que deseja deletar "{{ category.name }}"?</p>

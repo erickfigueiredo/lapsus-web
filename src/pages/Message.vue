@@ -54,12 +54,12 @@
   </base-template>
   <modal
     v-show="isModalVisualizationActive"
-    :key="contact.id"
     title="Visualização de Mensagem"
     size="w-4/5 md:w-2/4 lg:w-2/4"
     @close="closeModal()"
   >
     <contact-form
+      :key="contact.id"
       @form-response="showInformation"
       @form-data="updateContact"
       :fill-data="contact"
@@ -68,7 +68,6 @@
   </modal>
   <modal
     v-show="isModalDeleteActive"
-    :key="contact.id"
     title="Deletar Mensagem"
     size="w-4/5 md:w-2/4 lg:w-1/4"
     @close="closeModal(true)"
