@@ -29,7 +29,7 @@
               <a :href="`mailto:${inst.email}`" class="text-gray-900">{{ inst.email }}</a>
             </td>
             <td class="px-5 py-5 border-b border-gray-200 hidden md:table-cell">
-              <span class="text-gray-900">{{ formatNumber(inst.phone) }}</span>
+              <a :href="`tel:${inst.phone}`" class="text-gray-900">{{ formatPhone(inst.phone) }}</a>
             </td>
             <td class="px-5 py-5 border-b border-gray-200 hidden md:table-cell">
               <span class="text-gray-900"
@@ -59,6 +59,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import BaseTemplate from '../templates/BaseTemplate.vue';
 import BaseCard from '../components/BaseCard.vue';
 import BaseTable from '../components/BaseTable.vue';
@@ -87,29 +89,37 @@ export default {
       pagination: {},
     };
   },
-
+  computed: {
+    ...mapGetters(['token']),
+  },
   methods: {
     addInstitution(inst) {
-      // eslint-disable-next-line no-plusplus
-      for (let i = 0; i < this.institutions.length - 1; i++) {
-        if (inst.name >= this.institutions[i].name && inst.name <= this.institutions[i + 1].name) {
-          this.institutions.splice(i + 1, 0, inst);
+      if (
+        this.institutions.length === 0
+        || inst.name >= this.institutions[this.institutions.length - 1].name
+      ) {
+        this.institutions.push(inst);
+      } else if (inst.name <= this.institutions[0].name) {
+        this.institutions.unshift(inst);
+      } else {
+        for (let i = 0; i < this.institutions.length - 1; i += 1) {
+          if (inst.name >= this.institutions[i].name && inst.name < this.institutions[i + 1].name) {
+            this.institutions.splice(i + 1, 0, inst);
+            break;
+          }
         }
       }
 
       if (this.institutions.length > this.pagination.perPage) {
         this.institutions.pop();
-      }
-
-      if (this.pagination.currentPage === this.pagination.lastPage) {
         this.pagination.lastPage += 1;
       }
     },
-    formatNumber(phone) {
+    formatPhone(phone) {
       return genericMask(phone, phone.length === 10 ? '(##) ####-####' : '(##) #####-####');
     },
     async paginate(page = 0) {
-      const result = await Institution.indexDetailed(page);
+      const result = await Institution.indexDetailed(this.token, page);
 
       if (result.success) {
         this.institutions = result.institution.data;

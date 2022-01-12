@@ -8,7 +8,20 @@
         @form-data="updateInstitution"
         :fill-data="institution"
         :to-update="true"
+        :key="institution.id"
       />
+      <template v-if="!technicians.length" >
+        <hr class="my-4" />
+        <div class="flex">
+          <button
+            class="p-2 ml-auto rounded-md text-white bg-red-500 hover:bg-red-700
+          transition delay-50 duration-300 ease-in-out"
+            @click="openModal"
+          >
+            Deletar Instituição
+          </button>
+        </div>
+      </template>
     </card>
     <card class="mb-8">
       <base-table>
@@ -43,14 +56,26 @@
       />
     </card>
   </base-template>
+  <modal
+    v-show="isModalDeleteActive"
+    title="Deletar Instituição"
+    size="w-4/5 md:w-2/4 lg:w-1/4"
+    @close="closeModal()"
+  >
+    <p>Tem certeza que deseja deletar "{{ institution.name }}"?</p>
+    <button :disabled="blockAction" @click="deleteInstitution">Sim</button>
+  </modal>
   <float-info :flag="floatData.flag" :message="floatData.message" />
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import BaseTemplate from '../templates/BaseTemplate.vue';
 import BaseCard from '../components/BaseCard.vue';
 import BaseTable from '../components/BaseTable.vue';
 import Pagination from '../components/Pagination.vue';
+import Modal from '../components/Modal.vue';
 import InstitutionForm from '../components/forms/InstitutionForm.vue';
 
 import Institution from '../services/Institution';
@@ -63,6 +88,7 @@ export default {
     BaseTable,
     InstitutionForm,
     Pagination,
+    Modal,
   },
   data() {
     return {
@@ -71,14 +97,32 @@ export default {
         message: '',
       },
 
-      institution: null,
+      institution: {},
       technicians: [],
       pagination: {},
+
+      blockAction: false,
+      isModalDeleteActive: false,
     };
+  },
+  computed: {
+    ...mapGetters(['token']),
   },
   methods: {
     updateInstitution(institution) {
       this.institution = institution;
+    },
+    async deleteInstitution() {
+      this.blockAction = true;
+
+      const result = await Institution.delete(this.token, this.institution.id);
+      if (result.success) {
+        this.$router.replace('/instituicoes');
+      } else {
+        this.showInformation(3, result.message);
+      }
+
+      this.blockAction = false;
     },
     async paginate(page = 0) {
       const result = await Technician.indexByInstitution(this.institution.id, page);
@@ -89,6 +133,12 @@ export default {
       } else {
         this.showInformation(3, result.message);
       }
+    },
+    openModal() {
+      this.isModalDeleteActive = true;
+    },
+    closeModal() {
+      this.isModalDeleteActive = false;
     },
     showInformation(flag, message) {
       this.floatData.flag = flag;
@@ -101,7 +151,7 @@ export default {
     },
   },
   async mounted() {
-    const result = await Institution.findOneById(this.$route.params.institutionId);
+    const result = await Institution.findOneById(this.token, this.$route.params.institutionId);
     if (result.success) {
       this.institution = result.institution;
 

@@ -93,7 +93,7 @@ const routes = [
     path: '/instituicoes/:institutionId',
     meta: {
       requireAuth: true,
-      allowUsers: [],
+      allowUsers: ['A'],
     },
     component: InstitutionDetails,
   },
