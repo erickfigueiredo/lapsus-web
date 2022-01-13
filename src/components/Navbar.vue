@@ -17,7 +17,7 @@
           </router-link>
         </div>
       </section>
-      <section class="my-8 text-gray-200 text-center font-semibold">
+      <section class="mt-8 text-gray-200 text-center font-semibold">
         <span>
           <font-awesome
             v-if="userType === 'A'"
@@ -44,15 +44,19 @@
         </span>
       </section>
 
+      <hr class="mx-4 my-4 border-1 border-cerulean-800">
+
       <!-- Início definição das rotas -->
       <ul class="text-gray-200">
         <li v-if="isLoggedIn">
           <router-link
             to="/"
             exact
-            class="block ml-4 my-4 border-l-8 rounded-l-lg hover:bg-cerulean-800 pr-4 p-2 transition
-            duration-200"
-            exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800 border-r-4"
+              class="block ml-4 my-4 border-l-8 rounded-l-lg hover:from-cerulean-700
+            hover:to-cerulean-900
+            hover:border-lemon-400 hover:text-lemon-400 pr-4 p-2 transition duration-200"
+            exact-active-class="bg-gradient-to-r from-cerulean-300 to-cerulean-100
+            text-cerulean-800 border-cerulean-300"
           >
             <p class="ml-12 text-base">
               <font-awesome :icon="['fas', 'caravan']" class="text-xl mr-2" />Home
@@ -63,9 +67,11 @@
           <router-link
             to="/"
             exact
-            class="block ml-4 my-4 border-l-8 rounded-l-lg hover:bg-cerulean-800 pr-4 p-2 transition
-            duration-200"
-            exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800 border-r-4"
+              class="block ml-4 my-4 border-l-8 rounded-l-lg hover:from-cerulean-700
+            hover:to-cerulean-900
+            hover:border-lemon-400 hover:text-lemon-400 pr-4 p-2 transition duration-200"
+            exact-active-class="bg-gradient-to-r from-cerulean-300 to-cerulean-100
+            text-cerulean-800 border-cerulean-300"
           >
             <p class="ml-12 text-base">
               <font-awesome :icon="['fas', 'id-card']" class="text-xl mr-2" />Usuários
@@ -74,8 +80,9 @@
         </li>
         <li>
           <div
-            class="block ml-4 my-4 border-l-8 rounded-l-lg cursor-pointer hover:bg-cerulean-800
-            pr-4 p-2 transition duration-200"
+            class="block ml-4 my-4 border-l-8 rounded-l-lg hover:from-cerulean-700
+            hover:to-cerulean-900 cursor-pointer hover:border-lemon-400
+            hover:text-lemon-400 pr-4 p-2 transition duration-200"
             @click="isDockOpen = !isDockOpen"
           >
             <p class="ml-12 text-base">
@@ -135,9 +142,11 @@
         <li v-if="isLoggedIn && ['A', 'T'].includes(userType)">
           <router-link
             to="/categorias"
-            class="block ml-4 my-4 border-l-8 rounded-l-lg hover:bg-cerulean-800 pr-4 p-2 transition
-            duration-200"
-            exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800 border-r-4"
+              class="block ml-4 my-4 border-l-8 rounded-l-lg hover:from-cerulean-700
+            hover:to-cerulean-900
+            hover:border-lemon-400 hover:text-lemon-400 pr-4 p-2 transition duration-200"
+            exact-active-class="bg-gradient-to-r from-cerulean-300 to-cerulean-100
+            text-cerulean-800 border-cerulean-300"
           >
             <p class="ml-12 text-base">
               <font-awesome :icon="['fas', 'tasks']" class="text-xl mr-2" />Categorias
@@ -146,10 +155,13 @@
         </li>
         <li>
           <router-link
+            v-if="isLoggedIn && userType === 'A'"
             to="/instituicoes"
-            class="block ml-4 my-4 border-l-8 rounded-l-lg hover:bg-cerulean-800 pr-4 p-2 transition
-            duration-200"
-            exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800 border-r-4"
+              class="block ml-4 my-4 border-l-8 rounded-l-lg hover:from-cerulean-700
+            hover:to-cerulean-900
+            hover:border-lemon-400 hover:text-lemon-400 pr-4 p-2 transition duration-200"
+            exact-active-class="bg-gradient-to-r from-cerulean-300 to-cerulean-100
+            text-cerulean-800 border-cerulean-300"
           >
             <p class="ml-12 text-base">
               <font-awesome :icon="['fas', 'landmark']" class="text-xl mr-2" />Instituições
@@ -160,9 +172,11 @@
           <router-link
             v-if="isLoggedIn && ['A', 'T'].includes(userType)"
             to="/mensagens"
-            class="block ml-4 my-4 border-l-8 rounded-l-lg hover:bg-cerulean-800 pr-4 p-2 transition
-            duration-200"
-            exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800 border-r-4"
+              class="block ml-4 my-4 border-l-8 rounded-l-lg hover:from-cerulean-700
+            hover:to-cerulean-900
+            hover:border-lemon-400 hover:text-lemon-400 pr-4 p-2 transition duration-200"
+            exact-active-class="bg-gradient-to-r from-cerulean-300 to-cerulean-100
+            text-cerulean-800 border-cerulean-300"
           >
             <p class="ml-12 text-base">
               <font-awesome :icon="['fas', 'envelope-open-text']" class="text-xl mr-2" />Mensagens
@@ -171,9 +185,11 @@
           <router-link
             v-else
             to="/mensagens/nova"
-            class="block ml-4 my-4 border-l-8 rounded-l-lg hover:bg-cerulean-800 pr-4 p-2 transition
-            duration-200"
-            exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800 border-r-4"
+              class="block ml-4 my-4 border-l-8 rounded-l-lg hover:from-cerulean-700
+            hover:to-cerulean-900
+            hover:border-lemon-400 hover:text-lemon-400 pr-4 p-2 transition duration-200"
+            exact-active-class="bg-gradient-to-r from-cerulean-300 to-cerulean-100
+            text-cerulean-800 border-cerulean-300"
           >
             <p class="ml-12 text-base">
               <font-awesome :icon="['fas', 'paper-plane']" class="text-xl mr-2" />Enviar Mensagem
@@ -183,9 +199,11 @@
         <li v-if="isLoggedIn && userType === 'A'">
           <router-link
             to="/shapefiles"
-            class="block ml-4 my-4 border-l-8 rounded-l-lg hover:bg-cerulean-800 pr-4 p-2 transition
-            duration-200"
-            exact-active-class="border-lemon-400 text-lemon-400 bg-cerulean-800 border-r-4"
+            class="block ml-4 my-4 border-l-8 rounded-l-lg hover:from-cerulean-700
+            hover:to-cerulean-900
+            hover:border-lemon-400 hover:text-lemon-400 pr-4 p-2 transition duration-200"
+            exact-active-class="bg-gradient-to-r from-cerulean-300 to-cerulean-100
+            text-cerulean-800 border-cerulean-300"
           >
             <p class="ml-12 text-base">
               <font-awesome :icon="['fas', 'layer-group']" class="text-xl mr-2" />Shapefiles
