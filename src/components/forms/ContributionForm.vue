@@ -11,6 +11,7 @@
         class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
         outline-none border-2 border-gray-200 focus:border-gray-400
         capitalize truncate"
+        required
       >
         <option
           v-for="cat in categoryList"
@@ -26,14 +27,14 @@
         Risco de Dano à Pessoas ou Materiais:
       </label>
       <span class="mx-2">{{ risk ? "Sim" : "Não" }}</span>
-      <input id="risk" name="risk" type="checkbox" class="toggle" v-model="risk" />
+      <input id="risk" name="risk" type="checkbox" class="toggle" v-model="risk"/>
     </div>
     <div class="flex my-4 ">
       <label for="victims" class="text-gray-500 font-semibold">
         Pessoas Feridas ou Desaparecidas:
       </label>
       <span class="mx-2">{{ victims ? "Sim" : "Não" }}</span>
-      <input id="victims" name="victims" type="checkbox" class="toggle" v-model="victims" />
+      <input id="victims" name="victims" type="checkbox" class="toggle" v-model="victims"/>
     </div>
     <div class="my-4">
       <label for="occurrence" class="block my-2 text-gray-500 font-semibold">
@@ -124,13 +125,13 @@ export default {
       this.blockAction = true;
 
       const data = {
-        id_category: this.id_category,
-        occurrence: this.occurrence,
-        desc: this.desc,
+        id_category: this.id_category || undefined,
+        occurrence: this.occurrence || undefined,
+        desc: this.desc || undefined,
         risk_damage: this.risk,
         victims: this.victims,
         local: this.coords,
-        id_collaborator: 2,
+        id_collaborator: this.$store.getters.user?.id,
       };
 
       const formData = new FormData();
@@ -143,7 +144,7 @@ export default {
       const result = await Contribution.create(formData);
       if (result.success) {
         this.clearForm();
-        this.$emit('form-response', 1, 'Categoria cadastrada com sucesso!');
+        this.$emit('form-response', 1, 'Contribuição cadastrada com sucesso!');
       } else {
         this.$emit('form-response', 3, result.message);
       }
