@@ -90,7 +90,7 @@ export default {
   components: {
     BaseButton,
   },
-  emits: ['form-response'],
+  emits: ['form-response', 'next-action'],
   props: {
     categoryList: {
       type: Array,
@@ -144,6 +144,7 @@ export default {
       const result = await Contribution.create(formData);
       if (result.success) {
         this.clearForm();
+        this.$emit('next-action');
         this.$emit('form-response', 1, 'Contribuição cadastrada com sucesso!');
       } else {
         this.$emit('form-response', 3, result.message);
