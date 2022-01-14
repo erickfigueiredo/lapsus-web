@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submitForm" class="my-4">
+  <form @submit.prevent="submitForm" class="my-4" novalidate>
     <!-- ==========================Evento============================ -->
     <div v-show="step === 0">
       <jumbotron>
@@ -836,7 +836,7 @@
       </div>
       <hr class="my-4" />
       <!-- Se não existir nem mostra -->
-      <template v-if="contributionList">
+      <template v-if="contributionList.length">
         <!-- Contribuição Associada -->
         <div class="my-4">
           <label for="context_desc" class="block my-2 text-gray-500 font-semibold">
@@ -851,17 +851,20 @@
           >
             <option value="" disabled selected hidden>Selecione o risco...</option>
             <option v-for="(contribution, i) in contributionList" :key="i" :value="contribution.id">
-              {{ `${contribution.id} - ${contribution.desc}` }}
+              {{ `${contribution.id} - ${contribution.category}` }}
             </option>
           </select>
         </div>
       </template>
-      <base-button name="Cadastrar Contribuição" :isBlocked="blockAction" />
     </div>
     <div class="flex my-4 justify-between bg-gray-100 border-2 border-gray-300 rounded-md p-2">
       <button
-        class="p-2 rounded-md ease-in-out bg-gray-600 font-semibold
-          hover:text-white text-lemon-400 hover:bg-lemon-500"
+        :class="
+          step < 1
+            ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
+            : 'bg-gray-600 hover:text-white text-lemon-400 hover:bg-lemon-500'
+        "
+        class="p-2 rounded-md ease-in-out  font-semibold"
         type="button"
         @click="stepControl(-1)"
         :disabled="step < 1"
@@ -869,8 +872,12 @@
         Anterior
       </button>
       <button
-        class="p-2 rounded-md ease-in-out bg-gray-600 font-semibold
-          hover:text-white text-lemon-400 hover:bg-lemon-500"
+        :class="
+          step > 6
+            ? 'bg-gray-400 text-gray-700 cursor-not-allowed'
+            : 'bg-gray-600 hover:text-white text-lemon-400 hover:bg-lemon-500'
+        "
+        class="p-2 rounded-md ease-in-out  font-semibold"
         type="button"
         @click="stepControl(1)"
         :disabled="step > 6"
@@ -878,6 +885,7 @@
         Próximo
       </button>
     </div>
+    <base-button v-if="step === 7" name="Cadastrar Contribuição" :isBlocked="blockAction" />
   </form>
 </template>
 
@@ -891,7 +899,7 @@ export default {
     BaseButton,
     Jumbotron,
   },
-  emits: ['form-response'],
+  emits: ['form-response', 'next-action'],
   props: {
     geometry: {
       type: String,
@@ -923,7 +931,7 @@ export default {
     },
     contributionList: {
       type: Array,
-      require: false, // Ver isso
+      require: true,
     },
     typeList: {
       type: Object,
@@ -980,6 +988,38 @@ export default {
   methods: {
     clearForm() {
       this.step = 0;
+
+      this.event = {
+        certainty: null,
+        decl_datime: '',
+        occ_time: '',
+        scale: '',
+        risk_assessmnt: '',
+        status: '',
+        cause: '',
+        freetext: '',
+      };
+
+      this.context = {
+        urgency: '',
+        freetext: '',
+      };
+
+      this.egeo = {
+        datime: '',
+        type: '',
+        subtype: '',
+        freetext: '',
+      };
+
+      this.fields = {
+        actors: [],
+        casualties: [],
+        evacs: [],
+        externalInfos: [],
+        loctypes: [],
+        weathers: [],
+      };
     },
     addActors() {
       this.fields.actors.push({
@@ -1129,13 +1169,12 @@ export default {
         }
       }
 
-      data.position = this.geometry;
-
       formData.append('data', JSON.stringify(data));
 
-      const result = await EMSI.create(formData);
+      const result = await EMSI.create(formData, this.$store.getters.token);
       if (result.success) {
-        // Limpa o form
+        this.clearForm();
+        this.$emit('next-action');
         this.$emit('form-response', 1, result.message);
       } else {
         this.$emit('form-response', 3, result.message);

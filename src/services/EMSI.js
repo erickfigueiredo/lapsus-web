@@ -1,19 +1,24 @@
 import { lapsus, defaultErrorMessage } from './AxiosSettings';
 
 class EMSI {
-  static async list() {
+  static async list(token) {
     try {
-      const res = await lapsus.get('/emsi/lists');
+      const res = await lapsus.get('/emsi/lists', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return res.data;
     } catch (err) {
       return err.response?.data ? err.response.data : defaultErrorMessage;
     }
   }
 
-  static async create(data) {
+  static async create(data, token) {
     try {
       const res = await lapsus.post('/emsi', data, {
         headers: {
+          Authorization: `Bearer ${token}`,
           Accepts: 'application/json',
           'Content-Type': 'multipart/form-data',
         },
