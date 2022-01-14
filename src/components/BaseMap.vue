@@ -17,6 +17,8 @@ import shp from 'shpjs';
 
 import Shapefile from '../services/Shapefile';
 
+import genHexColor from '../utils/colorGenerator';
+
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
@@ -66,8 +68,7 @@ export default {
         polygon() {
           that.geometry = 'POLYGON ((';
 
-          // eslint-disable-next-line no-plusplus
-          for (let i = 0; i < layer._latlngs[0].length; i++) {
+          for (let i = 0; i < layer._latlngs[0].length; i += 1) {
             that.geometry += `${layer._latlngs[0][i].lat} ${layer._latlngs[0][i].lng}`;
             if (i < layer._latlngs[0].length - 1) that.geometry += ',';
             else that.geometry += `,${layer._latlngs[0][0].lat} ${layer._latlngs[0][0].lng}))`;
@@ -76,8 +77,7 @@ export default {
         polyline() {
           that.geometry = 'LINESTRING (';
 
-          // eslint-disable-next-line no-plusplus
-          for (let i = 0; i < layer._latlngs.length; i++) {
+          for (let i = 0; i < layer._latlngs.length; i += 1) {
             that.geometry += `${layer._latlngs[i].lat} ${layer._latlngs[i].lng}`;
             if (i < layer._latlngs.length - 1) that.geometry += ',';
             else that.geometry += ')';
@@ -93,9 +93,6 @@ export default {
     sendCoords() {
       if (this.finishDraw) {
         this.finishDraw = false;
-
-        console.log(this.geometry);
-
         this.$emit('finish-draw', this.geometry);
       }
     },
@@ -134,22 +131,9 @@ export default {
       zoom: 15,
     });
 
-    L.control.layers(baseMap, null, { collapse: true }).addTo(map);
+    const layerControl = L.control.layers(baseMap, null, { collapse: true }).addTo(map);
 
-    const shapes = await Shapefile.index('y');
-
-    if (shapes.success) {
-      shapes.shapefile.forEach((s) => {
-        shp(s.uri).then((data) => {
-          L.geoJSON(data, {
-            style() {
-              return { color: '#4361ee' };
-            },
-          }).addTo(map);
-        });
-      });
-    }
-
+    // INÍCIO Plugin - Desenho no Mapa
     const drawnItems = new L.FeatureGroup();
     map.addLayer(drawnItems);
 
@@ -201,7 +185,35 @@ export default {
     map.on('draw:created', this.drawFigure);
     map.on('draw:drawstop', this.sendCoords);
 
+    // FIM Plugin - Desenho no Mapa
+
     L.control.scale({ metric: true, imperial: false }).addTo(map);
+
+    // INÍCIO - Indexação de Shapefiles
+    const shapes = await Shapefile.index('y');
+    if (shapes.success) {
+      shapes.shapefile.forEach((s) => {
+        const randomColor = genHexColor();
+
+        shp(s.uri).then((data) => {
+          let shpName = data.fileName.replaceAll(/[-_]/g, ' ');
+
+          if (shpName.length > 25) { shpName = `${shpName.slice(0, 26)}...`; }
+
+          layerControl.addOverlay(
+            L.geoJSON(data, {
+              style() {
+                return { color: randomColor };
+              },
+            }), shpName,
+          );
+        }).catch((err) => {
+          console.warn('Um ou mais arquivos não possuem layers!', err);
+        });
+      });
+    }
+
+    // FIM - Indexação de Shapefiles
 
     this.map = map;
   },

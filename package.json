@@ -18,6 +18,7 @@
     "leaflet": "^1.7.1",
     "leaflet-draw": "^1.0.4",
     "postcss": "^7",
+    "shpjs": "^4.0.2",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
     "vue": "^3.0.0",
     "vue-router": "^4.0.3",
