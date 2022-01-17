@@ -10,17 +10,13 @@
     :disabled="isBlocked"
   >
     <font-awesome v-if="isBlocked" :icon="['fas', 'spinner']" class="text-lg text-white" spin />
-    <span v-else>{{ name }}</span>
+      <slot />
   </button>
 </template>
 
 <script>
 export default {
   props: {
-    name: {
-      type: String,
-      required: true,
-    },
     isBlocked: {
       type: Boolean,
       default: false,

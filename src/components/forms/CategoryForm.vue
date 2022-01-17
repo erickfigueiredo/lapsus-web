@@ -31,7 +31,9 @@
         outline-none border-2 border-gray-200 focus:border-gray-400"
       />
     </div>
-    <base-button :name="toUpdate ? 'Atualizar' : 'Cadastrar'" :isBlocked="blockAction" />
+    <base-button :isBlocked="blockAction">
+      {{ toUpdate ? "Atualizar" : "Cadastrar" }}
+    </base-button>
   </form>
 </template>
 

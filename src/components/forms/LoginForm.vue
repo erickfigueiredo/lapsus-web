@@ -30,7 +30,9 @@
         required
       />
     </div>
-    <base-button name="Login" :isBlocked="blockAction" />
+    <base-button :isBlocked="blockAction">
+      Login
+    </base-button>
   </form>
   <router-link to="/cadastro" class="block text-sm text-center text-gray-400 hover:text-lemon-500">
     Não tem uma conta? Cadastre-se

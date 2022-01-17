@@ -46,7 +46,9 @@
         required
       />
     </div>
-    <base-button :name="toUpdate ? 'Atualizar': 'Cadastrar'" :isBlocked="blockAction" />
+    <base-button :isBlocked="blockAction">
+      {{ toUpdate ? 'Atualizar' : 'Cadastrar' }}
+    </base-button>
   </form>
 </template>
 

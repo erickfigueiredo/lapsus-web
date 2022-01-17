@@ -69,16 +69,15 @@
         required
       />
     </div>
-    <base-button
-      :name="
+    <base-button :isBlocked="blockAction">
+      {{
         !isVisualization
-          ? 'Enviar Mensagem'
+          ? "Enviar Mensagem"
           : is_visualized
-          ? 'Marcar com Não Lido'
-          : 'Marcar como Lido'
-      "
-      :isBlocked="blockAction"
-    />
+          ? "Marcar com Não Lido"
+          : "Marcar como Lido"
+      }}
+    </base-button>
   </form>
 </template>
 

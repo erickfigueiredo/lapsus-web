@@ -885,7 +885,9 @@
         Próximo
       </button>
     </div>
-    <base-button v-if="step === 7" name="Cadastrar Contribuição" :isBlocked="blockAction" />
+    <base-button v-if="step === 7" :isBlocked="blockAction">
+      Cadastrar Contribuição
+    </base-button>
   </form>
 </template>
 

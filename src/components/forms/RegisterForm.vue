@@ -79,7 +79,7 @@
         />
       </div>
     </div>
-    <p class="text-sm text-right text-gray-400 cursor-pointer" @click="toggleVisiblePassword">
+    <p class="text-sm text-right text-gray-400 cursor-pointer my-2" @click="toggleVisiblePassword">
       {{ passwordVisible ? "Ocultar" : "Mostrar" }} senha
     </p>
     <div v-if="passwordConflict" class="border-2 border-red-500 bg-red-300 p-2 rounded-lg">
@@ -87,7 +87,9 @@
         As senhas não coincidem!
       </p>
     </div>
-    <base-button name="Cadastrar" :isBlocked="blockAction || passwordConflict" />
+    <base-button :isBlocked="blockAction || passwordConflict">
+      Cadastrar
+    </base-button>
   </form>
   <router-link to="/login" class="block text-sm text-center text-gray-400 hover:text-lemon-500">
     Já possui uma conta? Faça login
@@ -163,7 +165,7 @@ export default {
           this.$emit('form-response', 3, result.message);
         }
       } else {
-        this.$emit('form-response', 2, 'As senhas não coincidem');
+        this.$emit('form-response', 2, 'As senhas não coincidem!');
       }
 
       this.blockAction = false;
