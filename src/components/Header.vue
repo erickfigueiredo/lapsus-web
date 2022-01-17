@@ -11,9 +11,7 @@
       <!-- Mudar a tag button -->
       <div class="ml-auto my-auto">
         <!-- Mudar isso de escrever o nome e a questão da rota -->
-        <span v-if="$store.getters['userName']" class="text-white align-middle">
-          Olá, {{ $store.getters["userName"] }}
-        </span>
+        <span class="text-white align-middle"> Olá, {{ $store.getters["userName"] }} </span>
         <button
           class="ml-4 bg-white rounded-full w-10 h-10 shadow-md mr-4 lg:mr-12"
           @click="isActiveMenu = !isActiveMenu"
@@ -28,22 +26,33 @@
   </header>
   <div v-if="isActiveMenu" class="absolute top-12 right-4 shadow-md rounded-lg z-20 lg:right-12">
     <div class="absolute -top-2 right-7 bg-white h-4 w-4 transform rotate-45" />
-    <section class="bg-white rounded-lg">
-      <ul>
-        <li class="px-6 py-2">
+    <section class="bg-white rounded-lg text-gray-700">
+      <ul v-if="$store.getters.isLoggedIn">
+        <li
+          class="px-6 py-2 rounded-t-lg hover:bg-gray-400 hover:text-white transition
+        duration-200"
+        >
           <router-link to="/perfil" @click="closeMenu">Perfil</router-link>
         </li>
-        <li class="px-6 py-2">
+        <li class="px-6 py-2 hover:bg-gray-400 hover:text-white transition duration-200">
           <router-link to="/configuracoes" @click="closeMenu">Configurações</router-link>
         </li>
-        <router-link to="/login" @click="logout">
-          <li
-            class="px-6 py-2 text-red-500 hover:bg-red-500 rounded-b-lg hover:text-white
-          font-semibold"
-          >
-            Sair
-          </li>
-        </router-link>
+        <li
+          class="px-6 block cursor-pointer py-2 text-red-500 hover:bg-red-500 rounded-b-lg
+          hover:text-white font-semibold transition duration-200"
+          @click="logout"
+        >
+          Sair
+        </li>
+      </ul>
+      <ul v-else>
+        <li>
+          <router-link to="/cadastro" class="block px-6 p-2">Cadastre-se</router-link>
+        </li>
+        <li>
+          <router-link to="/login" class="block px-6 p-2 text-red-500 hover:bg-red-500 rounded-b-lg
+          hover:text-white font-semibold transition duration-200">Sair</router-link>
+        </li>
       </ul>
     </section>
   </div>
@@ -65,7 +74,7 @@ export default {
     logout() {
       this.closeMenu();
       this.$store.dispatch('logout');
-      this.$router.push('/login');
+      this.$router.replace('/login');
     },
   },
 };

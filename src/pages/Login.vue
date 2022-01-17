@@ -9,7 +9,14 @@
       <login-form @form-response="showInformation" />
     </template>
   </facade-template>
-  <p @click="test" class="text-center">{{$store.state.counter}}</p>
+  <div
+    class="fixed right-2 md:right-8 rounded-lg bottom-2 md:bottom-8 p-2 bg-cerulean-700
+    hover:bg-green-500 animate-bounce transition duration-200"
+  >
+    <router-link to="/contribuicao" class="text-white font-semibold">
+      Faça uma contribuição no mapa!
+    </router-link>
+  </div>
   <float-info :flag="floatData.flag" :message="floatData.message" />
 </template>
 
