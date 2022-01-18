@@ -11,8 +11,7 @@
         v-model="name"
         placeholder="Informe um nome"
         spellcheck="true"
-        class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+        class="form-control"
         required
       />
     </div>
@@ -27,8 +26,7 @@
         rows="9"
         placeholder="Informe uma breve descrição"
         spellcheck="true"
-        class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+        class="form-control"
       />
     </div>
     <base-button :isBlocked="blockAction">

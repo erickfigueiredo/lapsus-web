@@ -3,3 +3,11 @@
 @tailwind components;
 
 @tailwind utilities;
+
+
+@layer components {
+    .form-control {
+        @apply w-full p-2 bg-gray-100 text-gray-600 rounded-md outline-none border-2 
+        border-gray-200 focus:border-gray-400 disabled:bg-gray-200;
+    }
+}

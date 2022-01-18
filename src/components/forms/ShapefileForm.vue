@@ -11,8 +11,7 @@
         v-model="title"
         placeholder="Informe um Título"
         spellcheck="true"
-        class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+        class="form-control"
         required
       />
     </div>
@@ -27,8 +26,7 @@
         rows="5"
         placeholder="Informe uma breve descrição"
         spellcheck="true"
-        class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+        class="form-control"
       />
     </div>
     <div v-if="!toUpdate" class="my-4">
@@ -41,8 +39,7 @@
         name="shape"
         ref="file"
         accept=".zip"
-        class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+        class="form-control"
         required
       />
     </div>

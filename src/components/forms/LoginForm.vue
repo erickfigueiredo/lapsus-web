@@ -10,8 +10,7 @@
         name="email"
         v-model="email"
         placeholder="email@exemplo.com"
-        class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-              outline-none border-2 border-gray-200 focus:border-gray-400"
+        class="form-control"
         required
       />
     </div>
@@ -25,8 +24,7 @@
         name="password"
         v-model="password"
         placeholder="********"
-        class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-              outline-none border-2 border-gray-200 focus:border-gray-400"
+        class="form-control"
         required
       />
     </div>

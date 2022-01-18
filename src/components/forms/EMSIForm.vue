@@ -17,8 +17,7 @@
               name="event_decl"
               v-model="event.decl_datime"
               type="datetime-local"
-              class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+              class="form-control"
             />
           </div>
           <!-- OCC DATIME -->
@@ -31,8 +30,7 @@
               name="event_occ"
               v-model="event.occ_datime"
               type="datetime-local"
-              class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+              class="form-control"
             />
           </div>
         </div>
@@ -48,8 +46,7 @@
             type="range"
             min="0"
             max="100"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
           />
         </div>
         <!-- STATUS -->
@@ -61,8 +58,7 @@
             id="event_status"
             name="event_status"
             v-model="event.status"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
           >
             <option value="" disabled selected hidden>Selecione uma situação...</option>
             <option v-for="(status, i) in statusList" :key="i" :value="status.status">
@@ -80,8 +76,7 @@
               id="event_risk"
               name="event_risk"
               v-model="event.risk_assessmnt"
-              class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+              class="form-control"
             >
               <option value="" disabled selected hidden>Selecione o risco...</option>
               <option v-for="(risk, i) in riskList" :key="i" :value="risk.risk_assessmnt">
@@ -98,8 +93,7 @@
               id="event_cause"
               name="event_cause"
               v-model="event.cause"
-              class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+              class="form-control"
             >
               <option value="" disabled selected hidden>Selecione a causa...</option>
               <option v-for="(cause, i) in causeList" :key="i" :value="cause.cause">
@@ -124,8 +118,7 @@
             id="event_scale"
             name="event_scale"
             v-model="event.scale"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
           >
             <option value="" disabled selected hidden>Selecione o nível...</option>
             <option v-for="(scale, i) in scaleList" :key="i" :value="scale.scale" class="truncate">
@@ -143,8 +136,7 @@
             name="event_desc"
             v-model="event.freetext"
             spellcheck="true"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
           />
         </div>
         <!-- ==========================Context============================ -->
@@ -221,8 +213,7 @@
             name="egeo_time"
             v-model="egeo.datime"
             type="datetime-local"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
           />
         </div>
         <!-- EGEO FreeText -->
@@ -235,8 +226,7 @@
             name="egeo_desc"
             v-model="egeo.freetext"
             spellcheck="true"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
           />
         </div>
         <!-- Type -->
@@ -250,8 +240,7 @@
               name="egeo_type"
               v-model="egeo.type"
               @click="egeo.subtype = ''"
-              class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+              class="form-control"
             >
               <option value="" disabled selected hidden>Selecione o tipo...</option>
               <option v-for="(type, i) in typeList" :key="i" :value="i">
@@ -268,8 +257,7 @@
               id="egeo_subtype"
               name="egeo_subtype"
               v-model="egeo.subtype"
-              class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+              class="form-control"
               :disabled="!egeo.type"
             >
               <template v-if="egeo.type">
@@ -314,8 +302,7 @@
               :name="`wth_${i}_type`"
               @click="weather.subweather = ''"
               v-model="weather.weather"
-              class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+              class="form-control"
             >
               <option value="" disabled selected hidden>Selecione o tipo de local...</option>
               <option v-for="(wth, i) in weatherList" :key="i" :value="i">
@@ -331,8 +318,7 @@
               :id="`wth_${i}_subtype`"
               :name="`wth_${i}_subtype`"
               v-model="weather.subweather"
-              class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+              class="form-control"
               :disabled="!weather.weather"
             >
               <template v-if="weather.weather">
@@ -389,8 +375,7 @@
             :name="`loc_${i}_type`"
             @click="loctype.subloctype = ''"
             v-model="loctype.loctype"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
           >
             <option value="" disabled selected hidden>Selecione o tipo de local...</option>
             <option v-for="(loc, i) in loctypeList" :key="i" :value="i">
@@ -406,8 +391,7 @@
             :id="`loc_${i}_subtype`"
             :name="`loc_${i}_subtype`"
             v-model="loctype.subloctype"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
             :disabled="!loctype.loctype"
           >
             <template v-if="loctype.loctype">
@@ -470,8 +454,7 @@
               actor.actornv3 = '';
             "
             v-model="actor.actor"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
           >
             <option value="" disabled selected hidden>Selecione o tipo...</option>
             <option v-for="(act, i) in actorList" :key="i" :value="i">
@@ -488,8 +471,7 @@
             :name="`act_${i}_nv2`"
             @click="actor.actornv3 = ''"
             v-model="actor.actornv2"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
             :disabled="!actor.actor"
           >
             <template v-if="actor.actor">
@@ -511,8 +493,7 @@
             :id="`act_${i}_nv3`"
             :name="`act_${i}_nv3`"
             v-model="actor.actornv3"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
             :disabled="!actor.actornv2"
           >
             <template v-if="actor.actornv2">
@@ -568,8 +549,7 @@
             :name="`evacs_${i}_datime`"
             v-model="fields.evacs[i].datime"
             type="datetime-local"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
           />
         </div>
         <div class="sm:flex sm:space-x-4 my-4">
@@ -584,8 +564,7 @@
               type="number"
               min="0"
               placeholder="Número de Pessoas"
-              class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+              class="form-control"
             />
           </div>
           <div class="w-full">
@@ -599,8 +578,7 @@
               type="number"
               min="0"
               placeholder="Número de Pessoas"
-              class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+              class="form-control"
             />
           </div>
         </div>
@@ -645,8 +623,7 @@
             :id="`casualties_${i}_context`"
             :name="`casualties_${i}_context`"
             v-model="fields.casualties[i].context"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
           >
             <option value="" disabled selected hidden>Selecione o tipo...</option>
             <option v-for="(c, i) in casualtiesList" :key="i" :value="c.context">
@@ -663,8 +640,7 @@
             :name="`casualties_${i}_datime`"
             v-model="fields.casualties[i].datime"
             type="datetime-local"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
           />
         </div>
         <div class="sm:flex sm:space-x-4 my-4">
@@ -682,8 +658,7 @@
               type="number"
               min="0"
               placeholder="Número de Pessoas"
-              class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+              class="form-control"
             />
           </div>
           <div class="w-full">
@@ -700,8 +675,7 @@
               type="number"
               min="0"
               placeholder="Número de Pessoas"
-              class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+              class="form-control"
             />
           </div>
         </div>
@@ -720,8 +694,7 @@
               type="number"
               min="0"
               placeholder="Número de Pessoas"
-              class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+              class="form-control"
             />
           </div>
           <div class="w-full">
@@ -738,8 +711,7 @@
               type="number"
               min="0"
               placeholder="Número de Pessoas"
-              class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+              class="form-control"
             />
           </div>
           <div class="w-full">
@@ -753,8 +725,7 @@
               type="number"
               min="0"
               placeholder="Número de Pessoas"
-              class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+              class="form-control"
             />
           </div>
         </div>
@@ -798,8 +769,7 @@
             :name="`external_${i}_file`"
             :ref="`external_${i}`"
             type="file"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
           />
         </div>
         <div class="">
@@ -811,8 +781,7 @@
             :name="`external_${i}_desc`"
             v-model="fields.externalInfos[i].freetext"
             spellcheck="true"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
           />
         </div>
       </div>
@@ -846,8 +815,7 @@
             id="contribution_assoc"
             name="contribution_assoc"
             v-model="id_contribution"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
           >
             <option value="" disabled selected hidden>Selecione o risco...</option>
             <option v-for="(contribution, i) in contributionList" :key="i" :value="contribution.id">

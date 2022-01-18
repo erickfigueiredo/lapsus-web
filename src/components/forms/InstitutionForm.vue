@@ -17,8 +17,7 @@
         v-model="name"
         placeholder="Nome da Instituição"
         spellcheck="true"
-        class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+        class="form-control"
         :disabled="!isEnabled"
         required
       />
@@ -34,8 +33,7 @@
           name="email"
           v-model="email"
           placeholder="E-mail da Instituição"
-          class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+          class="form-control"
           :disabled="!isEnabled"
           required
         />

@@ -12,8 +12,7 @@
             name="collaborator"
             :value="collaborator"
             placeholder="Nome do Colaborador"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
             disabled
           />
         </div>
@@ -26,8 +25,7 @@
             type="text"
             name="ocurrence"
             :value="occurrence"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
             disabled
           />
         </div>
@@ -68,8 +66,7 @@
             name="victims"
             :value="this.fillData.victims ? 'SIM' : 'NÃO'"
             placeholder="Nome do Colaborador"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
             disabled
           />
         </div>
@@ -82,8 +79,7 @@
             type="text"
             name="risk"
             :value="this.fillData.risk_damage ? 'SIM' : 'NÃO'"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
             disabled
           />
         </div>
@@ -98,8 +94,7 @@
           rows="4"
           placeholder="Descrição"
           :value="fillData.desc"
-          class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+          class="form-control"
           disabled
         />
       </div>
@@ -127,8 +122,7 @@
             name="manager"
             :value="manager"
             placeholder="Nome do Avaliador"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
             disabled
           />
         </div>
@@ -142,8 +136,7 @@
             name="status"
             :value="situation"
             placeholder="Status da Colaboração"
-            class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+            class="form-control"
             disabled
           />
         </div>

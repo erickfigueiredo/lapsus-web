@@ -8,8 +8,7 @@
         id="category"
         name="category"
         v-model="id_category"
-        class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400
+        class="form-control
         capitalize truncate"
         required
       >
@@ -45,8 +44,7 @@
         name="occurrence"
         v-model="occurrence"
         type="datetime-local"
-        class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+        class="form-control"
       />
     </div>
     <div class="my-4">
@@ -58,8 +56,7 @@
         name="annexes"
         type="file"
         ref="files"
-        class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+        class="form-control"
         multiple
       />
     </div>
@@ -73,8 +70,7 @@
         v-model="desc"
         rows="4"
         spellcheck="true"
-        class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+        class="form-control"
       />
     </div>
     <base-button :isBlocked="blockAction">

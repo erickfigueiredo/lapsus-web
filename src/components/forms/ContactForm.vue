@@ -12,8 +12,7 @@
           v-model="sender"
           placeholder="Informe seu nome"
           spellcheck="true"
-          class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+          class="form-control"
           :disabled="isVisualization || isLoggedIn"
           required
         />
@@ -28,8 +27,7 @@
           name="email"
           v-model="email"
           placeholder="Informe seu e-mail"
-          class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+          class="form-control"
           :disabled="isVisualization || isLoggedIn"
           required
         />
@@ -46,8 +44,7 @@
         v-model="subject"
         placeholder="Informe o assunto"
         spellcheck="true"
-        class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+        class="form-control"
         :disabled="isVisualization"
         required
       />
@@ -63,8 +60,7 @@
         rows="6"
         placeholder="Escreva sua mensagem..."
         spellcheck="true"
-        class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+        class="form-control"
         :disabled="isVisualization"
         required
       />

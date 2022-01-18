@@ -11,8 +11,7 @@
         v-model="name"
         placeholder="Informe um nome"
         spellcheck="true"
-        class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+        class="form-control"
         required
       />
     </div>
@@ -26,8 +25,7 @@
         name="phone"
         v-model="phone"
         placeholder="Informe o telefone"
-        class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-        outline-none border-2 border-gray-200 focus:border-gray-400"
+        class="form-control"
         required
       />
     </div>

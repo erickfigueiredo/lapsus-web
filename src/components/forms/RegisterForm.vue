@@ -11,8 +11,7 @@
           name="name"
           v-model="name"
           placeholder="Seu nome"
-          class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-              outline-none border-2 border-gray-200 focus:border-gray-400"
+          class="form-control"
           required
         />
       </div>
@@ -26,8 +25,7 @@
           name="surname"
           v-model="surname"
           placeholder="Sobrenome"
-          class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-              outline-none border-2 border-gray-200 focus:border-gray-400"
+          class="form-control"
           required
         />
       </div>
@@ -42,8 +40,7 @@
         name="email"
         v-model="email"
         placeholder="email@exemplo.com"
-        class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-              outline-none border-2 border-gray-200 focus:border-gray-400"
+        class="form-control"
         required
       />
     </div>
@@ -58,8 +55,7 @@
           name="password"
           v-model="password"
           placeholder="Sua senha"
-          class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-              outline-none border-2 border-gray-200 focus:border-gray-400"
+          class="form-control"
           required
         />
       </div>
@@ -73,8 +69,7 @@
           name="passwordConf"
           v-model="passwordConf"
           placeholder="Digite novamente"
-          class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-              outline-none border-2 border-gray-200 focus:border-gray-400"
+          class="form-control"
           required
         />
       </div>
