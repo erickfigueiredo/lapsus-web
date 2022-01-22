@@ -94,7 +94,7 @@
 <script>
 import BaseButton from '../BaseButton.vue';
 
-import Registered from '../../services/users/Registered';
+import User from '../../services/users/User';
 
 export default {
   components: {
@@ -146,7 +146,7 @@ export default {
     async submitForm() {
       this.blockAction = true;
       if (this.password === this.passwordConf) {
-        const result = await Registered.create({
+        const result = await User.create({
           name: this.name,
           surname: this.surname,
           email: this.email,
