@@ -1,24 +1,28 @@
-# lapsus-web
+# Lapsus WEB
 
-## Project setup
+Sistema WEB desenvolvido por [Erick Figueiredo](https://github.com/erickfigueiredo) para consumir e interagir com a Lapsus API.
+
+---
+
+## Configuração do projeto
 ```
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### Compila com "hot-reload" para desenvolvimento
 ```
 yarn serve
 ```
 
-### Compiles and minifies for production
+### Compila e minifica para produção
 ```
 yarn build
 ```
 
-### Lints and fixes files
+### Lints e consertos de arquivos
 ```
 yarn lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+---
+### Personalizar Configuração
+Veja [Referência de Configuração](https://cli.vuejs.org/config/).

@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+export default axios.create({ timeout: 4000 });
+
 export const apiURL = 'http://localhost:3001';
 
 export const lapsus = axios.create({
