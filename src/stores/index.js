@@ -1,5 +1,4 @@
 import { createStore } from 'vuex';
-
 import Access from '../services/users/Access';
 
 const store = createStore({

@@ -12,6 +12,7 @@ import NewMessage from '../pages/NewMessage.vue';
 import Shapefile from '../pages/Shapefile.vue';
 import Contribute from '../pages/Contribute.vue';
 import AssessContribution from '../pages/AssessContribution.vue';
+import Profile from '../pages/Profile.vue';
 import Settings from '../pages/Settings.vue';
 import NotFound from '../pages/NotFound.vue';
 
@@ -122,6 +123,15 @@ const routes = [
       allowUsers: ['A', 'T', 'M'],
     },
     component: AssessContribution,
+  },
+  {
+    name: 'Perfil',
+    path: '/perfil',
+    meta: {
+      requireAuth: true,
+      allowUsers: ['A', 'T', 'M', 'R'],
+    },
+    component: Profile,
   },
   {
     name: 'Configurações',
