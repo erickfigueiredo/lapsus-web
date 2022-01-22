@@ -1,8 +1,10 @@
 module.exports = {
+  // mode: 'jit', // Just in Time Mode (Adiciona funções extras sem a necessidade de importação)
   purge: { content: ['./public/**/*.html', './src/**/*.vue'] },
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      // animation: ['group-hover'],
       colors: {
         lemon: {
           100: '#CDFF41',
@@ -30,7 +32,9 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      backgroundColor: ['disabled'], // automático no JIT
+    },
   },
   plugins: [],
 };
