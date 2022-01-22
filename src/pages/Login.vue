@@ -10,12 +10,10 @@
     </template>
   </facade-template>
   <div
-    class="fixed right-2 md:right-8 rounded-lg bottom-2 md:bottom-8 p-2 bg-cerulean-700
-    hover:bg-green-500 animate-bounce transition duration-200"
+    class="fixed bottom-2 lg:bottom-8 right-2 lg:right-8 animate-bounce rounded-md shadow-md
+    text-white bg-cerulean-600 p-2"
   >
-    <router-link to="/contribuicao" class="text-white font-semibold">
-      Faça uma contribuição no mapa!
-    </router-link>
+    <router-link to="/contribuicao">Não tem cadastro?<br />Contribua de forma anônima!</router-link>
   </div>
   <float-info :flag="floatData.flag" :message="floatData.message" />
 </template>
