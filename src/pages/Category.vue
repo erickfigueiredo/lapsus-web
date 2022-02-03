@@ -118,7 +118,6 @@ export default {
     ...mapGetters(['token']),
   },
   methods: {
-    // eslint-disable-next-line consistent-return
     addOrdered(array, begin, end, cat) {
       const index = Math.floor((begin + end) / 2);
 
@@ -132,16 +131,24 @@ export default {
       }
 
       if (array[index].name < cat.name) {
-        this.addOrdered(array, index + 1, end, cat);
-      } else {
-        this.addOrdered(array, begin, index, cat);
+        return this.addOrdered(array, index + 1, end, cat);
       }
+      return this.addOrdered(array, begin, index, cat);
     },
     addCategory(category) {
-      this.addOrdered(this.categories, 0, this.categories.length - 1, category);
+      if (!this.categories.length) {
+        this.categories.push(category);
+      } else {
+        this.addOrdered(this.categories, 0, this.categories.length - 1, category);
+      }
     },
     updateCategory(category) {
-      this.categories[this.index] = category;
+      if (this.categories[this.index].name !== category.name) {
+        this.categories.splice(this.index, 1);
+        this.addOrdered(this.categories, 0, this.categories.length - 1, category);
+      } else {
+        this.categories[this.index] = category;
+      }
     },
     async deleteCategory() {
       this.blockAction = true;
