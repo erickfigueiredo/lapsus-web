@@ -2,6 +2,16 @@
   <base-template>
     <section>
       <template v-if="user">
+        <div class="flex my-4">
+          <div class="mx-auto bg-white p-2 rounded-full">
+            <img
+              :src="profilePic"
+              :alt="user.name"
+              :title="`${user.name} ${user.surname}`"
+              class="rounded-full"
+            />
+          </div>
+        </div>
         <card>
           <h2 class="font-bold text-gray-500">Informações Pessoais</h2>
           <hr class="my-4" />
@@ -85,7 +95,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['token', 'user']),
+    ...mapGetters(['token', 'user', 'profilePic']),
   },
   methods: {
     ...mapMutations({ updateUser: 'setUser' }),

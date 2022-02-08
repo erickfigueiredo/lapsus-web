@@ -1,4 +1,6 @@
 import { createStore } from 'vuex';
+import { MD5 } from 'crypto-js';
+
 import Access from '../services/users/Access';
 
 const store = createStore({
@@ -84,6 +86,10 @@ const store = createStore({
     },
     userType(state) {
       return state.user?.type;
+    },
+    profilePic(state) {
+      const hash = MD5(state.user?.email).toString();
+      return `https://gravatar.com/avatar/${hash}?d=identicon`;
     },
   },
 });
