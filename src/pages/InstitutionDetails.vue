@@ -15,7 +15,7 @@
         <div class="flex">
           <button
             class="p-2 ml-auto rounded-md text-white bg-red-500 hover:bg-red-700
-          transition delay-50 duration-300 ease-in-out"
+          transition  duration-300 ease-in-out"
             @click="openModal"
           >
             Deletar Instituição
@@ -125,7 +125,7 @@ export default {
       this.blockAction = false;
     },
     async paginate(page = 0) {
-      const result = await Technician.indexByInstitution(this.institution.id, page);
+      const result = await Technician.indexByInstitution(this.token, this.institution.id, page);
 
       if (result.success) {
         this.technicians = result.user.data;

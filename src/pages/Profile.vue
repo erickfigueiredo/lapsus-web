@@ -23,7 +23,7 @@
           <div class="flex">
             <button
               class="ml-auto my-4 p-2 bg-red-500 hover:bg-red-700 text-white rounded-md
-            transition delay-50 duration-300 ease-in-out"
+            transition  duration-300 ease-in-out"
               @click="openModal"
             >
               Desativar Conta
