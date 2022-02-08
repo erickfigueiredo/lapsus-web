@@ -5,7 +5,6 @@
 <script>
 /* eslint-disable global-require */
 /* eslint-disable no-underscore-dangle */
-import { toRaw } from 'vue';
 
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
@@ -212,13 +211,9 @@ export default {
         });
       });
     }
-
     // FIM - Indexação de Shapefiles
 
     this.map = map;
-  },
-  beforeUnmount() {
-    toRaw(this.map).remove();
   },
 };
 </script>
