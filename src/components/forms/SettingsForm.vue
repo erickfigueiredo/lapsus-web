@@ -7,7 +7,7 @@
       <input id="mode" name="mode" type="checkbox" class="toggle" v-model="isEnabled" />
     </div>
     <div class="my-4">
-      <label for="sys_name">
+      <label for="sys_name" class="block my-2 text-gray-500 font-semibold">
         Nome da Instância do Sistema
       </label>
       <input
@@ -23,7 +23,7 @@
       />
     </div>
     <div class="my-4">
-      <label for="sys_name">
+      <label for="sys_uuid" class="block my-2 text-gray-500 font-semibold">
         Identificador do Sistema (UUID)
       </label>
       <input
