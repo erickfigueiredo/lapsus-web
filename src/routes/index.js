@@ -4,6 +4,11 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Login from '../pages/Login.vue';
 import Register from '../pages/Register.vue';
 import Home from '../pages/Home.vue';
+import User from '../pages/User.vue';
+import Registered from '../pages/users/Registered.vue';
+import Moderator from '../pages/users/Moderator.vue';
+import Technician from '../pages/users/Technician.vue';
+import Admin from '../pages/users/Admin.vue';
 import Category from '../pages/Category.vue';
 import Institution from '../pages/Institution.vue';
 import InstitutionDetails from '../pages/InstitutionDetails.vue';
@@ -15,9 +20,6 @@ import AssessContribution from '../pages/AssessContribution.vue';
 import Profile from '../pages/Profile.vue';
 import Settings from '../pages/Settings.vue';
 import NotFound from '../pages/NotFound.vue';
-
-import Teste2 from '../pages/Teste2.vue';
-import Teste from '../pages/Teste.vue';
 
 import store from '../stores';
 
@@ -33,15 +35,6 @@ const routes = [
     component: Home,
   },
   {
-    name: 'map',
-    path: '/map',
-    meta: {
-      requireAuth: true,
-      allowUsers: [],
-    },
-    component: Teste,
-  },
-  {
     name: 'Login',
     path: '/login',
     meta: { requireAuth: false },
@@ -52,6 +45,37 @@ const routes = [
     path: '/cadastro',
     meta: { requireAuth: false },
     component: Register,
+  },
+  {
+    name: 'Usuários',
+    path: '/usuarios',
+    children: [
+      {
+        name: 'Cadastrados',
+        path: 'cadastrados',
+        component: Registered,
+      },
+      {
+        name: 'Moderadores',
+        path: 'moderadores',
+        component: Moderator,
+      },
+      {
+        name: 'Técnicos',
+        path: 'tecnicos',
+        component: Technician,
+      },
+      {
+        name: 'Administradores',
+        path: 'administradores',
+        component: Admin,
+      },
+    ],
+    meta: {
+      requireAuth: true,
+      allowUsers: ['A'],
+    },
+    component: User,
   },
   {
     name: 'Categorias',
@@ -141,15 +165,6 @@ const routes = [
       allowUsers: ['A'],
     },
     component: Settings,
-  },
-  {
-    name: 'Test',
-    path: '/teste',
-    meta: {
-      requireAuth: true,
-      allowUsers: [],
-    },
-    component: Teste2,
   },
   {
     name: 'NotFound',
