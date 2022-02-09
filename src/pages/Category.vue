@@ -12,7 +12,12 @@
           <ul v-if="categories.length">
             <template v-for="(cat, i) in categories" :key="cat.id">
               <li
-                v-if="i === 0 || cat.name[0] !== categories[i - 1].name[0]"
+                v-if="
+                  i === 0 ||
+                    cat.name[0].localeCompare(categories[i - 1].name[0], 'pt-BR', {
+                      sensitivity: 'base'
+                    })
+                "
                 class="capitalize p-2 rounded-md bg-cerulean-400 text-white my-2"
               >
                 {{ cat.name[0] }}
@@ -38,7 +43,14 @@
                   </button>
                 </div>
               </li>
-              <hr v-if="i < categories.length - 1 && cat.name[0] === categories[i + 1].name[0]" />
+              <hr
+                v-if="
+                  i < categories.length - 1 &&
+                    !cat.name[0].localeCompare(categories[i + 1].name[0], 'pt-BR', {
+                      sensitivity: 'base'
+                    })
+                "
+              />
             </template>
           </ul>
           <div v-else class="flex font-semibold text-center text-gray-400 h-full">
@@ -121,8 +133,11 @@ export default {
     addOrdered(array, begin, end, cat) {
       const index = Math.floor((begin + end) / 2);
 
-      if (array[index].name === cat.name || begin === end) {
-        if (array[index].name <= cat.name) {
+      if (
+        !array[index].name.localeCompare(cat.name, 'pt-BR', { sensitivity: 'base' })
+        || begin === end
+      ) {
+        if (array[index].name.localeCompare(cat.name, 'pt-BR', { sensitivity: 'base' }) <= 0) {
           array.splice(index + 1, 0, cat);
         } else {
           array.splice(index, 0, cat);
@@ -130,7 +145,7 @@ export default {
         return null;
       }
 
-      if (array[index].name < cat.name) {
+      if (array[index].name.localeCompare(cat.name, 'pt-BR', { sensitivity: 'base' }) < 0) {
         return this.addOrdered(array, index + 1, end, cat);
       }
       return this.addOrdered(array, begin, index, cat);
