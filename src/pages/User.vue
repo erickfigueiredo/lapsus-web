@@ -3,6 +3,9 @@
     <card>
       <h2 class="font-bold text-gray-500">Níveis de Usuário</h2>
       <hr class="my-4" />
+      <p class="text-gray-500 text-center mb-4">
+        Selecione um dos níveis de usuário abaixo.
+      </p>
       <nav class="flex flex-wrap justify-between md:justify-center md:space-x-4">
         <div class="my-4">
           <router-link to="/usuarios/cadastrados" class="btn-primary w-full">

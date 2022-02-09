@@ -175,46 +175,28 @@ export default {
   },
   methods: {
     addUser(user) {
-      if (this.search === '' && (this.who === 'both' || this.who === 'active')) {
-        if (
-          !this.registered.length
-          || user.name > this.registered[this.registered.length - 1].name
-          || (user.name === this.registered[this.registered.length - 1].name
-            && user.surname >= this.registered[this.registered.length - 1].surname)
-        ) {
-          this.registered.push(user);
-        } else if (
-          user.name < this.registered[0].name
-          || (user.name === this.registered[0].name && user.surname <= this.registered[0].surname)
-        ) {
-          this.registered.unshift(user);
-        } else {
-          for (let i = 0; i < this.registered.length - 1; i += 1) {
-            if (user.name > this.registered[i].name && user.name < this.registered[i + 1].name) {
-              this.registered.splice(i + 1, 0, user);
-              break;
-            } else if (user.name === this.registered[i].name) {
-              if (
-                user.name === this.registered[i + 1]
-                && user.surname >= this.registered[i].surname
-                && user.surname < this.registered[i + 1].surname
-              ) {
-                this.registered.splice(i + 1, 0, user);
-                break;
-              } else {
-                if (user.surname >= this.registered[i].surname) {
-                  this.registered.splice(i + 1, 0, user);
-                } else {
-                  this.registered.splice(i - 1, 0, user);
-                }
-                break;
-              }
-            }
+      if (this.search === '' && this.who !== 'inactive' && this.pagination.currentPage < 2) {
+        const compAsc = (userA, userB) => {
+          const comp = userA.name.localeCompare(userB.name, 'pt-BR', { sensitivity: 'base' });
+          if (!comp) {
+            return userA.surname.localeCompare(userB.surname, 'pt-BR', { sensitivity: 'base' });
           }
-        }
+          return comp;
+        };
 
-        if (this.institutions.length > this.pagination.perPage) {
-          this.institutions.pop();
+        const compDsc = (userA, userB) => {
+          const comp = userB.name.localeCompare(userA.name, 'pt-BR', { sensitivity: 'base' });
+          if (!comp) {
+            return userB.surname.localeCompare(userA.surname, 'pt-BR', { sensitivity: 'base' });
+          }
+          return comp;
+        };
+
+        this.admins.push(user);
+        this.admins.sort(this.order === 'asc' ? compAsc : compDsc);
+
+        if (this.admins.length > this.pagination.perPage) {
+          this.admins.pop();
 
           if (this.pagination.currentPage === this.pagination.lastPage) {
             this.pagination.lastPage += 1;

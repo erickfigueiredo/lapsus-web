@@ -114,17 +114,19 @@ export default {
       return this.addOrdered(array, begin, index, inst);
     },
     addInstitution(inst) {
-      if (!this.institutions.length) {
-        this.institutions.push(inst);
-      } else {
-        this.addOrdered(this.institutions, 0, this.institutions.length - 1, inst);
-      }
+      if (this.pagination.currentPage < 2) {
+        if (!this.institutions.length) {
+          this.institutions.push(inst);
+        } else {
+          this.addOrdered(this.institutions, 0, this.institutions.length - 1, inst);
+        }
 
-      if (this.institutions.length > this.pagination.perPage) {
-        this.institutions.pop();
+        if (this.institutions.length > this.pagination.perPage) {
+          this.institutions.pop();
 
-        if (this.pagination.currentPage === this.pagination.lastPage) {
-          this.pagination.lastPage += 1;
+          if (this.pagination.currentPage === this.pagination.lastPage) {
+            this.pagination.lastPage += 1;
+          }
         }
       }
     },
