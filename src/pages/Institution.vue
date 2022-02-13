@@ -1,8 +1,6 @@
 <template>
   <base-template>
-    <card responsivity="mb-8">
-      <h2 class="font-bold text-gray-500">Cadastro de Instituições</h2>
-      <hr class="my-4" />
+    <card title="Cadastro de Instituições" responsivity="mb-8">
       <institution-form @form-response="showInformation" @form-data="addInstitution" />
     </card>
     <card class="mb-8">

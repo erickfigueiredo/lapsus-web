@@ -1,8 +1,6 @@
 <template>
   <base-template>
-    <card>
-      <h2 class="font-bold text-gray-500">Níveis de Usuário</h2>
-      <hr class="my-4" />
+    <card title="Níveis de Usuário">
       <p class="text-gray-500 text-center mb-4">
         Selecione um dos níveis de usuário abaixo.
       </p>

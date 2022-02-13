@@ -1,8 +1,6 @@
 <template>
   <base-template :subtitle="institution?.name">
-    <card v-if="institution" responsivity="mb-8">
-      <h2 class="font-bold text-gray-500">Informações da Instituição</h2>
-      <hr class="my-4" />
+    <card v-if="institution" title="Informações da Instituição" responsivity="mb-8">
       <institution-form
         @form-response="showInformation"
         @form-data="updateInstitution"
