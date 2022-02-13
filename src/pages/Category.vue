@@ -18,7 +18,7 @@
                 "
                 class="capitalize p-2 rounded-md bg-cerulean-400 text-white my-2"
               >
-                {{ cat.name[0] }}
+                {{ normalizeIndex(cat.name[0])}}
               </li>
               <li class="my-2 mx-6 lg:flex">
                 <p class="my-2 capitalize truncate">
@@ -189,6 +189,9 @@ export default {
       if (isDelete) {
         this.isModalDeleteActive = false;
       } else this.isModalUpdateActive = false;
+    },
+    normalizeIndex(char) {
+      return char.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     },
     showInformation(flag, message) {
       this.floatData.flag = flag;
