@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 // Importação das Páginas
 import Login from '../pages/Login.vue';
 import Register from '../pages/Register.vue';
+import ResetPassword from '../pages/ResetPassword.vue';
 import Home from '../pages/Home.vue';
 import User from '../pages/User.vue';
 import Registered from '../pages/users/Registered.vue';
@@ -45,6 +46,12 @@ const routes = [
     path: '/cadastro',
     meta: { requireAuth: false },
     component: Register,
+  },
+  {
+    name: 'Redefinir Senha',
+    path: '/redefinir-senha',
+    meta: { requireAuth: false },
+    component: ResetPassword,
   },
   {
     name: 'Usuários',
