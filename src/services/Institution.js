@@ -43,6 +43,19 @@ class Institution {
     }
   }
 
+  static async getAmount(token) {
+    try {
+      const res = await lapsus.get('/institution/amount', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return res.data;
+    } catch (err) {
+      return err.response?.data ? err.response.data : defaultErrorMessage;
+    }
+  }
+
   static async create(token, data) {
     try {
       const res = await lapsus.post('/institution', data, {
