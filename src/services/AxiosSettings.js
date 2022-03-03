@@ -6,7 +6,7 @@ export const apiURL = 'http://localhost:3001';
 
 export const lapsus = axios.create({
   baseURL: apiURL,
-  timeout: 4000, // 4 segundos de espera
+  timeout: 8000, // 8 segundos de espera
   headers: {
     'Content-Type': 'application/json',
   },
