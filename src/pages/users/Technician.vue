@@ -7,11 +7,9 @@
       <hr class="xl:hidden" />
       <div class="xl:w-3/4">
         <form class="xl:flex" @submit.prevent="submitSearch">
-          <div class=" flex xl:w-6/12">
+          <div class="flex xl:w-6/12">
             <div class="w-1/2">
-              <label for="search" class="block my-2 text-gray-500 font-semibold">
-                Pesquisar
-              </label>
+              <label for="search" class="block my-2 text-gray-500 font-semibold"> Pesquisar </label>
               <input
                 id="search"
                 name="search"
@@ -22,9 +20,7 @@
               />
             </div>
             <div class="w-1/2">
-              <label for="inst" class="block my-2 text-gray-500 font-semibold">
-                Instituição
-              </label>
+              <label for="inst" class="block my-2 text-gray-500 font-semibold"> Instituição </label>
               <select
                 id="inst"
                 name="inst"
@@ -40,9 +36,7 @@
           </div>
           <div class="flex xl:w-6/12">
             <div class="w-1/3">
-              <label for="who" class="block my-2 text-gray-500 font-semibold">
-                Status
-              </label>
+              <label for="who" class="block my-2 text-gray-500 font-semibold"> Status </label>
               <select
                 id="who"
                 name="who"
@@ -55,9 +49,7 @@
               </select>
             </div>
             <div class="w-1/3">
-              <label for="order" class="block my-2 text-gray-500 font-semibold">
-                Ordem
-              </label>
+              <label for="order" class="block my-2 text-gray-500 font-semibold"> Ordem </label>
               <select id="order" name="order" v-model="order" class="form-control rounded-none">
                 <option value="asc" selected>Crescente</option>
                 <option value="desc">Decrescente</option>
@@ -91,10 +83,10 @@
       </template>
       <template #body>
         <tr v-for="(tech, i) in technicians" :key="tech.id" class="hover:bg-gray-100">
-          <td class="px-5 py-5 border-b border-gray-200 ">
+          <td class="px-5 py-5 border-b border-gray-200">
             <span class="text-gray-900">{{ tech.name }}</span>
           </td>
-          <td class="px-5 py-5 border-b border-gray-200 ">
+          <td class="px-5 py-5 border-b border-gray-200">
             <span class="text-gray-900">{{ tech.surname }}</span>
           </td>
           <td class="px-5 py-5 border-b border-gray-200">
@@ -103,7 +95,7 @@
           <td class="px-5 py-5 border-b border-gray-200 hidden md:table-cell">
             <span class="text-gray-900">{{ tech.created_at }} </span>
           </td>
-          <td class="px-5 py-5 border-b border-gray-200 ">
+          <td class="px-5 py-5 border-b border-gray-200">
             <span
               class="font-semibold"
               :class="tech.is_active ? 'text-green-600' : 'text-red-700'"
@@ -249,7 +241,7 @@ export default {
   },
   methods: {
     addUser(user) {
-      if (this.search === '' && this.who !== 'inactive' && this.pagination.currentPage < 2) {
+      if (this.search === '' && this.who !== 'inactive' && (this.pagination.currentPage || 0) < 2) {
         const compAsc = (userA, userB) => {
           const comp = userA.name.localeCompare(userB.name, 'pt-BR', { sensitivity: 'base' });
           if (!comp) {

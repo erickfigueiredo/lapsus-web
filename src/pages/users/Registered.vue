@@ -218,7 +218,7 @@ export default {
   },
   methods: {
     addUser(user) {
-      if (this.search === '' && this.who !== 'inactive' && this.pagination.currentPage < 2) {
+      if (this.search === '' && this.who !== 'inactive' && (this.pagination.currentPage || 0) < 2) {
         const compAsc = (userA, userB) => {
           const comp = userA.name.localeCompare(userB.name, 'pt-BR', { sensitivity: 'base' });
           if (!comp) {
