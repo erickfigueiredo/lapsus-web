@@ -1,33 +1,32 @@
 <template>
   <header
     class="px-4 bg-gradient-to-r from-cerulean-900 to-gray-700 border-b-2 border-lemon-400
-  shadow-md"
+    shadow-md"
   >
-    <div class=" flex my-auto py-2">
+    <div class="flex my-auto py-2">
       <button class="ml-2 lg:hidden" @click="isActiveNav = true">
         <font-awesome :icon="['fas', 'bars']" class="text-2xl text-lemon-400 align-middle" />
       </button>
+      <div v-if="instanceName.length" class="my-auto ml-2 hidden md:block">
+        <p class="align-middle text-white">
+          <span class="font-semibold">Instância: </span>{{ instanceName }}</p
+        >
+      </div>
       <div class="flex ml-auto my-auto items-center">
         <span v-if="$store.getters['userName']" class="text-white align-middle">
           Olá, {{ $store.getters["userName"] }}
         </span>
-          <button
-            class="ml-4 bg-white rounded-full w-10 h-10 shadow-md mr-4 lg:mr-12"
-            @click="isActiveMenu = !isActiveMenu"
-          >
-            <img
-              v-if="isLoggedIn"
-              :src="profilePic"
-              :alt="userName"
-              class="rounded-full p-0.5"
-            />
-            <font-awesome
-              v-else
-              :icon="['fas', 'user-circle']"
-              class="text-3xl text-cerulean-700 align-middle"
-            />
-          </button>
-
+        <button
+          class="ml-4 bg-white rounded-full w-10 h-10 shadow-md mr-4 lg:mr-12"
+          @click="isActiveMenu = !isActiveMenu"
+        >
+          <img v-if="isLoggedIn" :src="profilePic" :alt="userName" class="rounded-full p-0.5" />
+          <font-awesome
+            v-else
+            :icon="['fas', 'user-circle']"
+            class="text-3xl text-cerulean-700 align-middle"
+          />
+        </button>
       </div>
     </div>
   </header>
@@ -49,7 +48,7 @@
         <router-link to="" @click="logout">
           <li
             class="px-6 py-2 text-red-500 hover:bg-red-500 rounded-b-lg hover:text-white
-          font-semibold"
+            font-semibold"
           >
             Sair
           </li>
@@ -69,6 +68,12 @@ export default {
     const { isActiveNav, isActiveMenu } = useMenus();
 
     return { isActiveNav, isActiveMenu };
+  },
+  props: {
+    instanceName: {
+      type: String,
+      required: false,
+    },
   },
   computed: {
     ...mapGetters(['isLoggedIn', 'userType', 'userName', 'profilePic']),

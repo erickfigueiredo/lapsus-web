@@ -2,7 +2,7 @@
   <div class="flex h-screen">
     <navbar @click="isActiveMenu = false" />
     <div class="flex-1 flex flex-col overflow-hidden bg-cerulean-100">
-      <head-bar />
+      <head-bar :instance-name="name"/>
       <main @click="isActiveMenu = false" class="flex-1 overflow-x-hidden overflow-y-auto">
         <div class="h-full flex">
           <slot />
@@ -21,6 +21,7 @@ import useMenus from '../hooks/useMenus';
 
 import MapInformation from '../components/MapInformation.vue';
 
+import Settings from '../services/Settings';
 import EmergencyContact from '../services/EmergencyContact';
 import MapLegend from '../services/MapLegend';
 
@@ -40,6 +41,7 @@ export default {
         flag: 0,
         message: '',
       },
+      name: '',
       contacts: [],
       legends: [],
     };
@@ -56,6 +58,11 @@ export default {
     },
   },
   async mounted() {
+    const org = await Settings.getOrg();
+    if (org.success) {
+      this.name = org.org.name;
+    }
+
     const ctt = await EmergencyContact.index();
     if (ctt.success) {
       this.contacts = ctt.emContact;
@@ -66,8 +73,10 @@ export default {
       this.legends = legend.legendItems;
     }
 
-    if (!legend.success && !ctt.success) {
+    if (!legend.success && !ctt.success && !org.success) {
       this.showInformation(3, 'Os recursos da legenda não puderam ser carregados!');
+    } else if (!org.success) {
+      this.showInformation(3, org.message);
     } else if (!legend.success) {
       this.showInformation(3, legend.message);
     } else if (!ctt.success) {

@@ -11,7 +11,6 @@
           <span class="ml-1">{{ l.title }}</span>
         </li>
       </ul>
-      <p>Não há legenda para ser exibida</p>
     </section>
     <div v-else class="flex font-semibold text-center rounded-lg bg-gray-100 text-gray-400 h-3/6">
       <p class="mx-auto my-auto">
@@ -35,9 +34,9 @@
 </template>
 
 <script>
-import { apiURL } from '../services/AxiosSettings';
-
 import genericMask from '../utils/genericMask';
+
+import { apiURL } from '../services/AxiosSettings';
 
 export default {
   props: {
