@@ -73,6 +73,7 @@ export default {
     instanceName: {
       type: String,
       required: false,
+      default: '',
     },
   },
   computed: {
