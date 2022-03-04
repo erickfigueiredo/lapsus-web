@@ -1,7 +1,7 @@
 <template>
-  <base-template :is-map="true">
+  <map-template>
     <base-map :useUserLocation="true" @finish-draw="openModal" />
-  </base-template>
+  </map-template>
   <modal
     v-show="isModalContributionActive"
     class="overflow-y-auto"
@@ -14,9 +14,7 @@
       class="bg-gray-100 flex font-semibold text-center text-gray-400 h-64 rounded-md p-6
       overflow-y-auto"
     >
-      <p class="mx-auto my-auto">
-        Não é possível realizar contribuições!
-      </p>
+      <p class="mx-auto my-auto">Não é possível realizar contribuições!</p>
     </div>
     <template v-else>
       <emsi-form
@@ -51,7 +49,7 @@
 <script>
 import { mapGetters } from 'vuex';
 
-import BaseTemplate from '../templates/BaseTemplate.vue';
+import MapTemplate from '../templates/MapTemplate.vue';
 import BaseMap from '../components/BaseMap.vue';
 import ContributionForm from '../components/forms/ContributionForm.vue';
 import EMSIForm from '../components/forms/EMSIForm.vue';
@@ -63,7 +61,7 @@ import EMSI from '../services/EMSI';
 
 export default {
   components: {
-    BaseTemplate,
+    MapTemplate,
     BaseMap,
     Modal,
     ContributionForm,
@@ -89,6 +87,9 @@ export default {
 
       geometry: '',
       contentFailed: false,
+
+      contacts: [],
+      legend: [],
 
       isModalContributionActive: false,
     };
