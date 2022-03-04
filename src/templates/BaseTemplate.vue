@@ -4,10 +4,8 @@
     <div class="flex-1 flex flex-col overflow-hidden bg-cerulean-100">
       <head-bar />
       <main @click="isActiveMenu = false" class="flex-1 overflow-x-hidden overflow-y-auto">
-        <div
-          :class="['h-full', { 'container mx-auto p-4 md:px-8 lg:py-4 lg:px-16': !isMap }]"
-        >
-          <section v-if="!isMap" class="bg-white p-4 rounded-lg shadow-md mt-4 mb-8">
+        <div class="h-full container mx-auto p-4 md:px-8 lg:py-4 lg:px-16">
+          <section class="bg-white p-4 rounded-lg shadow-md mt-4 mb-8">
             <h1 class="text-xl md:text-2xl lg:text-3xl truncate">
               <font-awesome :icon="['fas', 'chevron-right']" class="text-lemon-400" />
               {{ $route.name }}
@@ -43,10 +41,6 @@ export default {
     subtitle: {
       type: String,
       required: false,
-    },
-    isMap: {
-      type: Boolean,
-      default: false,
     },
   },
 };
