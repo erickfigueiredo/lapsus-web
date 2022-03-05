@@ -32,7 +32,7 @@
               }}
             </td>
             <td class="px-5 py-5 border-b border-gray-200 hidden md:table-cell">
-              <p class="text-gray-900">{{ new Date(contrib.created_at).toLocaleDateString() }}</p>
+              <p class="text-gray-900">{{ contrib.created_at }}</p>
             </td>
             <td class="px-5 py-5 border-b border-gray-200 hidden md:table-cell">
               <p

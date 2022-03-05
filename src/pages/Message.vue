@@ -26,7 +26,7 @@
               <a :href="`mailto:${ctt.email}`" class="">{{ ctt.email }}</a>
             </td>
             <td class="px-5 py-5 border-b border-gray-200 hidden md:table-cell">
-              <span class="">{{ new Date(ctt.created_at).toLocaleDateString() }}</span>
+              <span class="">{{ ctt.created_at }}</span>
             </td>
             <td class="px-5 py-5 border-b border-gray-200">
               <span class="hover:text-cerulean-600 cursor-pointer" @click="openModal(i)">

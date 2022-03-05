@@ -41,7 +41,7 @@
               <a :href="`mailto:${tech.email}`" class="text-gray-900">{{ tech.email }}</a>
             </td>
             <td class="px-5 py-5 border-b border-gray-200 hidden md:table-cell">
-              <p class="text-gray-900">{{ new Date(tech.created_at).toLocaleDateString() }}</p>
+              <p class="text-gray-900">{{ tech.created_at }}</p>
             </td>
           </tr>
         </template>

@@ -31,7 +31,7 @@
             </td>
             <td class="px-5 py-5 border-b border-gray-200 hidden md:table-cell">
               <span class="text-gray-900"
-                >{{ new Date(inst.created_at).toLocaleDateString() }}
+                >{{ inst.created_at }}
               </span>
             </td>
             <td class="px-5 py-5 border-b border-gray-200">
