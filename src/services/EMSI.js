@@ -1,6 +1,15 @@
 import { lapsus, defaultErrorMessage } from './AxiosSettings';
 
 class EMSI {
+  static async index(x, y) {
+    try {
+      const res = await lapsus.get(`/emsi/all?x=${x}&y=${y}`);
+      return res.data;
+    } catch (err) {
+      return err.response?.data ? err.response.data : defaultErrorMessage;
+    }
+  }
+
   static async list(token) {
     try {
       const res = await lapsus.get('/emsi/lists', {

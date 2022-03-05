@@ -17,6 +17,7 @@ import Message from '../pages/Message.vue';
 import NewMessage from '../pages/NewMessage.vue';
 import Shapefile from '../pages/Shapefile.vue';
 import Contribute from '../pages/Contribute.vue';
+import ContributeView from '../pages/ContributeView.vue';
 import AssessContribution from '../pages/AssessContribution.vue';
 import Profile from '../pages/Profile.vue';
 import Settings from '../pages/Settings.vue';
@@ -145,6 +146,14 @@ const routes = [
       requireAuth: false,
     },
     component: Contribute,
+  },
+  {
+    name: 'Contribuicoes',
+    path: '/contribuicoes',
+    meta: {
+      requireAuth: false,
+    },
+    component: ContributeView,
   },
   {
     name: 'Avaliar Contribuições',

@@ -1,6 +1,7 @@
 import { lapsus, defaultErrorMessage } from './AxiosSettings';
 
 class Contribution {
+  // Adicionar a busca por proximidade aqui
   static async indexDetailed(token, page = 0) {
     try {
       const res = await lapsus.get(`/contribution/all?page=${page}`, {
