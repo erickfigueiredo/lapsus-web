@@ -3,7 +3,7 @@ import { lapsus, defaultErrorMessage } from './AxiosSettings';
 class EmergencyContact {
   static async index() {
     try {
-      const res = await lapsus.get('/emergency_contact');
+      const res = await lapsus.get('/emergency-contact');
       return res.data;
     } catch (err) {
       return err.response?.data ? err.response.data : defaultErrorMessage;
@@ -12,7 +12,7 @@ class EmergencyContact {
 
   static async create(token, data) {
     try {
-      const res = await lapsus.post('/emergency_contact', data, {
+      const res = await lapsus.post('/emergency-contact', data, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return res.data;
@@ -23,7 +23,7 @@ class EmergencyContact {
 
   static async update(token, data) {
     try {
-      const res = await lapsus.put('/emergency_contact', data, {
+      const res = await lapsus.put('/emergency-contact', data, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return res.data;
@@ -34,7 +34,7 @@ class EmergencyContact {
 
   static async delete(token, id) {
     try {
-      const res = await lapsus.delete(`/emergency_contact/${id}`, {
+      const res = await lapsus.delete(`/emergency-contact/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return res.data;

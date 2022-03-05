@@ -3,7 +3,7 @@ import { lapsus, defaultErrorMessage } from '../AxiosSettings';
 class Technician {
   static async index(token, page, search = '', idInstitution = '', who = 'both', order = 'asc') {
     try {
-      const res = await lapsus.get(`/technician/all/?search=${search}&id_institution=${idInstitution}&page=${page}&who=${who}&order=${order}`,
+      const res = await lapsus.get(`/technician?search=${search}&id_institution=${idInstitution}&page=${page}&who=${who}&order=${order}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

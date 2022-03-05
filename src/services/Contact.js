@@ -3,7 +3,7 @@ import { lapsus, defaultErrorMessage } from './AxiosSettings';
 class Contact {
   static async index(token, page) {
     try {
-      const res = await lapsus.get(`/contact/all?page=${page}`, {
+      const res = await lapsus.get(`/contact?page=${page}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -25,7 +25,7 @@ class Contact {
 
   static async toggleVisualization(token, id) {
     try {
-      const res = await lapsus.patch('/contact/toggle_check', { id }, {
+      const res = await lapsus.patch('/contact/toggle-check', { id }, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

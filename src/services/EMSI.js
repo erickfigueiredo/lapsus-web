@@ -3,7 +3,7 @@ import { lapsus, defaultErrorMessage } from './AxiosSettings';
 class EMSI {
   static async index(x, y) {
     try {
-      const res = await lapsus.get(`/emsi/all?x=${x}&y=${y}`);
+      const res = await lapsus.get(`/emsi/detailed?x=${x}&y=${y}`);
       return res.data;
     } catch (err) {
       return err.response?.data ? err.response.data : defaultErrorMessage;

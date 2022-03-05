@@ -3,7 +3,7 @@ import { lapsus, defaultErrorMessage } from '../AxiosSettings';
 class User {
   static async getTypeRelationship(token) {
     try {
-      const res = await lapsus.get('/user/type_relationship', {
+      const res = await lapsus.get('/user/type-relationship', {
         headers: { Authorization: `Bearer ${token}` },
       });
 

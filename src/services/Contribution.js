@@ -3,7 +3,7 @@ import { lapsus, defaultErrorMessage } from './AxiosSettings';
 class Contribution {
   static async index(x, y) {
     try {
-      const res = await lapsus.get(`/contribution/all/detailed?x=${x}&y=${y}`);
+      const res = await lapsus.get(`/contribution/detailed?x=${x}&y=${y}`);
       return res.data;
     } catch (err) {
       return err.response?.data ? err.response.data : defaultErrorMessage;
@@ -12,7 +12,7 @@ class Contribution {
 
   static async indexDetailed(token, page = 0) {
     try {
-      const res = await lapsus.get(`/contribution/all?page=${page}`, {
+      const res = await lapsus.get(`/contribution?page=${page}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
