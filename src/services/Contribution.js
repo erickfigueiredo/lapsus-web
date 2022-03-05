@@ -1,7 +1,15 @@
 import { lapsus, defaultErrorMessage } from './AxiosSettings';
 
 class Contribution {
-  // Adicionar a busca por proximidade aqui
+  static async index(x, y) {
+    try {
+      const res = await lapsus.get(`/contribution/all/detailed?x=${x}&y=${y}`);
+      return res.data;
+    } catch (err) {
+      return err.response?.data ? err.response.data : defaultErrorMessage;
+    }
+  }
+
   static async indexDetailed(token, page = 0) {
     try {
       const res = await lapsus.get(`/contribution/all?page=${page}`, {
