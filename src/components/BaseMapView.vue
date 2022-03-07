@@ -56,7 +56,6 @@ export default {
       }
     },
     getContributionsAndEMSI: _.debounce(async function (x, y) {
-      console.log('chamou');
       let result = await contribution.index(x, y);
       if (result.success) {
         this.contributions = result.contribution;
