@@ -1,9 +1,9 @@
 <script>
-import { Doughnut } from 'vue3-chart-v2';
+import { Pie } from 'vue3-chart-v2';
 
 export default {
-  name: 'DoughnutChart',
-  extends: Doughnut,
+  name: 'PieChart',
+  extends: Pie,
   props: {
     data: {
       type: Array,
