@@ -15,8 +15,9 @@
         {{ count.shapefiles || 0 }} Shapefile(s)
       </card>
     </section>
-    <section class="flex space-x-4 my-4">
-      <card v-if="['A', 'T'].includes(userType)" title="Relação de Leitura de Mensagens">
+    <section class="md:flex md:space-x-4 md:my-4">
+      <card v-if="['A', 'T'].includes(userType)" class="my-4 md:my-0"
+      title="Relação de Leitura de Mensagens">
         <doughnut-chart
           v-if="contact.show"
           :data="contact.data"
@@ -24,7 +25,8 @@
           :colors="['#4361ee', '#ade8f4']"
         />
       </card>
-      <card v-if="userType !== 'R'" title="Relação de Contribuições">
+      <card v-if="userType !== 'R'" class="my-4 md:my-0"
+      title="Relação de Contribuições">
         <doughnut-chart
           v-if="contribution.show"
           :data="contribution.data"
