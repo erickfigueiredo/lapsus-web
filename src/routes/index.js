@@ -216,14 +216,20 @@ router.beforeEach(async (to, from, next) => {
 
   if (to.meta.requireAuth) {
     if (store.getters.isLoggedIn && to.meta.allowUsers.includes(store.getters.userType)) {
+      document.title = `Lapsus | ${to.name}`;
       return next();
     }
 
-    if (from.path !== to.path) return next(from);
+    if (from.path !== to.path) {
+      document.title = `Lapsus | ${from.name}`;
+      return next(from);
+    }
 
+    document.title = 'Lapsus | Login';
     return next('/login');
   }
 
+  document.title = `Lapsus | ${to.name}`;
   return next();
 });
 
