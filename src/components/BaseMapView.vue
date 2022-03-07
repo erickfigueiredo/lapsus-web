@@ -12,7 +12,11 @@ import L from 'leaflet';
 
 import shp from 'shpjs';
 
+import _ from 'lodash';
+
+import EMSI from '../services/EMSI';
 import Shapefile from '../services/Shapefile';
+import contribution from '../services/Contribution';
 
 import genHexColor from '../utils/colorGenerator';
 
@@ -34,8 +38,9 @@ export default {
   data() {
     return {
       map: null,
-      geometry: '',
-      finishDraw: false,
+
+      contributions: [],
+      emsis: [],
     };
   },
   methods: {
@@ -49,6 +54,25 @@ export default {
       } catch (error) {
         this.coords = { latitude: -20.7542, longitude: -42.8819 };
       }
+    },
+    getContributionsAndEMSI: _.debounce(async function (x, y) {
+      console.log('chamou');
+      let result = await contribution.index(x, y);
+      if (result.success) {
+        this.contributions = result.contribution;
+      }
+
+      result = await EMSI.index(x, y);
+      if (result.success) {
+        this.emsis = result.emsi;
+      }
+
+      // ADICIONAR AQUI: fazer a varredura dos arrays e desenha no mapa
+    }, 2000), // Espera 3 segundos pra mandar a requisição
+    async fetchAndShow(e) {
+      const center = e.target.getCenter();
+
+      await this.getContributionsAndEMSI(center.lat, center.lng);
     },
   },
   async mounted() {
@@ -89,27 +113,37 @@ export default {
 
     L.control.scale({ metric: true, imperial: false }).addTo(map);
 
+    const center = map.getCenter();
+    await this.getContributionsAndEMSI(center.lat, center.lng);
+
+    map.on('dragend', this.fetchAndShow);
+
     // INÍCIO - Indexação de Shapefiles
     const shapes = await Shapefile.index('y');
     if (shapes.success) {
       shapes.shapefile.forEach((s) => {
         const randomColor = genHexColor();
 
-        shp(s.uri).then((data) => {
-          let shpName = data.fileName.replaceAll(/[-_]/g, ' ');
+        shp(s.uri)
+          .then((data) => {
+            let shpName = data.fileName.replaceAll(/[-_]/g, ' ');
 
-          if (shpName.length > 25) { shpName = `${shpName.slice(0, 26)}...`; }
+            if (shpName.length > 25) {
+              shpName = `${shpName.slice(0, 26)}...`;
+            }
 
-          layerControl.addOverlay(
-            L.geoJSON(data, {
-              style() {
-                return { color: randomColor };
-              },
-            }), shpName,
-          );
-        }).catch((err) => {
-          console.warn('Um ou mais arquivos não possuem layers!', err);
-        });
+            layerControl.addOverlay(
+              L.geoJSON(data, {
+                style() {
+                  return { color: randomColor };
+                },
+              }),
+              shpName,
+            );
+          })
+          .catch((err) => {
+            console.warn('Um ou mais arquivos não possuem layers!', err);
+          });
       });
     }
     // FIM - Indexação de Shapefiles

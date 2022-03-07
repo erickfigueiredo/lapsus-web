@@ -19,6 +19,7 @@
     "crypto-js": "^4.1.1",
     "leaflet": "^1.7.1",
     "leaflet-draw": "^1.0.4",
+    "lodash": "^4.17.21",
     "postcss": "^7",
     "shpjs": "^4.0.2",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
