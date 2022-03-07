@@ -14,6 +14,19 @@ class Contact {
     }
   }
 
+  static async getReadRelationship(token) {
+    try {
+      const res = await lapsus.get('/contact/read-relationship', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return res.data;
+    } catch (err) {
+      return err.response?.data ? err.response.data : defaultErrorMessage;
+    }
+  }
+
   static async create(data) {
     try {
       const res = await lapsus.post('/contact', data);

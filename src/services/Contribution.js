@@ -24,6 +24,19 @@ class Contribution {
     }
   }
 
+  static async getPublishRelationship(token) {
+    try {
+      const res = await lapsus.get('/contribution/publish-relationship', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return res.data;
+    } catch (err) {
+      return err.response?.data ? err.response.data : defaultErrorMessage;
+    }
+  }
+
   static async create(data) {
     try {
       const res = await lapsus.post('/contribution', data, {
