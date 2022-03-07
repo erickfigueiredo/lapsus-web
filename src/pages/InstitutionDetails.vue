@@ -21,7 +21,7 @@
         </div>
       </template>
     </card>
-    <card class="mb-8">
+    <card class="mb-8" title="Técnicos Associados">
       <base-table>
         <template #header>
           <tr>
