@@ -61,3 +61,7 @@ yarn build
 ```
 yarn lint
 ```
+
+---
+
+Painel de Controle desenvolvido por Erick Figueiredo sob a [Licença MIT](LICENSE).
