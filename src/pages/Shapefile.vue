@@ -1,6 +1,6 @@
 <template>
   <base-template>
-    <section class="md:flex md:space-x-4 md:h-4/5">
+    <section class="md:flex md:space-x-4">
       <card title="Cadastro de Shapefile" responsivity="mb-4 md:mb-0 md:w-1/2">
         <shapefile-form @form-response="showInformation" @form-data="addShapefile" />
       </card>
