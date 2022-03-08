@@ -6,22 +6,24 @@
           <tr>
             <th class="px-5 py-3 border-b-2 border-gray-200">Id</th>
             <th class="px-5 py-3 border-b-2 border-gray-200">Colaborador</th>
-            <th class="px-5 py-3 border-b-2 border-gray-200 hidden md:table-cell">
-              Adicionado em
-            </th>
-            <th class="px-5 py-3 border-b-2 border-gray-200 hidden md:table-cell">
-              Status
-            </th>
+            <th class="px-5 py-3 border-b-2 border-gray-200 hidden md:table-cell">Adicionado em</th>
+            <th class="px-5 py-3 border-b-2 border-gray-200 hidden md:table-cell">Status</th>
             <th class="px-5 py-3 border-b-2 border-gray-200 hidden md:table-cell"></th>
           </tr>
         </template>
         <template #body>
-          <tr v-for="(contrib, i) in contributions" :key="contrib.id"
-          :class="['hover:bg-gray-100', {
-              'text-gray-500 bg-gray-200' : contrib.published !== 'P',
-              'text-gray-900 hover:bg-gray-100' : contrib.published === 'P'
-          }]">
-            <td class="px-5 py-5 border-b border-gray-200 ">
+          <tr
+            v-for="(contrib, i) in contributions"
+            :key="contrib.id"
+            :class="[
+              'hover:bg-gray-100',
+              {
+                'text-gray-500 bg-gray-200': contrib.published !== 'P',
+                'text-gray-900 hover:bg-gray-100': contrib.published === 'P',
+              },
+            ]"
+          >
+            <td class="px-5 py-5 border-b border-gray-200">
               <p class="text-gray-900">{{ contrib.id }}</p>
             </td>
             <td class="px-5 py-5 border-b border-gray-200">
@@ -39,7 +41,7 @@
                 :class="{
                   'text-gray-900': contrib.published === 'P',
                   'text-green-600 font-semibold': contrib.published === 'A',
-                  'text-red-700 font-semibold': contrib.published === 'R'
+                  'text-red-700 font-semibold': contrib.published === 'R',
                 }"
               >
                 {{
@@ -67,19 +69,21 @@
       />
     </card>
   </base-template>
-  <modal
-    v-show="isModalActive"
-    :title="'Detalhes da Contribuição #' + this.contribution.id"
-    size="w-4/5 lg:w-2/4 lg:w-1/4"
-    :key="this.contribution.id"
-    @close="closeModal"
-  >
-    <contribution-detailed
-      :fill-data="contribution"
-      @form-response="showInformation"
-      @form-data="updateContribution"
-    />
-  </modal>
+  <teleport to="body">
+    <modal
+      v-show="isModalActive"
+      :title="'Detalhes da Contribuição #' + this.contribution.id"
+      size="w-4/5 lg:w-2/4 lg:w-1/4"
+      :key="this.contribution.id"
+      @close="closeModal"
+    >
+      <contribution-detailed
+        :fill-data="contribution"
+        @form-response="showInformation"
+        @form-data="updateContribution"
+      />
+    </modal>
+  </teleport>
   <float-info :flag="floatData.flag" :message="floatData.message" />
 </template>
 

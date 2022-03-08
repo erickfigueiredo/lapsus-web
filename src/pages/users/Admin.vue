@@ -99,19 +99,21 @@
       @change-page="paginate"
     />
   </card>
-  <modal
-    v-show="isModalActive"
-    title="Cadastrar Administrador"
-    size="w-4/5 md:w-2/4 lg:w-1/4"
-    @close="closeModal"
-  >
-    <user-form
-      user-type="A"
-      :to-update="false"
-      @form-response="showInformation"
-      @form-data="addUser"
-    />
-  </modal>
+  <teleport to="body">
+    <modal
+      v-show="isModalActive"
+      title="Cadastrar Administrador"
+      size="w-4/5 md:w-2/4 lg:w-1/4"
+      @close="closeModal"
+    >
+      <user-form
+        user-type="A"
+        :to-update="false"
+        @form-response="showInformation"
+        @form-data="addUser"
+      />
+    </modal>
+  </teleport>
   <float-info :flag="floatData.flag" :message="floatData.message" />
 </template>
 

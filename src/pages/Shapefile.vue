@@ -30,29 +30,31 @@
       </card>
     </section>
   </base-template>
-  <modal
-    v-show="isModalUpdateActive"
-    title="Atualizar Shapefile"
-    size="w-1/4"
-    @close="closeModal"
-  >
-    <shapefile-form
-      :key="shapefile.id"
-      @form-response="showInformation"
-      @form-data="updateShapefile"
-      :fill-data="shapefile"
-      :to-update="true"
-    />
-  </modal>
-  <modal
-    v-show="isModalDeleteActive"
-    title="Deletar Shapefile"
-    size="w-1/4"
-    @close="closeModal(true)"
-  >
-    <p>Tem certeza que deseja deletar "{{ shapefile.title }}"?</p>
-    <button :disabled="blockAction" @click="deleteShapefile">Sim</button>
-  </modal>
+  <teleport to="body">
+    <modal
+      v-show="isModalUpdateActive"
+      title="Atualizar Shapefile"
+      size="w-1/4"
+      @close="closeModal"
+    >
+      <shapefile-form
+        :key="shapefile.id"
+        @form-response="showInformation"
+        @form-data="updateShapefile"
+        :fill-data="shapefile"
+        :to-update="true"
+      />
+    </modal>
+    <modal
+      v-show="isModalDeleteActive"
+      title="Deletar Shapefile"
+      size="w-1/4"
+      @close="closeModal(true)"
+    >
+      <p>Tem certeza que deseja deletar "{{ shapefile.title }}"?</p>
+      <button :disabled="blockAction" @click="deleteShapefile">Sim</button>
+    </modal>
+  </teleport>
   <float-info :flag="floatData.flag" :message="floatData.message" />
 </template>
 

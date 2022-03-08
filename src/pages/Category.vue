@@ -12,13 +12,13 @@
               <li
                 v-if="
                   i === 0 ||
-                    cat.name[0].localeCompare(categories[i - 1].name[0], 'pt-BR', {
-                      sensitivity: 'base'
-                    })
+                  cat.name[0].localeCompare(categories[i - 1].name[0], 'pt-BR', {
+                    sensitivity: 'base',
+                  })
                 "
                 class="capitalize p-2 rounded-md bg-cerulean-400 text-white my-2"
               >
-                {{ normalizeIndex(cat.name[0])}}
+                {{ normalizeIndex(cat.name[0]) }}
               </li>
               <li class="my-2 mx-6 lg:flex">
                 <p class="my-2 capitalize truncate">
@@ -44,45 +44,45 @@
               <hr
                 v-if="
                   i < categories.length - 1 &&
-                    !cat.name[0].localeCompare(categories[i + 1].name[0], 'pt-BR', {
-                      sensitivity: 'base'
-                    })
+                  !cat.name[0].localeCompare(categories[i + 1].name[0], 'pt-BR', {
+                    sensitivity: 'base',
+                  })
                 "
               />
             </template>
           </ul>
           <div v-else class="flex font-semibold text-center text-gray-400 h-full">
-            <p class="mx-auto my-auto">
-              Não há categorias para serem exibidas
-            </p>
+            <p class="mx-auto my-auto">Não há categorias para serem exibidas</p>
           </div>
         </div>
       </card>
     </section>
   </base-template>
-  <modal
-    v-show="isModalUpdateActive"
-    title="Atualizar Categoria"
-    size="w-4/5 md:w-2/4 lg:w-1/4"
-    @close="closeModal"
-  >
-    <category-form
-      :key="category.id"
-      @form-response="showInformation"
-      @form-data="updateCategory"
-      :fill-data="category"
-      :to-update="true"
-    />
-  </modal>
-  <modal
-    v-show="isModalDeleteActive"
-    title="Deletar Categoria"
-    size="w-4/5 md:w-2/4 lg:w-1/4"
-    @close="closeModal(true)"
-  >
-    <p>Tem certeza que deseja deletar "{{ category.name }}"?</p>
-    <button :disabled="blockAction" @click="deleteCategory">Sim</button>
-  </modal>
+  <teleport to="body">
+    <modal
+      v-show="isModalUpdateActive"
+      title="Atualizar Categoria"
+      size="w-4/5 md:w-2/4 lg:w-1/4"
+      @close="closeModal"
+    >
+      <category-form
+        :key="category.id"
+        @form-response="showInformation"
+        @form-data="updateCategory"
+        :fill-data="category"
+        :to-update="true"
+      />
+    </modal>
+    <modal
+      v-show="isModalDeleteActive"
+      title="Deletar Categoria"
+      size="w-4/5 md:w-2/4 lg:w-1/4"
+      @close="closeModal(true)"
+    >
+      <p>Tem certeza que deseja deletar "{{ category.name }}"?</p>
+      <button :disabled="blockAction" @click="deleteCategory">Sim</button>
+    </modal>
+  </teleport>
   <float-info :flag="floatData.flag" :message="floatData.message" />
 </template>
 

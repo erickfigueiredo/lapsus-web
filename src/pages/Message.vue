@@ -5,8 +5,8 @@
         <template #header>
           <tr>
             <th class="px-5 py-3 border-b-2 border-gray-200">Assunto</th>
-            <th class="px-5 py-3 border-b-2 border-gray-200  hidden md:table-cell">Email</th>
-            <th class="px-5 py-3 border-b-2 border-gray-200  hidden md:table-cell">Data</th>
+            <th class="px-5 py-3 border-b-2 border-gray-200 hidden md:table-cell">Email</th>
+            <th class="px-5 py-3 border-b-2 border-gray-200 hidden md:table-cell">Data</th>
             <th class="px-5 py-3 border-b-2 border-gray-200" />
             <th class="px-5 py-3 border-b-2 border-gray-200">Ação</th>
           </tr>
@@ -22,7 +22,7 @@
             <td class="px-5 py-5 border-b border-gray-200">
               <span class="">{{ ctt.subject }}</span>
             </td>
-            <td class="px-5 py-5 border-b border-gray-200  hidden md:table-cell">
+            <td class="px-5 py-5 border-b border-gray-200 hidden md:table-cell">
               <a :href="`mailto:${ctt.email}`" class="">{{ ctt.email }}</a>
             </td>
             <td class="px-5 py-5 border-b border-gray-200 hidden md:table-cell">
@@ -34,10 +34,7 @@
               </span>
             </td>
             <td class="px-5 py-5 border-b border-gray-200">
-              <span
-                class="hover:text-red-500 cursor-pointer"
-                @click="openModal(i, true)"
-              >
+              <span class="hover:text-red-500 cursor-pointer" @click="openModal(i, true)">
                 Deletar
               </span>
             </td>
@@ -45,10 +42,10 @@
         </template>
       </base-table>
       <div v-if="!contacts.length" class="bg-gray-100 rounded-md p-6">
-      <div class="flex font-semibold text-center text-gray-400 h-full">
-        <p class="mx-auto my-auto">Não há mensagens para serem exibidas</p>
+        <div class="flex font-semibold text-center text-gray-400 h-full">
+          <p class="mx-auto my-auto">Não há mensagens para serem exibidas</p>
+        </div>
       </div>
-    </div>
       <pagination
         v-if="contacts.length"
         :current="parseInt(pagination.currentPage)"
@@ -57,29 +54,31 @@
       />
     </card>
   </base-template>
-  <modal
-    v-show="isModalVisualizationActive"
-    title="Visualização de Mensagem"
-    size="w-4/5 md:w-2/4 lg:w-2/4"
-    @close="closeModal()"
-  >
-    <contact-form
-      :key="contact.id"
-      @form-response="showInformation"
-      @form-data="updateContact"
-      :fill-data="contact"
-      :is-visualization="true"
-    />
-  </modal>
-  <modal
-    v-show="isModalDeleteActive"
-    title="Deletar Mensagem"
-    size="w-4/5 md:w-2/4 lg:w-1/4"
-    @close="closeModal(true)"
-  >
-    <p>Tem certeza que deseja deletar "{{ contact.subject }}"?</p>
-    <button :disabled="blockAction" @click="deleteContact">Sim</button>
-  </modal>
+  <teleport to="body">
+    <modal
+      v-show="isModalVisualizationActive"
+      title="Visualização de Mensagem"
+      size="w-4/5 md:w-2/4 lg:w-2/4"
+      @close="closeModal()"
+    >
+      <contact-form
+        :key="contact.id"
+        @form-response="showInformation"
+        @form-data="updateContact"
+        :fill-data="contact"
+        :is-visualization="true"
+      />
+    </modal>
+    <modal
+      v-show="isModalDeleteActive"
+      title="Deletar Mensagem"
+      size="w-4/5 md:w-2/4 lg:w-1/4"
+      @close="closeModal(true)"
+    >
+      <p>Tem certeza que deseja deletar "{{ contact.subject }}"?</p>
+      <button :disabled="blockAction" @click="deleteContact">Sim</button>
+    </modal>
+  </teleport>
   <float-info :flag="floatData.flag" :message="floatData.message" />
 </template>
 

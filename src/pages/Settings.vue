@@ -60,37 +60,39 @@
     </section>
   </base-template>
   <float-info :flag="floatData.flag" :message="floatData.message" />
-  <modal
-    v-show="isModalCreateActive"
-    title="Adicionar Contato"
-    size="w-4/5 lg:w-2/4 lg:w-1/4"
-    @close="closeModal"
-  >
-    <em-contact-form @form-response="showInformation" @form-data="addContact" />
-  </modal>
-  <modal
-    v-show="isModalUpdateActive"
-    title="Atualizar Contato"
-    size="w-4/5 lg:w-2/4 lg:w-1/4"
-    @close="closeModal('u')"
-  >
-    <em-contact-form
-      :key="emCtt.id"
-      @form-response="showInformation"
-      @form-data="updateContact"
-      :fill-data="emCtt"
-      :to-update="true"
-    />
-  </modal>
-  <modal
-    v-show="isModalDeleteActive"
-    title="Deletar Contato"
-    size="w-4/5 lg:w-2/4 lg:w-1/4"
-    @close="closeModal(true)"
-  >
-    <p>Tem certeza que deseja deletar "{{ emCtt.name }}"?</p>
-    <button :disabled="blockAction" @click="deleteContact">Sim</button>
-  </modal>
+  <teleport to="body">
+    <modal
+      v-show="isModalCreateActive"
+      title="Adicionar Contato"
+      size="w-4/5 lg:w-2/4 lg:w-1/4"
+      @close="closeModal"
+    >
+      <em-contact-form @form-response="showInformation" @form-data="addContact" />
+    </modal>
+    <modal
+      v-show="isModalUpdateActive"
+      title="Atualizar Contato"
+      size="w-4/5 lg:w-2/4 lg:w-1/4"
+      @close="closeModal('u')"
+    >
+      <em-contact-form
+        :key="emCtt.id"
+        @form-response="showInformation"
+        @form-data="updateContact"
+        :fill-data="emCtt"
+        :to-update="true"
+      />
+    </modal>
+    <modal
+      v-show="isModalDeleteActive"
+      title="Deletar Contato"
+      size="w-4/5 lg:w-2/4 lg:w-1/4"
+      @close="closeModal(true)"
+    >
+      <p>Tem certeza que deseja deletar "{{ emCtt.name }}"?</p>
+      <button :disabled="blockAction" @click="deleteContact">Sim</button>
+    </modal>
+  </teleport>
 </template>
 
 <script>

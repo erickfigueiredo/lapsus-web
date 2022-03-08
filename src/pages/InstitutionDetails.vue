@@ -59,15 +59,17 @@
       />
     </card>
   </base-template>
-  <modal
-    v-show="isModalDeleteActive"
-    title="Deletar Instituição"
-    size="w-4/5 md:w-2/4 lg:w-1/4"
-    @close="closeModal()"
-  >
-    <p>Tem certeza que deseja deletar "{{ institution.name }}"?</p>
-    <button :disabled="blockAction" @click="deleteInstitution">Sim</button>
-  </modal>
+  <teleport to="body">
+    <modal
+      v-show="isModalDeleteActive"
+      title="Deletar Instituição"
+      size="w-4/5 md:w-2/4 lg:w-1/4"
+      @close="closeModal()"
+    >
+      <p>Tem certeza que deseja deletar "{{ institution.name }}"?</p>
+      <button :disabled="blockAction" @click="deleteInstitution">Sim</button>
+    </modal>
+  </teleport>
   <float-info :flag="floatData.flag" :message="floatData.message" />
 </template>
 

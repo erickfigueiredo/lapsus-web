@@ -42,7 +42,7 @@
             <div class="w-1/3">
               <button
                 class="form-control font-semibold mt-10 rounded-l-none truncate hover:bg-gray-600
-                hover:text-lemon-400 hover:border-gray-600 transition duration-300"
+                shover:text-lemon-400 hover:border-gray-600 transition duration-300"
               >
                 <font-awesome :icon="['fas', 'search']" />
                 Buscar
@@ -110,49 +110,51 @@
       @change-page="paginate"
     />
   </card>
-  <modal
-    v-show="isModalCreateActive"
-    title="Cadastrar Usuário"
-    size="w-4/5 md:w-2/4 lg:w-1/4"
-    @close="closeModal"
-  >
-    <user-form
-      :i="0"
-      user-type="R"
-      :to-update="false"
-      @form-response="showInformation"
-      @form-data="addUser"
-    />
-  </modal>
-  <modal
-    v-show="isModalUpdateActive"
-    title="Atualizar Usuário"
-    size="w-4/5 md:w-2/4 lg:w-1/4"
-    @close="closeModal('u')"
-  >
-    <user-form
-      :key="user.id"
-      :i="1"
-      user-type="R"
-      :to-update="true"
-      :fill-data="user"
-      @form-response="showInformation"
-      @form-data="updateUser"
-    />
-  </modal>
-  <modal
-    v-show="isModalAlterStatusActive"
-    title="Alterar Status"
-    size="w-4/5 md:w-2/4 lg:w-1/4"
-    @close="closeModal('d')"
-  >
-    <p>
-      Tem certeza que deseja {{ user.is_active ? "desativar" : "reativar" }} "{{
-        user.name + " " + user.surname
-      }}"?
-    </p>
-    <button @click="toggleUser">Sim</button>
-  </modal>
+  <teleport to="body">
+    <modal
+      v-show="isModalCreateActive"
+      title="Cadastrar Usuário"
+      size="w-4/5 md:w-2/4 lg:w-1/4"
+      @close="closeModal"
+    >
+      <user-form
+        :i="0"
+        user-type="R"
+        :to-update="false"
+        @form-response="showInformation"
+        @form-data="addUser"
+      />
+    </modal>
+    <modal
+      v-show="isModalUpdateActive"
+      title="Atualizar Usuário"
+      size="w-4/5 md:w-2/4 lg:w-1/4"
+      @close="closeModal('u')"
+    >
+      <user-form
+        :key="user.id"
+        :i="1"
+        user-type="R"
+        :to-update="true"
+        :fill-data="user"
+        @form-response="showInformation"
+        @form-data="updateUser"
+      />
+    </modal>
+    <modal
+      v-show="isModalAlterStatusActive"
+      title="Alterar Status"
+      size="w-4/5 md:w-2/4 lg:w-1/4"
+      @close="closeModal('d')"
+    >
+      <p>
+        Tem certeza que deseja {{ user.is_active ? "desativar" : "reativar" }} "{{
+          user.name + " " + user.surname
+        }}"?
+      </p>
+      <button @click="toggleUser">Sim</button>
+    </modal>
+  </teleport>
   <float-info :flag="floatData.flag" :message="floatData.message" />
 </template>
 
