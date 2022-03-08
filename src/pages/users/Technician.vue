@@ -59,7 +59,6 @@
               <button
                 class="form-control font-semibold mt-10 rounded-l-none truncate hover:bg-gray-600
                 hover:text-lemon-400 hover:border-gray-600 transition duration-300"
-                onclick=""
               >
                 <font-awesome :icon="['fas', 'search']" />
                 Buscar
@@ -119,6 +118,11 @@
         </tr>
       </template>
     </base-table>
+    <div v-if="!technicians.length" class="bg-gray-100 rounded-md p-6">
+      <div class="flex font-semibold text-center text-gray-400 h-full">
+        <p class="mx-auto my-auto">Não há usuários para serem exibidos</p>
+      </div>
+    </div>
     <pagination
       v-if="technicians.length"
       :current="parseInt(pagination.currentPage)"

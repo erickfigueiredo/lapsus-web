@@ -8,9 +8,7 @@
       <div class="xl:w-3/4">
         <form class="xl:flex" @submit.prevent="submitSearch">
           <div class="xl:w-6/12">
-            <label for="search" class="block my-2 text-gray-500 font-semibold">
-              Pesquisar
-            </label>
+            <label for="search" class="block my-2 text-gray-500 font-semibold"> Pesquisar </label>
             <input
               id="search"
               name="search"
@@ -22,9 +20,7 @@
           </div>
           <div class="flex xl:w-6/12">
             <div class="w-1/3">
-              <label for="who" class="block my-2 text-gray-500 font-semibold">
-                Status
-              </label>
+              <label for="who" class="block my-2 text-gray-500 font-semibold"> Status </label>
               <select
                 id="who"
                 name="who"
@@ -37,9 +33,7 @@
               </select>
             </div>
             <div class="w-1/3">
-              <label for="order" class="block my-2 text-gray-500 font-semibold">
-                Ordem
-              </label>
+              <label for="order" class="block my-2 text-gray-500 font-semibold"> Ordem </label>
               <select id="order" name="order" v-model="order" class="form-control rounded-none">
                 <option value="asc" selected>Crescente</option>
                 <option value="desc">Decrescente</option>
@@ -49,7 +43,6 @@
               <button
                 class="form-control font-semibold mt-10 rounded-l-none truncate hover:bg-gray-600
                 hover:text-lemon-400 hover:border-gray-600 transition duration-300"
-                onclick=""
               >
                 <font-awesome :icon="['fas', 'search']" />
                 Buscar
@@ -73,10 +66,10 @@
       </template>
       <template #body>
         <tr v-for="(reg, i) in registered" :key="reg.id" class="hover:bg-gray-100">
-          <td class="px-5 py-5 border-b border-gray-200 ">
+          <td class="px-5 py-5 border-b border-gray-200">
             <span class="text-gray-900">{{ reg.name }}</span>
           </td>
-          <td class="px-5 py-5 border-b border-gray-200 ">
+          <td class="px-5 py-5 border-b border-gray-200">
             <span class="text-gray-900">{{ reg.surname }}</span>
           </td>
           <td class="px-5 py-5 border-b border-gray-200">
@@ -85,7 +78,7 @@
           <td class="px-5 py-5 border-b border-gray-200 hidden md:table-cell">
             <span class="text-gray-900">{{ reg.created_at }} </span>
           </td>
-          <td class="px-5 py-5 border-b border-gray-200 ">
+          <td class="px-5 py-5 border-b border-gray-200">
             <span
               class="font-semibold"
               :class="reg.is_active ? 'text-green-600' : 'text-red-700'"
@@ -105,6 +98,11 @@
         </tr>
       </template>
     </base-table>
+    <div v-if="!registered.length" class="bg-gray-100 rounded-md p-6">
+      <div class="flex font-semibold text-center text-gray-400 h-full">
+        <p class="mx-auto my-auto">Não há usuários para serem exibidos</p>
+      </div>
+    </div>
     <pagination
       v-if="registered.length"
       :current="parseInt(pagination.currentPage)"

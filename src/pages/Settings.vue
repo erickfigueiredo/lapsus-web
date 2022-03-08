@@ -11,10 +11,10 @@
             :fill-data="settings.org"
             @form-response="showInformation"
           />
-          <div v-else class="flex font-semibold text-center text-gray-400 h-full">
-            <p class="mx-auto my-auto">
-              Não há categorias para serem exibidas
-            </p>
+          <div v-else class="bg-gray-100 rounded-md p-6">
+            <div class="flex font-semibold text-center text-gray-400 h-full">
+              <p class="mx-auto my-auto">Não foi possível carregar as configurações</p>
+            </div>
           </div>
         </template>
       </card>
@@ -22,8 +22,8 @@
         <h2 class="font-bold text-gray-500">Contatos de Emergência</h2>
         <hr class="my-4" />
         <button
-          class="w-full p-2 rounded-md ease-in-out bg-gray-600 font-semibold
-          hover:text-white text-lemon-400 hover:bg-lemon-500"
+          class="w-full p-2 rounded-md ease-in-out bg-gray-600 font-semibold hover:text-white
+          text-lemon-400 hover:bg-lemon-500"
           @click="openModal('c')"
           type="button"
         >
@@ -32,7 +32,7 @@
         <hr class="my-4" />
         <section class="h-4/5">
           <list-load v-if="isContactLoading" />
-          <div v-else class="bg-gray-100 rounded-md p-6 h-full overflow-y-auto">
+          <div v-else class="bg-gray-100 rounded-md p-6 overflow-y-auto">
             <ul v-if="emergencyContacts.length">
               <li
                 v-for="(em, index) in emergencyContacts"
@@ -49,10 +49,10 @@
                 >
               </li>
             </ul>
-            <div v-else class="flex font-semibold text-center text-gray-400 h-full">
-              <p class="mx-auto my-auto">
-                Não há contatos para serem exibidos
-              </p>
+            <div v-else class="bg-gray-100 rounded-md p-6">
+              <div class="flex font-semibold text-center text-gray-400 h-full">
+                <p class="mx-auto my-auto">Não há contatos de emergência para serem exibidos</p>
+              </div>
             </div>
           </div>
         </section>

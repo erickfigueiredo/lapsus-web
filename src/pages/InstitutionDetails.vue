@@ -46,6 +46,11 @@
           </tr>
         </template>
       </base-table>
+      <div v-if="!technicians.length" class="bg-gray-100 rounded-md p-6">
+      <div class="flex font-semibold text-center text-gray-400 h-full">
+        <p class="mx-auto my-auto">Não há usuários vinculados</p>
+      </div>
+    </div>
       <pagination
         v-if="technicians.length"
         :current="parseInt(pagination.currentPage)"

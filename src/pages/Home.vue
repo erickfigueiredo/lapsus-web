@@ -16,23 +16,35 @@
       </card>
     </section>
     <section class="md:flex md:space-x-4 md:my-4">
-      <card v-if="['A', 'T'].includes(userType)" class="my-4 md:my-0"
-      title="Relação de Leitura de Mensagens">
+      <card
+        v-if="['A', 'T'].includes(userType)"
+        class="my-4 md:my-0"
+        title="Relação de Leitura de Mensagens"
+      >
         <doughnut-chart
           v-if="contact.show"
           :data="contact.data"
           :legend="['Lidos', 'Pendentes']"
           :colors="['#4361ee', '#ade8f4']"
         />
+        <div v-else class="bg-gray-100 rounded-md p-6">
+          <div class="flex font-semibold text-center text-gray-400 h-full">
+            <p class="mx-auto my-auto">Não há informações do relacionamento de leitura</p>
+          </div>
+        </div>
       </card>
-      <card v-if="userType !== 'R'" class="my-4 md:my-0"
-      title="Relação de Contribuições">
+      <card v-if="userType !== 'R'" class="my-4 md:my-0" title="Relação de Contribuições">
         <doughnut-chart
           v-if="contribution.show"
           :data="contribution.data"
           :legend="['Aprovadas', 'Reprovadas', 'Pendentes']"
           :colors="['#99d98c', '#f72585', '#4a4e69']"
         />
+        <div v-else class="bg-gray-100 rounded-md p-6">
+          <div class="flex font-semibold text-center text-gray-400 h-full">
+            <p class="mx-auto my-auto">Não há informações do relacionamento de contribuições</p>
+          </div>
+        </div>
       </card>
     </section>
     <template v-if="userType === 'A'">
@@ -44,6 +56,11 @@
             :legend="['Administradores', 'Moderadores', 'Registrados', 'Técnicos']"
             :colors="['#126782', '#5bba6f', '#ffdd00', '#9d4edd']"
           />
+          <div v-else class="bg-gray-100 rounded-md p-6">
+            <div class="flex font-semibold text-center text-gray-400 h-full">
+              <p class="mx-auto my-auto">Não há informações do relacionamento de usuários</p>
+            </div>
+          </div>
         </card>
       </section>
       <section class="flex space-x-4 my-4">
@@ -55,6 +72,11 @@
             :legend="userA.legend"
             color="#dddf00"
           />
+          <div v-else class="bg-gray-100 rounded-md p-6">
+            <div class="flex font-semibold text-center text-gray-400 h-full">
+              <p class="mx-auto my-auto">Não há informações sobre a relação mensal de usuários</p>
+            </div>
+          </div>
         </card>
       </section>
     </template>
