@@ -27,15 +27,13 @@
                 <div class="ml-auto flex">
                   <button
                     class="p-2 bg-cerulean-500 hover:bg-cerulean-700 text-white rounded-md
-                    transition delay-50 duration-300 ease-in-out"
-                    @click="openModal(i)"
+                    transition delay-50 duration-300 ease-in-out" @click="openModal(i)"
                   >
                     Atualizar
                   </button>
                   <button
                     class="ml-auto lg:ml-2 p-2 bg-red-500 hover:bg-red-700 text-white rounded-md
-                    transition delay-50 duration-300 ease-in-out"
-                    @click="openModal(i, true)"
+                    transition delay-50 duration-300 ease-in-out" @click="openModal(i, true)"
                   >
                     Deletar
                   </button>
@@ -80,7 +78,16 @@
       @close="closeModal(true)"
     >
       <p>Tem certeza que deseja deletar "{{ category.name }}"?</p>
-      <button :disabled="blockAction" @click="deleteCategory">Sim</button>
+      <div class="flex">
+        <button
+          class="ml-auto p-2 bg-red-500 hover:bg-red-700 text-white rounded-md
+          transition delay-50 duration-300 ease-in-out"
+          :disabled="blockAction"
+          @click="deleteCategory"
+        >
+          deletar
+        </button>
+      </div>
     </modal>
   </teleport>
   <float-info :flag="floatData.flag" :message="floatData.message" />

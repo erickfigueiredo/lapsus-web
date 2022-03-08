@@ -152,7 +152,17 @@
           user.name + " " + user.surname
         }}"?
       </p>
-      <button @click="toggleUser">Sim</button>
+      <div class="flex">
+        <button
+          class="ml-auto p-2 hover:bg-red-700 text-white rounded-md
+          transition delay-50 duration-300 ease-in-out"
+          :class="user.is_active ? 'bg-red-500 hover:bg-red-700'
+          : 'bg-green-500 hover:bg-green-700'"
+          @click="toggleUser"
+        >
+          {{ user.is_active ? "desativar" : "reativar" }}
+        </button>
+      </div>
     </modal>
   </teleport>
   <float-info :flag="floatData.flag" :message="floatData.message" />

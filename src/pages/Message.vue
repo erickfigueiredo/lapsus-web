@@ -76,7 +76,16 @@
       @close="closeModal(true)"
     >
       <p>Tem certeza que deseja deletar "{{ contact.subject }}"?</p>
-      <button :disabled="blockAction" @click="deleteContact">Sim</button>
+      <div class="flex">
+        <button
+          class="ml-auto p-2 bg-red-500 hover:bg-red-700 text-white rounded-md
+          transition delay-50 duration-300 ease-in-out"
+          :disabled="blockAction"
+          @click="deleteContact"
+        >
+          deletar
+        </button>
+      </div>
     </modal>
   </teleport>
   <float-info :flag="floatData.flag" :message="floatData.message" />
