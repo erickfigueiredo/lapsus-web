@@ -18,6 +18,8 @@ import EMSI from '../services/EMSI';
 import Shapefile from '../services/Shapefile';
 import contribution from '../services/Contribution';
 
+import wkt from 'wkt'
+
 import genHexColor from '../utils/colorGenerator';
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -65,6 +67,265 @@ export default {
       if (result.success) {
         this.emsis = result.emsi;
       }
+
+      // INICIO - Visualização das contribuições
+
+      this.contributions.forEach((elemento) => {
+        if(elemento.local.indexOf("POINT") != '-1'){
+          L.marker(wkt.parse(elemento.local).coordinates).addTo(this.map).bindPopup(
+            '<strong>Tipo de colaboração: </strong>Colaboração normal<br>' +
+            '<strong>Data de ocorrência:</strong> ' + elemento.occurrence + '<br>' +
+            '<strong>Vítimas:</strong> ' + elemento.victims + '<br>' +
+            '<strong>Risco de danos:</strong> ' + elemento.risk_damage + '<br>' +
+            '<strong>Descrição:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Categoria:</strong> ' + elemento.category_name
+          );
+        }
+        else if(elemento.local.indexOf("LINESTRING") != '-1'){
+          L.polyline(wkt.parse(elemento.local).coordinates).addTo(this.map).bindPopup(
+            '<strong>Tipo de colaboração: </strong>Colaboração normal<br>' +
+            '<strong>Data de ocorrência:</strong> ' + elemento.occurrence + '<br>' +
+            '<strong>Vítimas:</strong> ' + elemento.victims + '<br>' +
+            '<strong>Risco de danos:</strong> ' + elemento.risk_damage + '<br>' +
+            '<strong>Descrição:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Categoria:</strong> ' + elemento.category_name
+          );
+        }
+        else if(elemento.local.indexOf("POLYGON") != '-1'){
+          L.polygon(wkt.parse(elemento.local).coordinates).addTo(this.map).bindPopup(
+            '<strong>Tipo de colaboração: </strong>Colaboração normal<br>' +
+            '<strong>Data de ocorrência:</strong> ' + elemento.occurrence + '<br>' +
+            '<strong>Vítimas:</strong> ' + elemento.victims + '<br>' +
+            '<strong>Risco de danos:</strong> ' + elemento.risk_damage + '<br>' +
+            '<strong>Descrição:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Categoria:</strong> ' + elemento.category_name
+          );
+        }
+      })
+
+      this.emsis.forEach((elemento) => {
+        if(elemento.local.indexOf("POINT") != '-1'){
+          L.marker(wkt.parse(elemento.local).coordinates).addTo(this.map).bindPopup(
+            '<strong>Tipo de colaboração: </strong>Colaboração EMSI<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.created_at + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.freetext + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.urgency + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.name + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.id_org + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.id + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.freetext + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.uri + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.type + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.seclass + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.mode + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.msgtype + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.level + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.id + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.name + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.main_event_id + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.certainty + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.decl_datime + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.occ_datime + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.freetext + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.source + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.scale + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.status + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.cause + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.risk_assessmnt + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.id + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.freetext + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.status + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.subtype + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.type + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.subweather + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.weather + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.id_loc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.name + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.st_astext + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.id + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.address + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.env + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.subcategory + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.category + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.subloctype + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.loctype + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.actornv3 + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.actornv2 + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.actor + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc
+          );
+        }
+        else if(elemento.local.indexOf("LINESTRING") != '-1'){
+          L.polyline(wkt.parse(elemento.local).coordinates).addTo(this.map).bindPopup(
+            '<strong>Tipo de colaboração: </strong>Colaboração EMSI<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.created_at + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.freetext + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.urgency + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.name + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.id_org + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.id + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.freetext + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.uri + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.type + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.seclass + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.mode + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.msgtype + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.level + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.id + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.name + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.main_event_id + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.certainty + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.decl_datime + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.occ_datime + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.freetext + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.source + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.scale + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.status + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.cause + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.risk_assessmnt + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.id + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.freetext + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.status + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.subtype + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.type + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.subweather + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.weather + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.id_loc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.name + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.st_astext + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.id + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.address + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.env + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.subcategory + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.category + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.subloctype + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.loctype + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.actornv3 + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.actornv2 + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.actor + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc
+          );
+        }
+        else if(elemento.local.indexOf("POLYGON") != '-1'){
+          L.polygon(wkt.parse(elemento.local).coordinates).addTo(this.map).bindPopup(
+            '<strong>Tipo de colaboração: </strong>Colaboração EMSI<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.created_at + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.freetext + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.urgency + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.name + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.id_org + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.id + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.freetext + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.uri + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.type + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.seclass + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.mode + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.msgtype + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.level + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.id + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.name + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.main_event_id + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.certainty + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.decl_datime + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.occ_datime + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.freetext + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.source + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.scale + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.status + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.cause + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.risk_assessmnt + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.id + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.freetext + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.status + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.subtype + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.type + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.subweather + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.weather + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.id_loc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.name + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.st_astext + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.id + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.address + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.env + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.subcategory + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.category + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.subloctype + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.loctype + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.actornv3 + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.actornv2 + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.actor + '<br>' +
+            '<strong>Nome do campo:</strong> ' + elemento.desc
+          );
+        }
+      })
+
+      // FIM - Visualização das contribuições
 
       // ADICIONAR AQUI: fazer a varredura dos arrays e desenha no mapa
     }, 2000), // Espera 3 segundos pra mandar a requisição
