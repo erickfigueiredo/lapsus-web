@@ -32,8 +32,8 @@
           </p>
           <div class="flex">
             <button
-              class="ml-auto my-4 p-2 bg-red-500 hover:bg-red-700 text-white rounded-md
-            transition  duration-300 ease-in-out"
+              class="ml-auto my-4 p-2 bg-red-500 hover:bg-red-700 text-white rounded-md transition
+              duration-300 ease-in-out"
               @click="openModal"
             >
               Desativar Conta
@@ -45,23 +45,23 @@
         <h2 class="font-bold text-gray-500">Informações Pessoais</h2>
         <hr class="my-4" />
         <div class="flex p-6 rounded-md bg-gray-100 font-semibold text-center text-gray-400 h-full">
-          <p class="mx-auto my-auto">
-            Não foi possível carregar as informações do perfil
-          </p>
+          <p class="mx-auto my-auto">Não foi possível carregar as informações do perfil</p>
         </div>
       </card>
     </section>
   </base-template>
-  <modal
-    v-if="user"
-    v-show="isModalDeactivateOpen"
-    title="Desativar conta"
-    size="w-4/5 md:w-2/4 lg:w-1/4"
-    @close="closeModal"
-  >
-    <p>{{ user.name }}, você está prestes a desativar sua conta, deseja continuar?</p>
-    <button :disabled="blockAction" @click="deactivateAccount">Sim</button>
-  </modal>
+  <teleport to="body">
+    <modal
+      v-if="user"
+      v-show="isModalDeactivateOpen"
+      title="Desativar conta"
+      size="w-4/5 md:w-2/4 lg:w-1/4"
+      @close="closeModal"
+    >
+      <p>{{ user.name }}, você está prestes a desativar sua conta, deseja continuar?</p>
+      <button :disabled="blockAction" @click="deactivateAccount">Sim</button>
+    </modal>
+  </teleport>
   <float-info :flag="floatData.flag" :message="floatData.message" />
 </template>
 

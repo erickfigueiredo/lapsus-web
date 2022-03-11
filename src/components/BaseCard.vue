@@ -1,10 +1,12 @@
 <template>
-  <div class="p-4 bg-white rounded-lg shadow-md w-full" :class="responsivity">
+  <div class="p-4 bg-white rounded-lg shadow-md  w-full" :class="responsivity">
     <template v-if="title">
-      <h2 class="font-semibold text-gray-500">{{title}}</h2>
+      <h2 class="font-semibold text-gray-500">{{ title }}</h2>
       <hr class="my-4" />
     </template>
-    <slot />
+    <section class="max-h-72 overflow-y-auto">
+      <slot />
+    </section>
   </div>
 </template>
 
@@ -22,3 +24,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.max-h-72 {
+  max-height: 72vh
+}
+</style>

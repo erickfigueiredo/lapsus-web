@@ -2,6 +2,8 @@
 
 Sistema WEB sob a arquitetura Single Page Application (SPA) desenvolvido por [Erick Figueiredo](https://github.com/erickfigueiredo) para consumir e interagir com a Lapsus API.
 
+![Demonstração](./docs/demo.png)
+
 ---
 
 ## Instruções de Configuração
@@ -61,3 +63,7 @@ yarn build
 ```
 yarn lint
 ```
+
+---
+
+Painel de Controle desenvolvido por Erick Figueiredo sob a [Licença MIT](LICENSE).

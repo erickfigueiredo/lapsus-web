@@ -59,7 +59,6 @@
               <button
                 class="form-control font-semibold mt-10 rounded-l-none truncate hover:bg-gray-600
                 hover:text-lemon-400 hover:border-gray-600 transition duration-300"
-                onclick=""
               >
                 <font-awesome :icon="['fas', 'search']" />
                 Buscar
@@ -119,6 +118,11 @@
         </tr>
       </template>
     </base-table>
+    <div v-if="!technicians.length" class="bg-gray-100 rounded-md p-6">
+      <div class="flex font-semibold text-center text-gray-400 h-full">
+        <p class="mx-auto my-auto">Não há usuários para serem exibidos</p>
+      </div>
+    </div>
     <pagination
       v-if="technicians.length"
       :current="parseInt(pagination.currentPage)"
@@ -126,51 +130,63 @@
       @change-page="paginate"
     />
   </card>
-  <modal
-    v-show="isModalCreateActive"
-    title="Cadastrar Técnico"
-    size="w-4/5 md:w-2/4 lg:w-1/4"
-    @close="closeModal"
-  >
-    <user-form
-      :i="0"
-      user-type="T"
-      :to-update="false"
-      :institutionList="institutions"
-      @form-response="showInformation"
-      @form-data="addUser"
-    />
-  </modal>
-  <modal
-    v-show="isModalUpdateActive"
-    title="Atualizar Técnico"
-    size="w-4/5 md:w-2/4 lg:w-1/4"
-    @close="closeModal('u')"
-  >
-    <user-form
-      :key="user.id"
-      :i="1"
-      user-type="T"
-      :institutionList="institutions"
-      :to-update="true"
-      :fill-data="user"
-      @form-response="showInformation"
-      @form-data="updateUser"
-    />
-  </modal>
-  <modal
-    v-show="isModalAlterStatusActive"
-    title="Alterar Status"
-    size="w-4/5 md:w-2/4 lg:w-1/4"
-    @close="closeModal('d')"
-  >
-    <p>
-      Tem certeza que deseja {{ user.is_active ? "desativar" : "reativar" }} "{{
-        user.name + " " + user.surname
-      }}"?
-    </p>
-    <button @click="toggleUser">Sim</button>
-  </modal>
+  <teleport to="body">
+    <modal
+      v-show="isModalCreateActive"
+      title="Cadastrar Técnico"
+      size="w-4/5 md:w-2/4 lg:w-1/4"
+      @close="closeModal"
+    >
+      <user-form
+        :i="0"
+        user-type="T"
+        :to-update="false"
+        :institutionList="institutions"
+        @form-response="showInformation"
+        @form-data="addUser"
+      />
+    </modal>
+    <modal
+      v-show="isModalUpdateActive"
+      title="Atualizar Técnico"
+      size="w-4/5 md:w-2/4 lg:w-1/4"
+      @close="closeModal('u')"
+    >
+      <user-form
+        :key="user.id"
+        :i="1"
+        user-type="T"
+        :institutionList="institutions"
+        :to-update="true"
+        :fill-data="user"
+        @form-response="showInformation"
+        @form-data="updateUser"
+      />
+    </modal>
+    <modal
+      v-show="isModalAlterStatusActive"
+      title="Alterar Status"
+      size="w-4/5 md:w-2/4 lg:w-1/4"
+      @close="closeModal('d')"
+    >
+      <p>
+        Tem certeza que deseja {{ user.is_active ? "desativar" : "reativar" }} "{{
+          user.name + " " + user.surname
+        }}"?
+      </p>
+      <div class="flex">
+        <button
+          class="ml-auto p-2 hover:bg-red-700 text-white rounded-md
+          transition delay-50 duration-300 ease-in-out"
+          :class="user.is_active ? 'bg-red-500 hover:bg-red-700'
+          : 'bg-green-500 hover:bg-green-700'"
+          @click="toggleUser"
+        >
+          {{ user.is_active ? "desativar" : "reativar" }}
+        </button>
+      </div>
+    </modal>
+  </teleport>
   <float-info :flag="floatData.flag" :message="floatData.message" />
 </template>
 

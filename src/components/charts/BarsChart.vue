@@ -9,12 +9,16 @@ export default {
       type: Array,
       required: true,
     },
+    label: {
+      type: String,
+      required: true,
+    },
     legend: {
       type: Array,
       required: true,
     },
-    colors: {
-      type: Array,
+    color: {
+      type: String,
       required: true,
     },
   },
@@ -24,7 +28,8 @@ export default {
         labels: this.legend,
         datasets: [
           {
-            backgroundColor: this.colors,
+            label: this.label,
+            backgroundColor: this.color,
             data: this.data,
           },
         ],
@@ -35,6 +40,7 @@ export default {
             {
               ticks: {
                 beginAtZero: true,
+                stepSize: 1,
               },
             },
           ],

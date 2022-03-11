@@ -1,6 +1,6 @@
 <template>
   <base-template>
-    <section class="md:flex md:space-x-4 md:h-4/5">
+    <section class="md:flex md:space-x-4">
       <card title="Cadastro de Shapefile" responsivity="mb-4 md:mb-0 md:w-1/2">
         <shapefile-form @form-response="showInformation" @form-data="addShapefile" />
       </card>
@@ -30,29 +30,40 @@
       </card>
     </section>
   </base-template>
-  <modal
-    v-show="isModalUpdateActive"
-    title="Atualizar Shapefile"
-    size="w-1/4"
-    @close="closeModal"
-  >
-    <shapefile-form
-      :key="shapefile.id"
-      @form-response="showInformation"
-      @form-data="updateShapefile"
-      :fill-data="shapefile"
-      :to-update="true"
-    />
-  </modal>
-  <modal
-    v-show="isModalDeleteActive"
-    title="Deletar Shapefile"
-    size="w-1/4"
-    @close="closeModal(true)"
-  >
-    <p>Tem certeza que deseja deletar "{{ shapefile.title }}"?</p>
-    <button :disabled="blockAction" @click="deleteShapefile">Sim</button>
-  </modal>
+  <teleport to="body">
+    <modal
+      v-show="isModalUpdateActive"
+      title="Atualizar Shapefile"
+      size="w-1/4"
+      @close="closeModal"
+    >
+      <shapefile-form
+        :key="shapefile.id"
+        @form-response="showInformation"
+        @form-data="updateShapefile"
+        :fill-data="shapefile"
+        :to-update="true"
+      />
+    </modal>
+    <modal
+      v-show="isModalDeleteActive"
+      title="Deletar Shapefile"
+      size="w-1/4"
+      @close="closeModal(true)"
+    >
+      <p>Tem certeza que deseja deletar "{{ shapefile.title }}"?</p>
+      <div class="flex">
+        <button
+          class="ml-auto p-2 bg-red-500 hover:bg-red-700 text-white rounded-md
+          transition delay-50 duration-300 ease-in-out"
+          :disabled="blockAction"
+          @click="deleteShapefile"
+        >
+          deletar
+        </button>
+      </div>
+    </modal>
+  </teleport>
   <float-info :flag="floatData.flag" :message="floatData.message" />
 </template>
 

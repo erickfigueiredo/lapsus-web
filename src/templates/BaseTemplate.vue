@@ -16,6 +16,7 @@
             </h1>
           </section>
           <slot />
+          <div class="p-2" />
         </div>
       </main>
     </div>

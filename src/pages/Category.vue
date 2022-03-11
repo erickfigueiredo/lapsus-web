@@ -1,6 +1,6 @@
 <template>
   <base-template>
-    <section class="md:flex md:space-x-4 md:h-4/5">
+    <section class="md:flex md:space-x-4">
       <card title="Cadastro de Categorias" responsivity="mb-4 md:mb-0 md:w-1/2 lg:w-2/6">
         <category-form @form-response="showInformation" @form-data="addCategory" />
       </card>
@@ -12,13 +12,13 @@
               <li
                 v-if="
                   i === 0 ||
-                    cat.name[0].localeCompare(categories[i - 1].name[0], 'pt-BR', {
-                      sensitivity: 'base'
-                    })
+                  cat.name[0].localeCompare(categories[i - 1].name[0], 'pt-BR', {
+                    sensitivity: 'base',
+                  })
                 "
                 class="capitalize p-2 rounded-md bg-cerulean-400 text-white my-2"
               >
-                {{ normalizeIndex(cat.name[0])}}
+                {{ normalizeIndex(cat.name[0]) }}
               </li>
               <li class="my-2 mx-6 lg:flex">
                 <p class="my-2 capitalize truncate">
@@ -27,15 +27,13 @@
                 <div class="ml-auto flex">
                   <button
                     class="p-2 bg-cerulean-500 hover:bg-cerulean-700 text-white rounded-md
-                    transition delay-50 duration-300 ease-in-out"
-                    @click="openModal(i)"
+                    transition delay-50 duration-300 ease-in-out" @click="openModal(i)"
                   >
                     Atualizar
                   </button>
                   <button
                     class="ml-auto lg:ml-2 p-2 bg-red-500 hover:bg-red-700 text-white rounded-md
-                    transition delay-50 duration-300 ease-in-out"
-                    @click="openModal(i, true)"
+                    transition delay-50 duration-300 ease-in-out" @click="openModal(i, true)"
                   >
                     Deletar
                   </button>
@@ -44,45 +42,54 @@
               <hr
                 v-if="
                   i < categories.length - 1 &&
-                    !cat.name[0].localeCompare(categories[i + 1].name[0], 'pt-BR', {
-                      sensitivity: 'base'
-                    })
+                  !cat.name[0].localeCompare(categories[i + 1].name[0], 'pt-BR', {
+                    sensitivity: 'base',
+                  })
                 "
               />
             </template>
           </ul>
           <div v-else class="flex font-semibold text-center text-gray-400 h-full">
-            <p class="mx-auto my-auto">
-              Não há categorias para serem exibidas
-            </p>
+            <p class="mx-auto my-auto">Não há categorias para serem exibidas</p>
           </div>
         </div>
       </card>
     </section>
   </base-template>
-  <modal
-    v-show="isModalUpdateActive"
-    title="Atualizar Categoria"
-    size="w-4/5 md:w-2/4 lg:w-1/4"
-    @close="closeModal"
-  >
-    <category-form
-      :key="category.id"
-      @form-response="showInformation"
-      @form-data="updateCategory"
-      :fill-data="category"
-      :to-update="true"
-    />
-  </modal>
-  <modal
-    v-show="isModalDeleteActive"
-    title="Deletar Categoria"
-    size="w-4/5 md:w-2/4 lg:w-1/4"
-    @close="closeModal(true)"
-  >
-    <p>Tem certeza que deseja deletar "{{ category.name }}"?</p>
-    <button :disabled="blockAction" @click="deleteCategory">Sim</button>
-  </modal>
+  <teleport to="body">
+    <modal
+      v-show="isModalUpdateActive"
+      title="Atualizar Categoria"
+      size="w-4/5 md:w-2/4 lg:w-1/4"
+      @close="closeModal"
+    >
+      <category-form
+        :key="category.id"
+        @form-response="showInformation"
+        @form-data="updateCategory"
+        :fill-data="category"
+        :to-update="true"
+      />
+    </modal>
+    <modal
+      v-show="isModalDeleteActive"
+      title="Deletar Categoria"
+      size="w-4/5 md:w-2/4 lg:w-1/4"
+      @close="closeModal(true)"
+    >
+      <p>Tem certeza que deseja deletar "{{ category.name }}"?</p>
+      <div class="flex">
+        <button
+          class="ml-auto p-2 bg-red-500 hover:bg-red-700 text-white rounded-md
+          transition delay-50 duration-300 ease-in-out"
+          :disabled="blockAction"
+          @click="deleteCategory"
+        >
+          deletar
+        </button>
+      </div>
+    </modal>
+  </teleport>
   <float-info :flag="floatData.flag" :message="floatData.message" />
 </template>
 

@@ -4,7 +4,8 @@
       class="fixed z-30 top-0 left-0 h-screen w-full bg-black opacity-50"
       @click="$emit('close')"
     />
-    <dialog open class="fixed top-10 md:inset-1/4 z-40 bg-white rounded-md" :class="size">
+    <dialog open class="fixed top-10 md:inset-1/4 z-40 bg-white rounded-md" :class="size"
+    >
       <header class="flex">
         <h2 class="text-xl">{{ title }}</h2>
         <span class="ml-auto mr-2 text-gray-400 cursor-pointer" @click="$emit('close')">
@@ -12,7 +13,7 @@
         </span>
       </header>
       <hr class="my-2" />
-      <section class="overflow-y-auto">
+      <section class="max-h-80 overflow-y-auto">
         <slot />
       </section>
     </dialog>
@@ -34,3 +35,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.max-h-80 {
+  max-height: 80vh
+}
+</style>

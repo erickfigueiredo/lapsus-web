@@ -46,6 +46,11 @@
           </tr>
         </template>
       </base-table>
+      <div v-if="!technicians.length" class="bg-gray-100 rounded-md p-6">
+      <div class="flex font-semibold text-center text-gray-400 h-full">
+        <p class="mx-auto my-auto">Não há usuários vinculados</p>
+      </div>
+    </div>
       <pagination
         v-if="technicians.length"
         :current="parseInt(pagination.currentPage)"
@@ -54,15 +59,26 @@
       />
     </card>
   </base-template>
-  <modal
-    v-show="isModalDeleteActive"
-    title="Deletar Instituição"
-    size="w-4/5 md:w-2/4 lg:w-1/4"
-    @close="closeModal()"
-  >
-    <p>Tem certeza que deseja deletar "{{ institution.name }}"?</p>
-    <button :disabled="blockAction" @click="deleteInstitution">Sim</button>
-  </modal>
+  <teleport to="body">
+    <modal
+      v-show="isModalDeleteActive"
+      title="Deletar Instituição"
+      size="w-4/5 md:w-2/4 lg:w-1/4"
+      @close="closeModal()"
+    >
+      <p>Tem certeza que deseja deletar "{{ institution.name }}"?</p>
+      <div class="flex">
+        <button
+          class="ml-auto p-2 bg-red-500 hover:bg-red-700 text-white rounded-md
+          transition delay-50 duration-300 ease-in-out"
+          :disabled="blockAction"
+          @click="deleteInstitution"
+        >
+          deletar
+        </button>
+      </div>
+    </modal>
+  </teleport>
   <float-info :flag="floatData.flag" :message="floatData.message" />
 </template>
 
