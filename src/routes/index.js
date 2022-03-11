@@ -134,7 +134,7 @@ const routes = [
     name: 'Shapefiles',
     path: '/shapefiles',
     meta: {
-      requireAuth: false,
+      requireAuth: true,
       allowUsers: ['A'],
     },
     component: Shapefile,
