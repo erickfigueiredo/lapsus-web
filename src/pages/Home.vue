@@ -15,10 +15,10 @@
         {{ count.shapefiles || 0 }} Shapefile(s)
       </card>
     </section>
-    <section class="md:flex md:space-x-4 md:my-4">
+    <section class="lg:flex lg:space-x-4 lg:my-4 overflow-x-auto">
       <card
         v-if="['A', 'T'].includes(userType)"
-        class="my-4 md:my-0"
+        class="my-4 lg:my-0"
         title="Relação de Leitura de Mensagens"
       >
         <doughnut-chart
@@ -33,7 +33,7 @@
           </div>
         </div>
       </card>
-      <card v-if="userType !== 'R'" class="my-4 md:my-0" title="Relação de Contribuições">
+      <card v-if="userType !== 'R'" class="my-4 lg:my-0" title="Relação de Contribuições">
         <doughnut-chart
           v-if="contribution.show"
           :data="contribution.data"
