@@ -68,11 +68,7 @@ export default {
         this.emsis = result.emsi;
       }
 
-      if ((this.contributions.length || this.emsis.length) && this.layers.length) {
-        this.layers.forEach((l) => {
-          this.map.removeLayer(l);
-        });
-      }
+      // Todos os layers estão guardados em this.layers
 
       // Visualização de Contribuições
       this.contributions.forEach((el) => {
