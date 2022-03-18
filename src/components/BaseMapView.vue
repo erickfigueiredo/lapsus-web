@@ -5,7 +5,7 @@
 <script>
 /* eslint-disable global-require */
 /* eslint-disable no-underscore-dangle */
-
+import { toRaw } from 'vue';
 import 'leaflet/dist/leaflet.css';
 
 import L from 'leaflet';
@@ -40,6 +40,7 @@ export default {
     return {
       map: null,
 
+      layers: [],
       contributions: [],
       emsis: [],
     };
@@ -67,260 +68,80 @@ export default {
         this.emsis = result.emsi;
       }
 
-      // INICIO - Visualização das contribuições
+      if ((this.contributions.length || this.emsis.length) && this.layers.length) {
+        this.layers.forEach((l) => {
+          this.map.removeLayer(l);
+        });
+      }
 
-      this.contributions.forEach((elemento) => {
-        if (elemento.local.indexOf('POINT') !== '-1') {
-          L.marker(wkt.parse(elemento.local).coordinates).addTo(this.map).bindPopup(
-            `${'<strong>Tipo de colaboração: </strong>Colaboração normal<br>'
-            + '<strong>Data de ocorrência:</strong> '}${elemento.occurrence}<br>`
-            + `<strong>Vítimas:</strong> ${elemento.victims}<br>`
-            + `<strong>Risco de danos:</strong> ${elemento.risk_damage}<br>`
-            + `<strong>Descrição:</strong> ${elemento.desc}<br>`
-            + `<strong>Categoria:</strong> ${elemento.category_name}`,
+      // Visualização de Contribuições
+      this.contributions.forEach((el) => {
+        const data = '<strong>Colaboração de Usuário</strong><br><hr><br>'
+          + `<strong>Categoria:</strong> ${el.category_name}<br>`
+          + `<strong>Data de ocorrência:</strong> ${el.occurrence || 'Não Informado'}<br>`
+          + `<strong>Vítimas:</strong> ${el.victims ? 'Sim' : 'Não'}<br>`
+          + `<strong>Risco de danos:</strong> ${el.risk_damage ? 'Sim' : 'Não'}<br>`
+          + `<strong>Descrição:</strong> ${el.desc || 'Não Informado'}<br>`;
+
+        if (wkt.parse(el.local).type === 'Point') {
+          this.layers.push(
+            L.marker(wkt.parse(el.local).coordinates).addTo(toRaw(this.map)).bindPopup(data),
           );
-        } else if (elemento.local.indexOf('LINESTRING') !== '-1') {
-          L.polyline(wkt.parse(elemento.local).coordinates).addTo(this.map).bindPopup(
-            `${'<strong>Tipo de colaboração: </strong>Colaboração normal<br>'
-            + '<strong>Data de ocorrência:</strong> '}${elemento.occurrence}<br>`
-            + `<strong>Vítimas:</strong> ${elemento.victims}<br>`
-            + `<strong>Risco de danos:</strong> ${elemento.risk_damage}<br>`
-            + `<strong>Descrição:</strong> ${elemento.desc}<br>`
-            + `<strong>Categoria:</strong> ${elemento.category_name}`,
+        }
+
+        if (wkt.parse(el.local).type === 'Polygon') {
+          this.layers.push(
+            L.polygon(wkt.parse(el.local).coordinates).addTo(toRaw(this.map)).bindPopup(data),
           );
-        } else if (elemento.local.indexOf('POLYGON') !== '-1') {
-          L.polygon(wkt.parse(elemento.local).coordinates).addTo(this.map).bindPopup(
-            `${'<strong>Tipo de colaboração: </strong>Colaboração normal<br>'
-            + '<strong>Data de ocorrência:</strong> '}${elemento.occurrence}<br>`
-            + `<strong>Vítimas:</strong> ${elemento.victims}<br>`
-            + `<strong>Risco de danos:</strong> ${elemento.risk_damage}<br>`
-            + `<strong>Descrição:</strong> ${elemento.desc}<br>`
-            + `<strong>Categoria:</strong> ${elemento.category_name}`,
+        }
+
+        if (wkt.parse(el.local).type === 'LineString') {
+          this.layers.push(
+            L.polyline(wkt.parse(el.local).coordinates).addTo(toRaw(this.map)).bindPopup(data),
           );
         }
       });
 
-      this.emsis.forEach((elemento) => {
-        if (elemento.local.indexOf('POINT') !== '-1') {
-          L.marker(wkt.parse(elemento.local).coordinates).addTo(this.map).bindPopup(
-            `${'<strong>Tipo de colaboração: </strong>Colaboração EMSI<br>'
-            + '<strong>Nome do campo:</strong> '}${elemento.created_at}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.freetext}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.urgency}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.name}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.id_org}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.id}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.freetext}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.uri}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.type}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.seclass}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.mode}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.msgtype}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.level}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.id}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.name}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.main_event_id}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.certainty}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.decl_datime}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.occ_datime}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.freetext}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.source}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.scale}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.status}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.cause}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.risk_assessmnt}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.id}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.freetext}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.status}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.subtype}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.type}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.subweather}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.weather}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.id_loc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.name}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.st_astext}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.id}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.address}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.env}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.subcategory}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.category}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.subloctype}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.loctype}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.actornv3}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.actornv2}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.actor}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}`,
+      // Visualização de EMSI
+      this.emsis.forEach((el) => {
+        const data = '<strong>Colaboração EMSI</strong><br><hr><br>'
+          + `<strong>Nome do campo:</strong> ${el.created_at}<br>`
+          + `<strong>Nome do campo:</strong> ${el.freetext}<br>`
+          + `<strong>Nome do campo:</strong> ${el.urgency}<br>`
+          + `<strong>Nome do campo:</strong> ${el.name}<br>`
+          + `<strong>Nome do campo:</strong> ${el.id_org}<br>`
+          + `<strong>Nome do campo:</strong> ${el.id}<br>`
+          + `<strong>Nome do campo:</strong> ${el.freetext}<br>`
+          + `<strong>Nome do campo:</strong> ${el.uri}<br>`
+          + `<strong>Nome do campo:</strong> ${el.type}<br>`
+          + `<strong>Nome do campo:</strong> ${el.desc}<br>`
+          + `<strong>Nome do campo:</strong> ${el.seclass}<br>`
+          + `<strong>Nome do campo:</strong> ${el.desc}<br>`
+          + `<strong>Nome do campo:</strong> ${el.mode}<br>`
+          + `<strong>Nome do campo:</strong> ${el.desc}<br>`
+          + `<strong>Nome do campo:</strong> ${el.msgtype}<br>`
+          + `<strong>Nome do campo:</strong> ${el.desc}<br>`
+          + `<strong>Nome do campo:</strong> ${el.level}<br>`
+          + `<strong>Nome do campo:</strong> ${el.desc}<br>`;
+
+        if (wkt.parse(el.coord).type === 'Point') {
+          this.layers.push(
+            L.marker(wkt.parse(el.coord).coordinates).addTo(toRaw(this.map)).bindPopup(data),
           );
-        } else if (elemento.local.indexOf('LINESTRING') !== '-1') {
-          L.polyline(wkt.parse(elemento.local).coordinates).addTo(this.map).bindPopup(
-            `${'<strong>Tipo de colaboração: </strong>Colaboração EMSI<br>'
-            + '<strong>Nome do campo:</strong> '}${elemento.created_at}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.freetext}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.urgency}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.name}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.id_org}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.id}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.freetext}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.uri}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.type}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.seclass}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.mode}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.msgtype}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.level}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.id}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.name}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.main_event_id}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.certainty}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.decl_datime}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.occ_datime}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.freetext}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.source}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.scale}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.status}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.cause}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.risk_assessmnt}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.id}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.freetext}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.status}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.subtype}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.type}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.subweather}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.weather}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.id_loc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.name}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.st_astext}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.id}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.address}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.env}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.subcategory}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.category}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.subloctype}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.loctype}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.actornv3}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.actornv2}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.actor}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}`,
+        }
+
+        if (wkt.parse(el.coord).type === 'Polygon') {
+          this.layers.push(
+            L.polygon(wkt.parse(el.coord).coordinates).addTo(toRaw(this.map)).bindPopup(data),
           );
-        } else if (elemento.local.indexOf('POLYGON') !== '-1') {
-          L.polygon(wkt.parse(elemento.local).coordinates).addTo(this.map).bindPopup(
-            `${'<strong>Tipo de colaboração: </strong>Colaboração EMSI<br>'
-            + '<strong>Nome do campo:</strong> '}${elemento.created_at}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.freetext}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.urgency}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.name}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.id_org}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.id}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.freetext}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.uri}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.type}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.seclass}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.mode}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.msgtype}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.level}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.id}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.name}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.main_event_id}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.certainty}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.decl_datime}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.occ_datime}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.freetext}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.source}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.scale}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.status}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.cause}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.risk_assessmnt}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.id}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.freetext}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.status}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.subtype}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.type}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.subweather}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.weather}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.id_loc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.name}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.st_astext}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.id}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.address}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.env}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.subcategory}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.category}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.subloctype}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.loctype}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.actornv3}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.actornv2}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.actor}<br>`
-            + `<strong>Nome do campo:</strong> ${elemento.desc}`,
+        }
+
+        if (wkt.parse(el.coord).type === 'LineString') {
+          this.layers.push(
+            L.polyline(wkt.parse(el.coord).coordinates).addTo(toRaw(this.map)).bindPopup(data),
           );
         }
       });
-
-      // FIM - Visualização das contribuições
     }, 2000), // Espera 2 segundos pra mandar a requisição
     async fetchAndShow(e) {
       const center = e.target.getCenter();
@@ -357,6 +178,7 @@ export default {
 
     // Definição e plotagem do mapa
     const map = L.map('map-container', {
+      zoomAnimation: false,
       center: [this.coords.latitude, this.coords.longitude],
       layers: [osm],
       zoom: 15,
@@ -402,6 +224,12 @@ export default {
     // FIM - Indexação de Shapefiles
 
     this.map = map;
+  },
+  beforeUnmount() {
+    if (this.map) {
+      toRaw(this.map).off();
+      toRaw(this.map).remove();
+    }
   },
 };
 </script>

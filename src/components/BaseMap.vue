@@ -9,6 +9,8 @@
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-draw/dist/leaflet.draw.css';
 
+import { toRaw } from 'vue';
+
 import L from 'leaflet';
 import 'leaflet-draw';
 
@@ -214,6 +216,9 @@ export default {
     // FIM - Indexação de Shapefiles
 
     this.map = map;
+  },
+  beforeUnmount() {
+    if (this.map) { toRaw(this.map).off(); toRaw(this.map).remove(); }
   },
 };
 </script>
