@@ -58,42 +58,55 @@ export default {
       }
     },
     getContributionsAndEMSI: _.debounce(async function (x, y) {
-      let result = await contribution.index(x, y);
-      if (result.success) {
-        this.contributions = result.contribution;
+      const map = toRaw(this.map);
+      const contrib = await contribution.index(x, y);
+      if (contrib.success) {
+        this.contributions = contrib.contribution;
       }
 
-      result = await EMSI.index(x, y);
-      if (result.success) {
-        this.emsis = result.emsi;
+      const emsi = await EMSI.index(x, y);
+      if (emsi.success) {
+        this.emsis = emsi.emsi;
       }
 
-      // Todos os layers estão guardados em this.layers
+      if (contrib.success !== emsi.success) {
+        if (contrib.success) this.emsis = [];
+        else this.contributions = [];
+      }
+
+      // Deleta colaborações anteriores evitando sobrescrita
+      if (this.layers.length && (contrib.success || emsi.success)) {
+        this.layers.forEach((layer) => {
+          map.removeLayer(layer);
+        });
+
+        this.layers = [];
+      }
 
       // Visualização de Contribuições
       this.contributions.forEach((el) => {
         const data = '<strong>Colaboração de Usuário</strong><br><hr><br>'
           + `<strong>Categoria:</strong> ${el.category_name}<br>`
-          + `<strong>Data de ocorrência:</strong> ${el.occurrence || 'Não Informado'}<br>`
+          + `<strong>Data de ocorrência:</strong> ${el.occurrence || 'Não Informado.'}<br>`
           + `<strong>Vítimas:</strong> ${el.victims ? 'Sim' : 'Não'}<br>`
           + `<strong>Risco de danos:</strong> ${el.risk_damage ? 'Sim' : 'Não'}<br>`
-          + `<strong>Descrição:</strong> ${el.desc || 'Não Informado'}<br>`;
+          + `<strong>Descrição:</strong> ${el.desc || 'Não Informado.'}<br>`;
 
         if (wkt.parse(el.local).type === 'Point') {
           this.layers.push(
-            L.marker(wkt.parse(el.local).coordinates).addTo(toRaw(this.map)).bindPopup(data),
+            L.marker(wkt.parse(el.local).coordinates).addTo(map).bindPopup(data),
           );
         }
 
         if (wkt.parse(el.local).type === 'Polygon') {
           this.layers.push(
-            L.polygon(wkt.parse(el.local).coordinates).addTo(toRaw(this.map)).bindPopup(data),
+            L.polygon(wkt.parse(el.local).coordinates).addTo(map).bindPopup(data),
           );
         }
 
         if (wkt.parse(el.local).type === 'LineString') {
           this.layers.push(
-            L.polyline(wkt.parse(el.local).coordinates).addTo(toRaw(this.map)).bindPopup(data),
+            L.polyline(wkt.parse(el.local).coordinates).addTo(map).bindPopup(data),
           );
         }
       });
@@ -101,40 +114,39 @@ export default {
       // Visualização de EMSI
       this.emsis.forEach((el) => {
         const data = '<strong>Colaboração EMSI</strong><br><hr><br>'
-          + `<strong>Nome do campo:</strong> ${el.created_at}<br>`
-          + `<strong>Nome do campo:</strong> ${el.freetext}<br>`
-          + `<strong>Nome do campo:</strong> ${el.urgency}<br>`
-          + `<strong>Nome do campo:</strong> ${el.name}<br>`
-          + `<strong>Nome do campo:</strong> ${el.id_org}<br>`
-          + `<strong>Nome do campo:</strong> ${el.id}<br>`
-          + `<strong>Nome do campo:</strong> ${el.freetext}<br>`
-          + `<strong>Nome do campo:</strong> ${el.uri}<br>`
-          + `<strong>Nome do campo:</strong> ${el.type}<br>`
-          + `<strong>Nome do campo:</strong> ${el.desc}<br>`
-          + `<strong>Nome do campo:</strong> ${el.seclass}<br>`
-          + `<strong>Nome do campo:</strong> ${el.desc}<br>`
-          + `<strong>Nome do campo:</strong> ${el.mode}<br>`
-          + `<strong>Nome do campo:</strong> ${el.desc}<br>`
-          + `<strong>Nome do campo:</strong> ${el.msgtype}<br>`
-          + `<strong>Nome do campo:</strong> ${el.desc}<br>`
-          + `<strong>Nome do campo:</strong> ${el.level}<br>`
-          + `<strong>Nome do campo:</strong> ${el.desc}<br>`;
+          + `<strong>Origem:</strong> ${el.origin_name || 'Não Informado.'}<br>`
+          + `<strong>Identificador da Organização:</strong> ${el.origin_id || 'Não Informado.'}<br><hr>`
+          + `<strong>Data de Observação:</strong> ${el.obs_datime || 'Não Informado.'}<br>`
+          + `<strong>Data de Ocorrência:</strong> ${el.occ_datime || 'Não Informado.'}<br>`
+          + `<strong>Data de Declaração:</strong> ${el.decl_datime || 'Não Informado.'}<br><hr>`
+          + `<strong>Fonte:</strong> ${el.event_source || 'Não Informado.'}<br>`
+          + `<strong>Endereço:</strong> ${el.address || 'Não Informado.'}<br>`
+          + `<strong>Local:</strong> ${el.egeo_type ? `${el.egeo_type}/${el.egeo_subtype}` : 'Não Informado.'}<br><hr>`
+          + `<strong>Categoria:</strong> ${el.context_freetext || 'Não Informado.'}<br>`
+          + `<strong>Situação:</strong> ${el.event_status || 'Não Informado.'}<br>`
+          + `<strong>Risco:</strong> ${el.event_risk || 'Não Informado.'}<br>`
+          + `<strong>Probabilidade de Ocorrência:</strong> ${`${el.event_certainty}%` || 'Não Informado.'}<br>`
+          + `<strong>Urgência:</strong> ${el.context_urgency === 'URGENT' ? 'Urgente' : 'Não Urgente'}<br>`
+          + `<strong>Causa:</strong> ${el.event_cause || 'Não Informado.'}<br>`
+          + `<strong>Escala:</strong> ${el.event_scale || 'Não Informado.'}<br><hr>`
+          + `<strong>Observação 1:</strong> ${el.event_freetext || 'Não Informado.'}<br>`
+          + `<strong>Observação 2:</strong> ${el.egeo_freetext || 'Não Informado.'}<br>`;
 
         if (wkt.parse(el.coord).type === 'Point') {
           this.layers.push(
-            L.marker(wkt.parse(el.coord).coordinates).addTo(toRaw(this.map)).bindPopup(data),
+            L.marker(wkt.parse(el.coord).coordinates).addTo(map).bindPopup(data),
           );
         }
 
         if (wkt.parse(el.coord).type === 'Polygon') {
           this.layers.push(
-            L.polygon(wkt.parse(el.coord).coordinates).addTo(toRaw(this.map)).bindPopup(data),
+            L.polygon(wkt.parse(el.coord).coordinates).addTo(map).bindPopup(data),
           );
         }
 
         if (wkt.parse(el.coord).type === 'LineString') {
           this.layers.push(
-            L.polyline(wkt.parse(el.coord).coordinates).addTo(toRaw(this.map)).bindPopup(data),
+            L.polyline(wkt.parse(el.coord).coordinates).addTo(map).bindPopup(data),
           );
         }
       });
@@ -144,6 +156,12 @@ export default {
 
       await this.getContributionsAndEMSI(center.lat, center.lng);
     },
+  },
+  beforeMount() {
+    if (this.map) {
+      toRaw(this.map).off();
+      toRaw(this.map).remove();
+    }
   },
   async mounted() {
     if (this.useUserLocation) {
@@ -174,7 +192,7 @@ export default {
 
     // Definição e plotagem do mapa
     const map = L.map('map-container', {
-      zoomAnimation: false,
+      zoomAnimation: false, // Adicionado para evitar Bug
       center: [this.coords.latitude, this.coords.longitude],
       layers: [osm],
       zoom: 15,
@@ -220,12 +238,6 @@ export default {
     // FIM - Indexação de Shapefiles
 
     this.map = map;
-  },
-  beforeUnmount() {
-    if (this.map) {
-      toRaw(this.map).off();
-      toRaw(this.map).remove();
-    }
   },
 };
 </script>

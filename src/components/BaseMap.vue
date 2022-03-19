@@ -98,6 +98,12 @@ export default {
       }
     },
   },
+  beforeUnmount() {
+    if (this.map) {
+      toRaw(this.map).off();
+      toRaw(this.map).remove();
+    }
+  },
   async mounted() {
     if (this.useUserLocation) {
       await this.getUserLocation();
@@ -196,29 +202,31 @@ export default {
       shapes.shapefile.forEach((s) => {
         const randomColor = genHexColor();
 
-        shp(s.uri).then((data) => {
-          let shpName = data.fileName.replaceAll(/[-_]/g, ' ');
+        shp(s.uri)
+          .then((data) => {
+            let shpName = data.fileName.replaceAll(/[-_]/g, ' ');
 
-          if (shpName.length > 25) { shpName = `${shpName.slice(0, 26)}...`; }
+            if (shpName.length > 25) {
+              shpName = `${shpName.slice(0, 26)}...`;
+            }
 
-          layerControl.addOverlay(
-            L.geoJSON(data, {
-              style() {
-                return { color: randomColor };
-              },
-            }), shpName,
-          );
-        }).catch((err) => {
-          console.warn('Um ou mais arquivos não possuem layers!', err);
-        });
+            layerControl.addOverlay(
+              L.geoJSON(data, {
+                style() {
+                  return { color: randomColor };
+                },
+              }),
+              shpName,
+            );
+          })
+          .catch((err) => {
+            console.warn('Um ou mais arquivos não possuem layers!', err);
+          });
       });
     }
     // FIM - Indexação de Shapefiles
 
     this.map = map;
-  },
-  beforeUnmount() {
-    if (this.map) { toRaw(this.map).off(); toRaw(this.map).remove(); }
   },
 };
 </script>
