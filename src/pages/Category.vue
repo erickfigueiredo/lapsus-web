@@ -1,9 +1,7 @@
 <template>
   <base-template>
-    <section class="md:flex md:space-x-4 md:h-4/5">
-      <card responsivity="mb-4 md:mb-0 md:w-1/2 lg:w-2/6">
-        <h2 class="font-bold text-gray-500">Cadastro de Categorias</h2>
-        <hr class="my-4" />
+    <section class="md:flex md:space-x-4">
+      <card title="Cadastro de Categorias" responsivity="mb-4 md:mb-0 md:w-1/2 lg:w-2/6">
         <category-form @form-response="showInformation" @form-data="addCategory" />
       </card>
       <card responsivity="md:w-1/2 lg:w-4/6">
@@ -12,10 +10,15 @@
           <ul v-if="categories.length">
             <template v-for="(cat, i) in categories" :key="cat.id">
               <li
-                v-if="i === 0 || cat.name[0] !== categories[i - 1].name[0]"
+                v-if="
+                  i === 0 ||
+                  cat.name[0].localeCompare(categories[i - 1].name[0], 'pt-BR', {
+                    sensitivity: 'base',
+                  })
+                "
                 class="capitalize p-2 rounded-md bg-cerulean-400 text-white my-2"
               >
-                {{ cat.name[0] }}
+                {{ normalizeIndex(cat.name[0]) }}
               </li>
               <li class="my-2 mx-6 lg:flex">
                 <p class="my-2 capitalize truncate">
@@ -24,55 +27,69 @@
                 <div class="ml-auto flex">
                   <button
                     class="p-2 bg-cerulean-500 hover:bg-cerulean-700 text-white rounded-md
-                    transition delay-50 duration-300 ease-in-out"
-                    @click="openModal(i)"
+                    transition delay-50 duration-300 ease-in-out" @click="openModal(i)"
                   >
                     Atualizar
                   </button>
                   <button
                     class="ml-auto lg:ml-2 p-2 bg-red-500 hover:bg-red-700 text-white rounded-md
-                    transition delay-50 duration-300 ease-in-out"
-                    @click="openModal(i, true)"
+                    transition delay-50 duration-300 ease-in-out" @click="openModal(i, true)"
                   >
                     Deletar
                   </button>
                 </div>
               </li>
-              <hr v-if="i < categories.length - 1 && cat.name[0] === categories[i + 1].name[0]" />
+              <hr
+                v-if="
+                  i < categories.length - 1 &&
+                  !cat.name[0].localeCompare(categories[i + 1].name[0], 'pt-BR', {
+                    sensitivity: 'base',
+                  })
+                "
+              />
             </template>
           </ul>
           <div v-else class="flex font-semibold text-center text-gray-400 h-full">
-            <p class="mx-auto my-auto">
-              Não há categorias para serem exibidas
-            </p>
+            <p class="mx-auto my-auto">Não há categorias para serem exibidas</p>
           </div>
         </div>
       </card>
     </section>
   </base-template>
-  <modal
-    v-show="isModalUpdateActive"
-    title="Atualizar Categoria"
-    size="w-4/5 md:w-2/4 lg:w-1/4"
-    @close="closeModal"
-  >
-    <category-form
-      :key="category.id"
-      @form-response="showInformation"
-      @form-data="updateCategory"
-      :fill-data="category"
-      :to-update="true"
-    />
-  </modal>
-  <modal
-    v-show="isModalDeleteActive"
-    title="Deletar Categoria"
-    size="w-4/5 md:w-2/4 lg:w-1/4"
-    @close="closeModal(true)"
-  >
-    <p>Tem certeza que deseja deletar "{{ category.name }}"?</p>
-    <button :disabled="blockAction" @click="deleteCategory">Sim</button>
-  </modal>
+  <teleport to="body">
+    <modal
+      v-show="isModalUpdateActive"
+      title="Atualizar Categoria"
+      size="w-4/5 md:w-2/4 lg:w-1/4"
+      @close="closeModal"
+    >
+      <category-form
+        :key="category.id"
+        @form-response="showInformation"
+        @form-data="updateCategory"
+        :fill-data="category"
+        :to-update="true"
+      />
+    </modal>
+    <modal
+      v-show="isModalDeleteActive"
+      title="Deletar Categoria"
+      size="w-4/5 md:w-2/4 lg:w-1/4"
+      @close="closeModal(true)"
+    >
+      <p>Tem certeza que deseja deletar "{{ category.name }}"?</p>
+      <div class="flex">
+        <button
+          class="ml-auto p-2 bg-red-500 hover:bg-red-700 text-white rounded-md
+          transition delay-50 duration-300 ease-in-out"
+          :disabled="blockAction"
+          @click="deleteCategory"
+        >
+          deletar
+        </button>
+      </div>
+    </modal>
+  </teleport>
   <float-info :flag="floatData.flag" :message="floatData.message" />
 </template>
 
@@ -118,12 +135,14 @@ export default {
     ...mapGetters(['token']),
   },
   methods: {
-    // eslint-disable-next-line consistent-return
     addOrdered(array, begin, end, cat) {
       const index = Math.floor((begin + end) / 2);
 
-      if (array[index].name === cat.name || begin === end) {
-        if (array[index].name <= cat.name) {
+      if (
+        !array[index].name.localeCompare(cat.name, 'pt-BR', { sensitivity: 'base' })
+        || begin === end
+      ) {
+        if (array[index].name.localeCompare(cat.name, 'pt-BR', { sensitivity: 'base' }) <= 0) {
           array.splice(index + 1, 0, cat);
         } else {
           array.splice(index, 0, cat);
@@ -131,17 +150,25 @@ export default {
         return null;
       }
 
-      if (array[index].name < cat.name) {
-        this.addOrdered(array, index + 1, end, cat);
-      } else {
-        this.addOrdered(array, begin, index, cat);
+      if (array[index].name.localeCompare(cat.name, 'pt-BR', { sensitivity: 'base' }) < 0) {
+        return this.addOrdered(array, index + 1, end, cat);
       }
+      return this.addOrdered(array, begin, index, cat);
     },
     addCategory(category) {
-      this.addOrdered(this.categories, 0, this.categories.length - 1, category);
+      if (!this.categories.length) {
+        this.categories.push(category);
+      } else {
+        this.addOrdered(this.categories, 0, this.categories.length - 1, category);
+      }
     },
     updateCategory(category) {
-      this.categories[this.index] = category;
+      if (this.categories[this.index].name !== category.name) {
+        this.categories.splice(this.index, 1);
+        this.addOrdered(this.categories, 0, this.categories.length - 1, category);
+      } else {
+        this.categories[this.index] = category;
+      }
     },
     async deleteCategory() {
       this.blockAction = true;
@@ -169,6 +196,9 @@ export default {
       if (isDelete) {
         this.isModalDeleteActive = false;
       } else this.isModalUpdateActive = false;
+    },
+    normalizeIndex(char) {
+      return char.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     },
     showInformation(flag, message) {
       this.floatData.flag = flag;

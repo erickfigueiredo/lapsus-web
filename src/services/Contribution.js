@@ -1,14 +1,36 @@
 import { lapsus, defaultErrorMessage } from './AxiosSettings';
 
 class Contribution {
+  static async index(x, y) {
+    try {
+      const res = await lapsus.get(`/contribution/detailed?x=${x}&y=${y}`);
+      return res.data;
+    } catch (err) {
+      return err.response?.data ? err.response.data : defaultErrorMessage;
+    }
+  }
+
   static async indexDetailed(token, page = 0) {
     try {
-      const res = await lapsus.get(`/contribution/all?page=${page}`, {
+      const res = await lapsus.get(`/contribution?page=${page}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
+      return res.data;
+    } catch (err) {
+      return err.response?.data ? err.response.data : defaultErrorMessage;
+    }
+  }
+
+  static async getPublishRelationship(token) {
+    try {
+      const res = await lapsus.get('/contribution/publish-relationship', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return res.data;
     } catch (err) {
       return err.response?.data ? err.response.data : defaultErrorMessage;

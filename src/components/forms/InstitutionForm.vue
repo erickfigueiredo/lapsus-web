@@ -48,8 +48,7 @@
           name="phone"
           v-model="phone"
           placeholder="Telefone de Contato"
-          class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-          outline-none border-2 border-gray-200 focus:border-gray-400"
+          class="form-control"
           :disabled="!isEnabled"
           required
         />
@@ -66,8 +65,7 @@
           name="street"
           v-model="street"
           placeholder="Logradouro"
-          class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-          outline-none border-2 border-gray-200 focus:border-gray-400"
+          class="form-control"
           :disabled="!isEnabled || foundAddress || isSearching"
           required
         />
@@ -82,8 +80,7 @@
           name="neighborhood"
           v-model="neighborhood"
           placeholder="Bairro"
-          class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-          outline-none border-2 border-gray-200 focus:border-gray-400"
+          class="form-control"
           :disabled="!isEnabled || foundAddress || isSearching"
           required
         />
@@ -98,8 +95,7 @@
           name="zipcode"
           v-model="zipcode"
           placeholder="CEP"
-          class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-          outline-none border-2 border-gray-200 focus:border-gray-400"
+          class="form-control"
           :disabled="!isEnabled || isSearching"
           required
         />
@@ -116,8 +112,7 @@
           name="number"
           v-model="number"
           placeholder="Número"
-          class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-          outline-none border-2 border-gray-200 focus:border-gray-400"
+          class="form-control"
           :disabled="!isEnabled"
           required
         />
@@ -132,8 +127,7 @@
           name="city"
           v-model="city"
           placeholder="Cidade"
-          class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-          outline-none border-2 border-gray-200 focus:border-gray-400"
+          class="form-control"
           :disabled="!isEnabled || foundAddress || isSearching"
           required
         />
@@ -146,8 +140,7 @@
           name="state"
           id="state"
           v-model="state"
-          class="w-full p-2 bg-gray-100 text-gray-600 rounded-md
-          outline-none border-2 border-gray-200 focus:border-gray-400"
+          class="form-control"
           :disabled="!isEnabled || foundAddress || isSearching"
           required
         >

@@ -1,6 +1,30 @@
 import { lapsus, defaultErrorMessage } from '../AxiosSettings';
 
 class User {
+  static async getTypeRelationship(token) {
+    try {
+      const res = await lapsus.get('/user/type-relationship', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      return res.data;
+    } catch (err) {
+      return err.response?.data ? err.response.data : defaultErrorMessage;
+    }
+  }
+
+  static async getAmountUserMonthly(token) {
+    try {
+      const res = await lapsus.get('/user/monthly', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      return res.data;
+    } catch (err) {
+      return err.response?.data ? err.response.data : defaultErrorMessage;
+    }
+  }
+
   static async create(data) {
     try {
       const res = await lapsus.post('/user', data);

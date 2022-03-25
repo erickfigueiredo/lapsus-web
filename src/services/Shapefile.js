@@ -3,7 +3,7 @@ import { lapsus, apiURL, defaultErrorMessage } from './AxiosSettings';
 class Shapefile {
   static async index(isURI = 'n') {
     try {
-      const res = await lapsus.get(`/shapefile/all?is_uri=${isURI}`);
+      const res = await lapsus.get(`/shapefile?is_uri=${isURI}`);
 
       if (isURI === 'y' && res.data.success) {
         const shapefile = res.data.shapefile.map((link) => {
@@ -14,6 +14,19 @@ class Shapefile {
         return { success: true, shapefile };
       }
 
+      return res.data;
+    } catch (err) {
+      return err.response?.data ? err.response.data : defaultErrorMessage;
+    }
+  }
+
+  static async getAmount(token) {
+    try {
+      const res = await lapsus.get('/shapefile/amount', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return res.data;
     } catch (err) {
       return err.response?.data ? err.response.data : defaultErrorMessage;

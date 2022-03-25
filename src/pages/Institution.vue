@@ -1,8 +1,6 @@
 <template>
   <base-template>
-    <card responsivity="mb-8">
-      <h2 class="font-bold text-gray-500">Cadastro de Instituições</h2>
-      <hr class="my-4" />
+    <card title="Cadastro de Instituições" responsivity="mb-8">
       <institution-form @form-response="showInformation" @form-data="addInstitution" />
     </card>
     <card class="mb-8">
@@ -33,7 +31,7 @@
             </td>
             <td class="px-5 py-5 border-b border-gray-200 hidden md:table-cell">
               <span class="text-gray-900"
-                >{{ new Date(inst.created_at).toLocaleDateString() }}
+                >{{ inst.created_at }}
               </span>
             </td>
             <td class="px-5 py-5 border-b border-gray-200">
@@ -47,6 +45,11 @@
           </tr>
         </template>
       </base-table>
+      <div v-if="!institutions.length" class="bg-gray-100 rounded-md p-6">
+      <div class="flex font-semibold text-center text-gray-400 h-full">
+        <p class="mx-auto my-auto">Não há instituições cadastradas</p>
+      </div>
+    </div>
       <pagination
         v-if="institutions.length"
         :current="parseInt(pagination.currentPage)"
@@ -93,26 +96,41 @@ export default {
     ...mapGetters(['token']),
   },
   methods: {
-    addInstitution(inst) {
+    addOrdered(array, begin, end, inst) {
+      const index = Math.floor((begin + end) / 2);
+
       if (
-        this.institutions.length === 0
-        || inst.name >= this.institutions[this.institutions.length - 1].name
+        !array[index].name.localeCompare(inst.name, 'pt-BR', { sensitivity: 'base' })
+        || begin === end
       ) {
-        this.institutions.push(inst);
-      } else if (inst.name <= this.institutions[0].name) {
-        this.institutions.unshift(inst);
-      } else {
-        for (let i = 0; i < this.institutions.length - 1; i += 1) {
-          if (inst.name >= this.institutions[i].name && inst.name < this.institutions[i + 1].name) {
-            this.institutions.splice(i + 1, 0, inst);
-            break;
-          }
+        if (array[index].name.localeCompare(inst.name, 'pt-BR', { sensitivity: 'base' }) <= 0) {
+          array.splice(index + 1, 0, inst);
+        } else {
+          array.splice(index, 0, inst);
         }
+        return null;
       }
 
-      if (this.institutions.length > this.pagination.perPage) {
-        this.institutions.pop();
-        this.pagination.lastPage += 1;
+      if (array[index].name.localeCompare(inst.name, 'pt-BR', { sensitivity: 'base' }) < 0) {
+        return this.addOrdered(array, index + 1, end, inst);
+      }
+      return this.addOrdered(array, begin, index, inst);
+    },
+    addInstitution(inst) {
+      if (this.pagination.currentPage < 2) {
+        if (!this.institutions.length) {
+          this.institutions.push(inst);
+        } else {
+          this.addOrdered(this.institutions, 0, this.institutions.length - 1, inst);
+        }
+
+        if (this.institutions.length > this.pagination.perPage) {
+          this.institutions.pop();
+
+          if (this.pagination.currentPage === this.pagination.lastPage) {
+            this.pagination.lastPage += 1;
+          }
+        }
       }
     },
     formatPhone(phone) {

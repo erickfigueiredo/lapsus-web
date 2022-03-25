@@ -224,7 +224,7 @@ export default {
       }
     },
     occurrence() {
-      if (this.fillData.occurrence) return new Date(this.fillData.occurrence).toLocaleString('pt-br');
+      if (this.fillData.occurrence) return this.fillData.occurrence;
       return 'Não informada';
     },
   },

@@ -17,7 +17,7 @@ class Institution {
 
   static async index(token) {
     try {
-      const res = await lapsus.get('/institution/all', {
+      const res = await lapsus.get('/institution', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -31,12 +31,25 @@ class Institution {
 
   static async indexDetailed(token, page = 0) {
     try {
-      const res = await lapsus.get(`/institution/all/detailed?page=${page}`, {
+      const res = await lapsus.get(`/institution/detailed?page=${page}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
+      return res.data;
+    } catch (err) {
+      return err.response?.data ? err.response.data : defaultErrorMessage;
+    }
+  }
+
+  static async getAmount(token) {
+    try {
+      const res = await lapsus.get('/institution/amount', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return res.data;
     } catch (err) {
       return err.response?.data ? err.response.data : defaultErrorMessage;

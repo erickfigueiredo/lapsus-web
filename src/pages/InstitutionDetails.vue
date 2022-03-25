@@ -1,8 +1,6 @@
 <template>
   <base-template :subtitle="institution?.name">
-    <card v-if="institution" responsivity="mb-8">
-      <h2 class="font-bold text-gray-500">Informações da Instituição</h2>
-      <hr class="my-4" />
+    <card v-if="institution" title="Informações da Instituição" responsivity="mb-8">
       <institution-form
         @form-response="showInformation"
         @form-data="updateInstitution"
@@ -15,7 +13,7 @@
         <div class="flex">
           <button
             class="p-2 ml-auto rounded-md text-white bg-red-500 hover:bg-red-700
-          transition delay-50 duration-300 ease-in-out"
+          transition  duration-300 ease-in-out"
             @click="openModal"
           >
             Deletar Instituição
@@ -23,7 +21,7 @@
         </div>
       </template>
     </card>
-    <card class="mb-8">
+    <card class="mb-8" title="Técnicos Associados">
       <base-table>
         <template #header>
           <tr>
@@ -43,11 +41,16 @@
               <a :href="`mailto:${tech.email}`" class="text-gray-900">{{ tech.email }}</a>
             </td>
             <td class="px-5 py-5 border-b border-gray-200 hidden md:table-cell">
-              <p class="text-gray-900">{{ new Date(tech.created_at).toLocaleDateString() }}</p>
+              <p class="text-gray-900">{{ tech.created_at }}</p>
             </td>
           </tr>
         </template>
       </base-table>
+      <div v-if="!technicians.length" class="bg-gray-100 rounded-md p-6">
+      <div class="flex font-semibold text-center text-gray-400 h-full">
+        <p class="mx-auto my-auto">Não há usuários vinculados</p>
+      </div>
+    </div>
       <pagination
         v-if="technicians.length"
         :current="parseInt(pagination.currentPage)"
@@ -56,15 +59,26 @@
       />
     </card>
   </base-template>
-  <modal
-    v-show="isModalDeleteActive"
-    title="Deletar Instituição"
-    size="w-4/5 md:w-2/4 lg:w-1/4"
-    @close="closeModal()"
-  >
-    <p>Tem certeza que deseja deletar "{{ institution.name }}"?</p>
-    <button :disabled="blockAction" @click="deleteInstitution">Sim</button>
-  </modal>
+  <teleport to="body">
+    <modal
+      v-show="isModalDeleteActive"
+      title="Deletar Instituição"
+      size="w-4/5 md:w-2/4 lg:w-1/4"
+      @close="closeModal()"
+    >
+      <p>Tem certeza que deseja deletar "{{ institution.name }}"?</p>
+      <div class="flex">
+        <button
+          class="ml-auto p-2 bg-red-500 hover:bg-red-700 text-white rounded-md
+          transition delay-50 duration-300 ease-in-out"
+          :disabled="blockAction"
+          @click="deleteInstitution"
+        >
+          deletar
+        </button>
+      </div>
+    </modal>
+  </teleport>
   <float-info :flag="floatData.flag" :message="floatData.message" />
 </template>
 
@@ -125,7 +139,7 @@ export default {
       this.blockAction = false;
     },
     async paginate(page = 0) {
-      const result = await Technician.indexByInstitution(this.institution.id, page);
+      const result = await Technician.indexByInstitution(this.token, this.institution.id, page);
 
       if (result.success) {
         this.technicians = result.user.data;

@@ -65,7 +65,7 @@
         </li>
         <li v-if="isLoggedIn && userType === 'A'">
           <router-link
-            to="/"
+            to="/usuarios"
             exact
               class="block ml-4 my-4 border-l-8 rounded-l-lg hover:from-cerulean-700
             hover:to-cerulean-900

@@ -7,6 +7,9 @@
         </div>
       </div>
       <register-form @form-response="showInformation" />
+      <router-link to="/login" class="block text-sm text-center text-gray-400 hover:text-lemon-500">
+        Já possui uma conta? Faça login
+      </router-link>
     </template>
   </facade-template>
   <float-info :flag="floatData.flag" :message="floatData.message" />

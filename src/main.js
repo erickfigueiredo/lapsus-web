@@ -7,7 +7,7 @@ import {
   faSortUp, faSortDown, faCaravan, faSpinner, faMap, faLayerGroup, faServer,
   faTasks, faLandmark, faEnvelopeOpenText, faPaperPlane, faMapMarkedAlt,
   faMapMarkerAlt, faIdCard, faUserSecret, faUser, faUserShield, faUserCog,
-  faUserTie, faPhoneAlt, faThumbsUp, faThumbsDown, faFile,
+  faUserTie, faPhoneAlt, faThumbsUp, faThumbsDown, faFile, faSearch,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -22,7 +22,7 @@ library.add(
   faSortUp, faSortDown, faCaravan, faSpinner, faMap, faLayerGroup, faServer,
   faTasks, faLandmark, faEnvelopeOpenText, faPaperPlane, faMapMarkedAlt,
   faMapMarkerAlt, faIdCard, faUserSecret, faUser, faUserShield, faUserCog,
-  faUserTie, faPhoneAlt, faThumbsUp, faThumbsDown, faFile,
+  faUserTie, faPhoneAlt, faThumbsUp, faThumbsDown, faFile, faSearch,
 );
 
 const app = createApp(App);

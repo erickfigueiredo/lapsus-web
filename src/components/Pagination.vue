@@ -2,7 +2,7 @@
   <div class="flex md:space-x-4">
     <button
       :disabled="current === 1"
-      class="md:ml-auto mt-4 p-2 rounded-md font-semibold transition delay-75 duration-300
+      class="md:ml-auto mt-4 p-2 rounded-md font-semibold transition  duration-300
       ease-in-out"
       :class="
         current === 1
@@ -15,7 +15,7 @@
     </button>
     <button
       :disabled="current === last"
-      class="ml-auto md:ml-0 mt-4 p-2 rounded-md font-semibold transition delay-75 duration-300
+      class="ml-auto md:ml-0 mt-4 p-2 rounded-md font-semibold transition  duration-300
       ease-in-out"
       :class="
         current === last

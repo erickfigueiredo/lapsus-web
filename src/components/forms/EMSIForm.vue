@@ -927,8 +927,8 @@ export default {
       id_contribution: null,
       event: {
         certainty: null,
-        decl_datime: '',
-        occ_time: '',
+        decl_datime: null,
+        occ_time: null,
         scale: '',
         risk_assessmnt: '',
         status: '',
@@ -940,7 +940,7 @@ export default {
         freetext: '',
       },
       egeo: {
-        datime: '',
+        datime: null,
         type: '',
         subtype: '',
         freetext: '',
@@ -961,8 +961,8 @@ export default {
 
       this.event = {
         certainty: null,
-        decl_datime: '',
-        occ_time: '',
+        decl_datime: null,
+        occ_time: null,
         scale: '',
         risk_assessmnt: '',
         status: '',
@@ -976,7 +976,7 @@ export default {
       };
 
       this.egeo = {
-        datime: '',
+        datime: null,
         type: '',
         subtype: '',
         freetext: '',
@@ -1011,7 +1011,7 @@ export default {
     },
     addEvacs() {
       this.fields.evacs.push({
-        datime: '',
+        datime: null,
         displaced: null,
         evacuated: null,
       });

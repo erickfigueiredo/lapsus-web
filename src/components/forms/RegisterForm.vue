@@ -86,9 +86,6 @@
       Cadastrar
     </base-button>
   </form>
-  <router-link to="/login" class="block text-sm text-center text-gray-400 hover:text-lemon-500">
-    Já possui uma conta? Faça login
-  </router-link>
 </template>
 
 <script>
