@@ -4,15 +4,15 @@
     <section class="sm:flex sm:space-x-8 mt-8 mb-8">
       <card class="font-semibold text-gray-500">
         <font-awesome :icon="['fas', 'tasks']" class="text-xl mr-2" />
-        {{ count.categories || 0 }} Categoria(s)
+        {{ count.categories || 0 }} {{count.categories == 1 ? "Categoria" : "Categorias"}}
       </card>
       <card class="mt-4 sm:mt-0 font-semibold text-gray-500">
         <font-awesome :icon="['fas', 'landmark']" class="text-xl mr-2" />
-        {{ count.institutions || 0 }} Instituição(ões)
+        {{ count.institutions || 0 }} {{count.institutions == 1 ? "Instituição" : "Instituições"}}
       </card>
       <card class="mt-4 sm:mt-0 font-semibold text-gray-500">
         <font-awesome :icon="['fas', 'layer-group']" class="text-xl mr-2" />
-        {{ count.shapefiles || 0 }} Shapefile(s)
+        {{ count.shapefiles || 0 }} {{count.shapefiles == 1 ? "Shapefile" : "Shapefiles"}}
       </card>
     </section>
     <section class="lg:flex lg:space-x-4 lg:my-4 overflow-x-auto">
