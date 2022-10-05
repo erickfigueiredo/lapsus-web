@@ -65,7 +65,7 @@ yarn lint
 ```
 ---
 
-Esse projeto combina com a [LapsusAPI](https://github.com/erickfigueiredo/lapsus-api), acesse, use e contribua!
+Esse projeto combina com a [LapsusAPI](https://github.com/erickfigueiredo/lapsus-api)! Acesse, use e contribua!
 
 ---
 
