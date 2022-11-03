@@ -7,9 +7,7 @@
       <input id="mode" name="mode" type="checkbox" class="toggle" v-model="isEnabled" />
     </div>
     <div class="my-4">
-      <label for="name" class="block my-2 text-gray-500 font-semibold">
-        Nome
-      </label>
+      <label for="name" class="block my-2 text-gray-500 font-semibold"> Nome </label>
       <input
         id="name"
         type="text"
@@ -24,9 +22,7 @@
     </div>
     <div class="my-0 md:my-4 md:flex md:space-x-4">
       <div class="my-4 md:my-0 md:w-full">
-        <label for="email" class="block my-2 text-gray-500 font-semibold">
-          E-mail
-        </label>
+        <label for="email" class="block my-2 text-gray-500 font-semibold"> E-mail </label>
         <input
           id="email"
           type="email"
@@ -39,9 +35,7 @@
         />
       </div>
       <div class="my-4 md:my-0 md:w-full">
-        <label for="phone" class="block my-2 text-gray-500 font-semibold">
-          Telefone
-        </label>
+        <label for="phone" class="block my-2 text-gray-500 font-semibold"> Telefone </label>
         <input
           id="phone"
           type="tel"
@@ -56,9 +50,7 @@
     </div>
     <div class="my-0 md:my-4 md:flex md:space-x-4">
       <div class="w-full my-4 md:my-0 md:w-2/5">
-        <label for="street" class="block my-2 text-gray-500 font-semibold">
-          Logradouro
-        </label>
+        <label for="street" class="block my-2 text-gray-500 font-semibold"> Logradouro </label>
         <input
           id="street"
           type="text"
@@ -66,14 +58,12 @@
           v-model="street"
           placeholder="Logradouro"
           class="form-control"
-          :disabled="!isEnabled || foundAddress || isSearching"
+          :disabled="!isEnabled || (foundAddress && foundStreetAndNeigh) || isSearching"
           required
         />
       </div>
       <div class="w-full my-4 md:my-0 md:w-2/5">
-        <label for="neighborhood" class="block my-2 text-gray-500 font-semibold">
-          Bairro
-        </label>
+        <label for="neighborhood" class="block my-2 text-gray-500 font-semibold"> Bairro </label>
         <input
           id="neighborhood"
           type="text"
@@ -81,14 +71,12 @@
           v-model="neighborhood"
           placeholder="Bairro"
           class="form-control"
-          :disabled="!isEnabled || foundAddress || isSearching"
+          :disabled="!isEnabled || (foundAddress && foundStreetAndNeigh) || isSearching"
           required
         />
       </div>
       <div class="w-full my-4 md:my-0 md:w-1/5">
-        <label for="zipcode" class="block my-2 text-gray-500 font-semibold">
-          CEP
-        </label>
+        <label for="zipcode" class="block my-2 text-gray-500 font-semibold"> CEP </label>
         <input
           id="zipcode"
           type="text"
@@ -103,9 +91,7 @@
     </div>
     <div class="my-0 md:my-4 md:flex md:space-x-4">
       <div class="w-full my-4 md:my-0 md:w-1/4">
-        <label for="number" class="block my-2 text-gray-500 font-semibold">
-          Número
-        </label>
+        <label for="number" class="block my-2 text-gray-500 font-semibold"> Número </label>
         <input
           id="number"
           type="text"
@@ -118,9 +104,7 @@
         />
       </div>
       <div class="w-full my-4 md:my-0 md:w-2/4">
-        <label for="city" class="block my-2 text-gray-500 font-semibold">
-          Cidade
-        </label>
+        <label for="city" class="block my-2 text-gray-500 font-semibold"> Cidade </label>
         <input
           id="city"
           type="text"
@@ -133,9 +117,7 @@
         />
       </div>
       <div class="w-full my-4 md:my-0 md:w-1/4">
-        <label for="state" class="block my-2 text-gray-500 font-semibold">
-          Estado
-        </label>
+        <label for="state" class="block my-2 text-gray-500 font-semibold"> Estado </label>
         <select
           name="state"
           id="state"
@@ -175,11 +157,8 @@
         </select>
       </div>
     </div>
-    <base-button
-      v-show="!toUpdate || isEnabled"
-      :isBlocked="blockAction"
-    >
-      {{ toUpdate ? 'Atualizar' : 'Cadastrar' }}
+    <base-button v-show="!toUpdate || isEnabled" :isBlocked="blockAction">
+      {{ toUpdate ? "Atualizar" : "Cadastrar" }}
     </base-button>
   </form>
 </template>
@@ -235,6 +214,7 @@ export default {
 
       isSearching: false,
       foundAddress: false,
+      foundStreetAndNeigh: false,
       isEnabled: false,
       blockAction: false,
     };
@@ -255,12 +235,18 @@ export default {
 
         if (result.erro || !result.success) {
           this.foundAddress = false;
+          this.foundStreetAndNeigh = false;
           this.$emit('form-response', 3, result.message);
         } else {
           this.foundAddress = true;
+          if (result.address.logradouro !== '' && result.address.bairro !== '') {
+            this.street = result.address.logradouro;
+            this.neighborhood = result.address.bairro;
+            this.foundStreetAndNeigh = true;
+          } else {
+            this.foundStreetAndNeigh = false;
+          }
 
-          this.street = result.address.logradouro;
-          this.neighborhood = result.address.bairro;
           this.city = result.address.localidade;
           this.state = result.address.uf;
         }
